@@ -26,11 +26,7 @@ export class BeveragesServiceImpl implements BeveragesService {
   getBeverageByID(beverage_id: number): Promise<Beverage> {
     return this.beveragesRepository.findOneBy({ beverage_id });
   }
-  getBeverages(
-    pageno: number,
-    pagesize: number,
-    priority?: string,
-  ): Promise<Pagination<Beverage>> {
+  getBeverages(pageno: number, pagesize: number, priority?: string): Promise<Pagination<Beverage>> {
     let searchOption = null;
     if (priority) {
       switch (priority) {
@@ -48,11 +44,7 @@ export class BeveragesServiceImpl implements BeveragesService {
           break;
       }
     }
-    return paginate<Beverage>(
-      this.beveragesRepository,
-      { page: pageno, limit: pagesize },
-      searchOption,
-    );
+    return paginate<Beverage>(this.beveragesRepository, { page: pageno, limit: pagesize }, searchOption);
   }
   getAllBeverage(): Promise<Beverage[]> {
     return this.beveragesRepository.find();
