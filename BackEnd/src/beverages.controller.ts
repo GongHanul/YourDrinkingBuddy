@@ -1,14 +1,4 @@
-import {
-  Controller,
-  Get,
-  Param,
-  Query,
-  Put,
-  Body,
-  Post,
-  Delete,
-  Inject,
-} from '@nestjs/common';
+import { Controller, Get, Param, Query, Put, Body, Post, Delete, Inject } from '@nestjs/common';
 import { Beverage } from './beverage.entity';
 import { BeveragesService } from './beverages.service';
 import { BeveragesServiceImpl } from './beverages.service.impl';
@@ -20,11 +10,7 @@ export class BeveragesController {
   beveragesService: BeveragesService;
 
   @Get()
-  async findAllWithPagination(
-    @Query('pageno') pageno: number,
-    @Query('pagesize') pagesize: number,
-    @Query('sort') sort: string,
-  ): Promise<Pagination<Beverage>> {
+  async findAllWithPagination(@Query('pageno') pageno: number, @Query('pagesize') pagesize: number, @Query('sort') sort: string): Promise<Pagination<Beverage>> {
     return this.beveragesService.getBeverages(pageno, pagesize, sort);
   }
 
