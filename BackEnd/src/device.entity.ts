@@ -1,15 +1,18 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
-import { IsNotEmpty, IsPositive, Length } from 'class-validator';
+import { IsNotEmpty, IsPositive, MaxLength } from 'class-validator';
+import { Account } from './account.entity.ts';
 
-@Entity()
+@Entity({ name: 'device' })
 export class Device {
   @PrimaryGeneratedColumn()
-  @Length(17)
-  device_id: string;
+  device_id: number;
+
+  @ManyToOne(type => Account)
+  account: Account;
 
   @Column()
   @IsNotEmpty()
-  @Length(11)
+  @MaxLength(11)
   recipe_maker_ip: string;
 
   @Column()
