@@ -10,4 +10,10 @@ export class GameStatisticsServiceImpl implements GameStatisticsService {
     @InjectRepository(GameStatistic)
     private gameStatisticsRepository: GameStatisticsRepository,
   ) {}
+  notifyPlay(account_id: number, game_id: number): Promise<GameStatistic> {
+    throw new Error('Method not implemented.');
+  }
+  getAllGameStatistic(account_id: number): Promise<GameStatistic[]> {
+    throw new Error('Method not implemented.');
+  }
 }
