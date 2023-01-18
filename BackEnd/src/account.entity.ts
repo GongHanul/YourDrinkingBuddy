@@ -27,5 +27,4 @@ export class Account {
   @Column({ default: false })
   @IsNotEmpty()
   account_is_removed: boolean;
-
 }

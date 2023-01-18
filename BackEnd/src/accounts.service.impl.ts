@@ -70,7 +70,7 @@ export class AccountsServiceImpl implements AccountsService {
     throw new Error('Authentication Module Needed');
   }
 
-  private async auth(account_user_id: string, account_user_password: string): number {
+  private async auth(account_user_id: string, account_user_password: string): Promise<number> {
     const user = await this.accountsRepository.findOne({ select: loginSelect, where: { account_user_id: account_user_id } });
     if (!user) {
       throw new ForbiddenException();

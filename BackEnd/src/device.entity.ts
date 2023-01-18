@@ -19,7 +19,7 @@ export class Device {
   @IsPositive()
   recipe_maker_port: number;
 
-  public setAccount(account_id: number){
+  public setAccount(account_id: number) {
     this.account_id = account_id;
   }
 }
