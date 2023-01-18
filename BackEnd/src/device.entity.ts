@@ -26,4 +26,8 @@ export class Device {
   public setAccount(account_id: number) {
     this.account_id = account_id;
   }
+
+  public equalsAccount(account_id: number): boolean {
+    return this.account_id === account_id;
+  }
 }
