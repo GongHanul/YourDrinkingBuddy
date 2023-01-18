@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { BeveragesRepository } from './beverages.repository';
 import { Beverage } from './beverage.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Like } from 'typeorm';
 import { BeveragesService } from './beverages.service';
 import { paginate, Pagination } from 'nestjs-typeorm-paginate';
 import env from 'src/env/env.json';
@@ -17,19 +18,28 @@ export class BeveragesServiceImpl implements BeveragesService {
     @InjectRepository(Beverage)
     private beveragesRepository: BeveragesRepository,
   ) {}
-  addBeverage(beverage: Beverage): Promise<Beverage> {
+  async addBeverage(beverage: Beverage): Promise<Beverage> {
     if (!beverage.beverage_image_url) {
       beverage.beverage_image_url = env.noImageUrl;
     }
-    return this.beveragesRepository.save(beverage);
+    const beverageInstance = this.beveragesRepository.create(beverage);
+    await this.beveragesRepository.insert(beverageInstance);
+    return beverageInstance;
   }
-  getBeverageByID(beverage_id: number): Promise<Beverage> {
-    return this.beveragesRepository.findOneBy({ beverage_id });
+  async getBeverageByID(beverage_id: number): Promise<Beverage> {
+    const result = this.beveragesRepository.findOneBy({ beverage_id });
+    if (!result) {
+      throw new NotFoundException();
+    }
+    return result;
   }
-  getBeverages(pageno: number, pagesize: number, priority?: string): Promise<Pagination<Beverage>> {
-    let searchOption = null;
-    if (priority) {
-      switch (priority) {
+  async getBeverages(pageno: number, pagesize: number, sort?: string, query?: string): Promise<Pagination<Beverage>> {
+    let searchOption = undefined;
+    if (!query) {
+      query = '';
+    }
+    if (sort) {
+      switch (sort) {
         case 'name':
           searchOption = nameASC;
           break;
@@ -44,15 +54,22 @@ export class BeveragesServiceImpl implements BeveragesService {
           break;
       }
     }
+    searchOption['where'] = { query: Like('%out%') };
     return paginate<Beverage>(this.beveragesRepository, { page: pageno, limit: pagesize }, searchOption);
   }
-  getAllBeverage(): Promise<Beverage[]> {
+  async getAllBeverage(): Promise<Beverage[]> {
     return this.beveragesRepository.find();
   }
-  updateBeverage(beverage: Beverage): Promise<Beverage> {
-    return this.beveragesRepository.save(beverage);
+  async updateBeverage(beverage: Beverage): Promise<Beverage> {
+    const result = await this.beveragesRepository.update({ beverage_id: beverage.beverage_id }, { beverage_name: beverage.beverage_name, beverage_image_url: beverage.beverage_image_url });
+    if (result.affected > 0) {
+      return this.getBeverageByID(beverage.beverage_id);
+    }
+    throw new BadRequestException();
   }
   async deleteBeverage(beverage_id: number): Promise<void> {
-    await this.beveragesRepository.delete(beverage_id);
+    if ((await this.beveragesRepository.delete(beverage_id)).affected == 0) {
+      throw new NotFoundException();
+    }
   }
 }

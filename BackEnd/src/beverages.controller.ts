@@ -1,8 +1,9 @@
-import { Controller, Get, Param, Query, Put, Body, Post, Delete, Inject } from '@nestjs/common';
+import { Controller, Get, Param, Query, Put, Body, Post, Delete, Inject, HttpCode } from '@nestjs/common';
 import { Beverage } from './beverage.entity';
 import { BeveragesService } from './beverages.service';
 import { BeveragesServiceImpl } from './beverages.service.impl';
 import { Pagination } from 'nestjs-typeorm-paginate';
+import { ParseIntPipe } from '@nestjs/common';
 
 @Controller('beverage')
 export class BeveragesController {
@@ -10,12 +11,12 @@ export class BeveragesController {
   beveragesService: BeveragesService;
 
   @Get()
-  async findAllWithPagination(@Query('pageno') pageno: number, @Query('pagesize') pagesize: number, @Query('sort') sort: string): Promise<Pagination<Beverage>> {
-    return this.beveragesService.getBeverages(pageno, pagesize, sort);
+  async findAllWithPagination(@Query('pageno') pageno?: number, @Query('pagesize') pagesize?: number, @Query('sort') sort?: string): Promise<Pagination<Beverage>> {
+    return this.beveragesService.getBeverages(pageno ? pageno : 1, pagesize ? pagesize : 10, sort);
   }
 
   @Get(':beverage_id')
-  async getOne(@Param('beverage_id') beverage_id: number): Promise<Beverage> {
+  async getOne(@Param('beverage_id', ParseIntPipe) beverage_id: number): Promise<Beverage> {
     return this.beveragesService.getBeverageByID(beverage_id);
   }
 
@@ -30,7 +31,8 @@ export class BeveragesController {
   }
 
   @Delete(':beverage_id')
-  async deleteOne(@Param('beverage_id') beverage_id: number) {
+  @HttpCode(204)
+  async deleteOne(@Param('beverage_id', ParseIntPipe) beverage_id: number) {
     await this.beveragesService.deleteBeverage(beverage_id);
   }
 }
