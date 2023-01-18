@@ -11,6 +11,10 @@ export class Device {
 
   @Column()
   @IsNotEmpty()
+  device_name: string;
+
+  @Column()
+  @IsNotEmpty()
   @MaxLength(11)
   recipe_maker_ip: string;
 
