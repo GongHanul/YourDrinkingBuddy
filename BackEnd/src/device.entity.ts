@@ -1,13 +1,13 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { IsNotEmpty, IsPositive, MaxLength } from 'class-validator';
-import { Account } from './account.entity.ts';
+import { Account } from './account.entity';
 
 @Entity({ name: 'device' })
 export class Device {
   @PrimaryGeneratedColumn()
   device_id: number;
 
-  @ManyToOne(type => Account)
+  @ManyToOne(() => Account)
   account: Account;
 
   @Column()

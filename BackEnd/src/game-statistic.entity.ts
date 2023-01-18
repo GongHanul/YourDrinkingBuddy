@@ -1,15 +1,14 @@
-import { Entity, Column, ManyToMany, ManyToOne } from 'typeorm';
+import { Entity, Column, ManyToOne } from 'typeorm';
 import { Account } from './account.entity';
 import { Game } from './game.entity';
 
 @Entity({ name: 'game_statistic' })
 export class GameStatistic {
-
-  @ManyToOne(type => Account)
+  @ManyToOne(() => Account)
   account: Account;
 
-  @ManyToOne(type => Game)
-  account: Game;
+  @ManyToOne(() => Game)
+  game: Game;
 
   @Column()
   game_play_count: number;

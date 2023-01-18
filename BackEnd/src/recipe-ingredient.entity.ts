@@ -1,10 +1,10 @@
-import { Recipe } from './recipe.entity.ts';
-import { Entity, Column } from 'typeorm';
-import { IsNotEmpty, IsPositive, ManyToOne } from 'class-validator';
+import { Recipe } from './recipe.entity';
+import { Entity, Column, ManyToOne } from 'typeorm';
+import { IsNotEmpty, IsPositive } from 'class-validator';
 
 @Entity({ name: 'recipe_ingredient' })
 export class RecipeIngredient {
-  @ManyToOne(()=> Recipe, (recipe) => recipe.ingredients)
+  @ManyToOne(() => Recipe, (recipe) => recipe.ingredients)
   recipe: Recipe;
 
   @Column()

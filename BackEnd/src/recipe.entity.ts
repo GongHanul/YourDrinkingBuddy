@@ -1,7 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
-import { IsNotEmpty, IsString, OneToMany } from 'class-validator';
-import { Account } from './account.entity.ts';
-import { RecipeIngredient } from './recipe-ingredient.entity.ts';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { IsNotEmpty, IsString } from 'class-validator';
+import { RecipeIngredient } from './recipe-ingredient.entity';
 
 @Entity({ name: 'recipe' })
 export class Recipe {
@@ -20,7 +19,6 @@ export class Recipe {
   @Column()
   recipe_use_count: number;
 
-  @OneToMany()
-  recipe_ingredient: Ingredient[];
-
+  @OneToMany(() => RecipeIngredient, (ingredient) => ingredient.recipe)
+  ingredients: RecipeIngredient[];
 }
