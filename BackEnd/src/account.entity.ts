@@ -23,4 +23,9 @@ export class Account {
   @Column({ type: 'enum', enum: Role, default: Role.MANAGER })
   @IsNotEmpty()
   role: Role;
+
+  @Column({ default: false })
+  @IsNotEmpty()
+  account_is_removed: boolean;
+
 }

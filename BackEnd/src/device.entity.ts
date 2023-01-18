@@ -1,14 +1,13 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 import { IsNotEmpty, IsPositive, MaxLength } from 'class-validator';
-import { Account } from './account.entity';
 
 @Entity({ name: 'device' })
 export class Device {
   @PrimaryGeneratedColumn()
   device_id: number;
 
-  @ManyToOne(() => Account)
-  account: Account;
+  @Column()
+  private account_id: number;
 
   @Column()
   @IsNotEmpty()
@@ -19,4 +18,8 @@ export class Device {
   @IsNotEmpty()
   @IsPositive()
   recipe_maker_port: number;
+
+  public setAccount(account_id: number){
+    this.account_id = account_id;
+  }
 }
