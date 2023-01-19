@@ -34,9 +34,13 @@ export class AccountsController {
   }
 
   @Post('login')
-  async login(@Body() login: Login) {}
+  async login(@Body() login: Login) {
+    throw new Error('Not Implemented');
+  }
 
   @Get('logout')
   @HttpCode(204)
-  async logout() {}
+  async logout() {
+    throw new Error('Not Implemented');
+  }
 }
