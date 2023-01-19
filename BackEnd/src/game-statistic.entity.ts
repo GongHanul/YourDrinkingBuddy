@@ -1,14 +1,16 @@
-import { Entity, Column, ManyToOne } from 'typeorm';
-import { Account } from './account.entity';
-import { Game } from './game.entity';
+import { IsNotEmpty } from 'class-validator';
+import { Entity, Column, PrimaryColumn } from 'typeorm';
+
 
 @Entity({ name: 'game_statistic' })
 export class GameStatistic {
-  @ManyToOne(() => Account)
-  account: Account;
+  @PrimaryColumn()
+  @IsNotEmpty()
+  account_id: number;
 
-  @ManyToOne(() => Game)
-  game: Game;
+  @PrimaryColumn()
+  @IsNotEmpty()
+  game_id: number;
 
   @Column()
   game_play_count: number;
