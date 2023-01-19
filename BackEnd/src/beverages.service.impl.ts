@@ -52,7 +52,8 @@ export class BeveragesServiceImpl implements BeveragesService {
       }
     }
     if (query) {
-      searchOption['where'] = { query: Like('%out%') };
+      searchOption['where'] = { beverage_id: Like('%:query%') };
+      searchOption['query'] = query;
     }
     return paginate<Beverage>(this.beveragesRepository, { page: pageno, limit: pagesize }, searchOption);
   }

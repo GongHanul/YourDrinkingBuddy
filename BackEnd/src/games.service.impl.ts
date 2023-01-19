@@ -46,7 +46,8 @@ export class GamesServiceImpl implements GamesService {
           break;
       }
     }
-    searchOption['where'] = { query: Like('%out%') };
+    searchOption['where'] = { game_name: Like('%:query%') };
+    searchOption['query'] = query;
     return paginate<Game>(this.gamesRepository, { page: pageno, limit: pagesize }, searchOption);
   }
   async getAllGames(): Promise<Game[]> {
