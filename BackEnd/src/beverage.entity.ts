@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 import { IsNotEmpty } from 'class-validator';
-import env from 'src/env/env.json';
+import env from './env/env.json';
 
 @Entity({ name: 'beverage' })
 export class Beverage {

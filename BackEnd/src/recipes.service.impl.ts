@@ -59,8 +59,7 @@ export class RecipesServiceImpl implements RecipesService {
       }
     }
     if (query) {
-      searchOption['where']['recipe_name'] = Like('%:query%');
-      searchOption['query'] = query;
+      searchOption['where'] = { recipe_name: Like(`%${query}%`) };
     }
     // filter를 이용하여 필터링 한 결과를 pagination 형태로 내놓는다.
     return this.recipesRepository.findAllContainsFilter(pageno, pagesize, searchOption, filter);

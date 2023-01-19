@@ -11,8 +11,8 @@ export class BeveragesController {
   beveragesService: BeveragesService;
 
   @Get()
-  async findAllWithPagination(@Query('pageno') pageno?: number, @Query('pagesize') pagesize?: number, @Query('sort') sort?: string): Promise<Pagination<Beverage>> {
-    return this.beveragesService.getBeverages(pageno ? pageno : 1, pagesize ? pagesize : 10, sort);
+  async findAllWithPagination(@Query('pageno') pageno?: number, @Query('pagesize') pagesize?: number, @Query('sort') sort?: string, @Query('query') query?: string): Promise<Pagination<Beverage>> {
+    return this.beveragesService.getBeverages(pageno ? pageno : 1, pagesize ? pagesize : 10, sort, query);
   }
 
   @Get(':beverage_id')

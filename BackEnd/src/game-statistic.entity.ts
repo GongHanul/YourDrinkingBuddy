@@ -1,7 +1,6 @@
 import { IsNotEmpty } from 'class-validator';
 import { Entity, Column, PrimaryColumn } from 'typeorm';
 
-
 @Entity({ name: 'game_statistic' })
 export class GameStatistic {
   @PrimaryColumn()

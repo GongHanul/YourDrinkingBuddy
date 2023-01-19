@@ -5,10 +5,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Like } from 'typeorm';
 import { BeveragesService } from './beverages.service';
 import { paginate, Pagination } from 'nestjs-typeorm-paginate';
-import env from 'src/env/env.json';
+import env from './env/env.json';
 
-const nameASC = { order: { name: 'ASC' } };
-const nameDESC = { order: { name: 'DESC' } };
+const nameASC = { order: { beverage_name: 'ASC' } };
+const nameDESC = { order: { beverage_name: 'DESC' } };
 const idASC = { order: { beverage_id: 'ASC' } };
 const idDESC = { order: { beverage_id: 'DESC' } };
 
@@ -34,7 +34,7 @@ export class BeveragesServiceImpl implements BeveragesService {
     return result;
   }
   async getBeverages(pageno: number, pagesize: number, sort?: string, query?: string): Promise<Pagination<Beverage>> {
-    let searchOption = undefined;
+    let searchOption = {};
     if (sort) {
       switch (sort) {
         case 'name':
@@ -52,8 +52,7 @@ export class BeveragesServiceImpl implements BeveragesService {
       }
     }
     if (query) {
-      searchOption['where'] = { beverage_id: Like('%:query%') };
-      searchOption['query'] = query;
+      searchOption['where'] = { beverage_name: Like(`%${query}%`) };
     }
     return paginate<Beverage>(this.beveragesRepository, { page: pageno, limit: pagesize }, searchOption);
   }
