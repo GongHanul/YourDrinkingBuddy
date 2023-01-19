@@ -41,7 +41,7 @@ export class DevicesServiceImpl implements DevicesService {
     // 소유자 판명되었으면 변경 진행
     return this.devicesRepository.save(device);
   }
-  async deleteDeviceByDeviceID(account_id: number, device_id: number): Promise<void> {
+  async deleteDevice(account_id: number, device_id: number): Promise<void> {
     const device2 = await this.getDeviceByDeviceID(device_id);
     // 디바이스 존재 검사
     if (!device2) {
