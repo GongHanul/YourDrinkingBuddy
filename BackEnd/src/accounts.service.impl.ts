@@ -1,9 +1,9 @@
-import { BadRequestException, ForbiddenException, Injectable, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, ForbiddenException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AccountsService } from './accounts.service';
 import { AccountsRepository } from './accounts.repository';
 import { Account } from './account.entity';
-import { Pagination, IPaginationMeta, paginate } from 'nestjs-typeorm-paginate';
+import { Pagination, paginate } from 'nestjs-typeorm-paginate';
 import { Role } from './role';
 
 const responseSelect = { account_user_id: true, account_name: true, role: true };
@@ -16,7 +16,7 @@ export class AccountsServiceImpl implements AccountsService {
     private accountsRepository: AccountsRepository,
   ) {}
   async getAccountByID(account_id: number): Promise<Account> {
-    return this.accountsRepository.findOne({ select: responseSelect, where: { account_id: account_id } });
+    return this.accountsRepository.findOne({ select: responseSelect, where: { account_id: account_id, account_is_removed: false } });
   }
   async addAccount(account: Account): Promise<Account> {
     const accountInstance = this.accountsRepository.create(account);
@@ -24,9 +24,9 @@ export class AccountsServiceImpl implements AccountsService {
     return accountInstance;
   }
   async getAccountByUserID(account_user_id: string): Promise<Account> {
-    return this.accountsRepository.findOne({ select: responseSelect, where: { account_user_id: account_user_id } });
+    return this.accountsRepository.findOne({ select: responseSelect, where: { account_user_id: account_user_id, account_is_removed: false } });
   }
-  async getAccounts(pageno: number, pagesize: number, role?: string): Promise<Pagination<Account, IPaginationMeta>> {
+  async getAccounts(pageno: number, pagesize: number, role?: string): Promise<Pagination<Account>> {
     let roleData = Role.MANAGER;
     switch (role) {
       case 'manager':
@@ -34,10 +34,10 @@ export class AccountsServiceImpl implements AccountsService {
       case 'admin':
         roleData = Role.ADMIN;
     }
-    return paginate<Account>(this.accountsRepository, { page: pageno, limit: pagesize }, roleData ? { where: { role: roleData } } : undefined);
+    return paginate<Account>(this.accountsRepository, { page: pageno, limit: pagesize }, roleData ? { where: { role: roleData, account_is_removed: false } } : { account_is_removed: false });
   }
   async getAllAccount(): Promise<Account[]> {
-    return this.accountsRepository.find();
+    return this.accountsRepository.find({ where: { account_is_removed: false } });
   }
   async updateAccount(account: Account): Promise<Account> {
     const result = await this.accountsRepository.update({ account_id: account.account_id }, account);
