@@ -35,9 +35,6 @@ export class BeveragesServiceImpl implements BeveragesService {
   }
   async getBeverages(pageno: number, pagesize: number, sort?: string, query?: string): Promise<Pagination<Beverage>> {
     let searchOption = undefined;
-    if (!query) {
-      query = '';
-    }
     if (sort) {
       switch (sort) {
         case 'name':
@@ -54,7 +51,9 @@ export class BeveragesServiceImpl implements BeveragesService {
           break;
       }
     }
-    searchOption['where'] = { query: Like('%out%') };
+    if (query) {
+      searchOption['where'] = { query: Like('%out%') };
+    }
     return paginate<Beverage>(this.beveragesRepository, { page: pageno, limit: pagesize }, searchOption);
   }
   async getAllBeverage(): Promise<Beverage[]> {
