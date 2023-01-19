@@ -59,7 +59,7 @@ export class GamesServiceImpl implements GamesService {
     }
     throw new BadRequestException();
   }
-  async deleteGameByGameID(game_id: number): Promise<void> {
+  async deleteGame(game_id: number): Promise<void> {
     if ((await this.gamesRepository.delete(game_id)).affected == 0) {
       throw new NotFoundException();
     }

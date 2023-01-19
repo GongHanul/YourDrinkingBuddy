@@ -7,5 +7,5 @@ export interface GamesService {
   getGames(pageno: number, pagesize: number, sort?: string, query?: string): Promise<Pagination<Game>>;
   getAllGames(): Promise<Game[]>;
   updateGame(game: Game): Promise<Game>;
-  deleteGameByGameID(game_id: number): Promise<void>;
+  deleteGame(game_id: number): Promise<void>;
 }
