@@ -5,5 +5,5 @@ export interface DevicesService {
   getDeviceByDeviceID(device_id: number): Promise<Device>;
   getAllDevices(account_id: number, query?: string): Promise<Device[]>;
   updateDevice(account_id: number, device: Device): Promise<Device>;
-  deleteDeviceByDeviceID(account_id: number, device_id: number): Promise<void>;
+  deleteDevice(account_id: number, device_id: number): Promise<void>;
 }
