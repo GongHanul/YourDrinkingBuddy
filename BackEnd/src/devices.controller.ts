@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpCode, Inject, Param, ParseIntPipe, Post, Put, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, Inject, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
 import { DevicesService } from './devices.service';
 import { DevicesServiceImpl } from './devices.service.impl';
 import { Device } from './device.entity';
