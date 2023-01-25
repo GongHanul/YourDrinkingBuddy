@@ -3,7 +3,7 @@ import { DevicesService } from './devices.service';
 import { DevicesServiceImpl } from './devices.service.impl';
 import { Device } from './device.entity';
 
-@Controller('device')
+@Controller('devices')
 export class DevicesController {
   @Inject(DevicesServiceImpl)
   devicesService: DevicesService;

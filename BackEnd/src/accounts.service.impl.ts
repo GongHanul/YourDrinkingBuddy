@@ -1,13 +1,13 @@
-import { BadRequestException, ForbiddenException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AccountsService } from './accounts.service';
 import { AccountsRepository } from './accounts.repository';
 import { Account } from './account.entity';
 import { Pagination, paginate } from 'nestjs-typeorm-paginate';
 import { Role } from './role';
+import * as bcrypt from 'bcrypt';
 
 const responseSelect = { account_user_id: true, account_name: true, role: true };
-const loginSelect = { account_id: true, account_user_id: true, role: true };
 
 @Injectable()
 export class AccountsServiceImpl implements AccountsService {
@@ -20,6 +20,7 @@ export class AccountsServiceImpl implements AccountsService {
   }
   async addAccount(account: Account): Promise<Account> {
     const accountInstance = this.accountsRepository.create(account);
+    accountInstance.account_user_password = await bcrypt.hash(accountInstance.account_user_password, 10);
     await this.accountsRepository.insert(accountInstance);
     return accountInstance;
   }
@@ -46,38 +47,10 @@ export class AccountsServiceImpl implements AccountsService {
     }
     throw new BadRequestException();
   }
-  async deleteAccountByUserID(account_id: number): Promise<void> {
-    const result = await this.accountsRepository.update({ account_id: account_id }, { account_is_removed: true });
+  async deleteAccountByUserID(account_user_id: string): Promise<void> {
+    const result = await this.accountsRepository.update({ account_user_id: account_user_id }, { account_is_removed: true });
     if (result.affected == 0) {
       throw new BadRequestException();
     }
-  }
-  async login(account_user_id: string, account_user_password: string): Promise<void> {
-    const account_id = this.auth(account_user_id, account_user_password);
-    //
-    //
-    // Session Level Logic
-    //
-    //
-    throw new Error('Authentication Module Needed');
-  }
-  async logout(): Promise<void> {
-    //
-    //
-    // Session Level Logic
-    //
-    //
-    throw new Error('Authentication Module Needed');
-  }
-
-  private async auth(account_user_id: string, account_user_password: string): Promise<number> {
-    const user = await this.accountsRepository.findOne({ select: loginSelect, where: { account_user_id: account_user_id } });
-    if (!user) {
-      throw new ForbiddenException();
-    }
-    if (user.account_user_password !== account_user_password) {
-      throw new ForbiddenException();
-    }
-    return user.account_id;
   }
 }

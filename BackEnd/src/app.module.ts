@@ -17,6 +17,10 @@ import { Device } from './device.entity';
 import { GameStatistic } from './game-statistic.entity';
 import { Recipe } from './recipe.entity';
 import { RecipeIngredient } from './recipe-ingredient.entity';
+import { AuthModule } from './auth/auth.module';
+import { APP_GUARD } from '@nestjs/core';
+import { JwtAuthGuard } from './auth/jwt-auth.guard';
+import { LocalAuthGuard } from './auth/local-auth.guard';
 
 @Module({
   imports: [
@@ -38,8 +42,19 @@ import { RecipeIngredient } from './recipe-ingredient.entity';
     DevicesModule,
     GameStatisticssModule,
     RecipesModule,
+    AuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: LocalAuthGuard,
+    },
+  ],
 })
 export class AppModule {}

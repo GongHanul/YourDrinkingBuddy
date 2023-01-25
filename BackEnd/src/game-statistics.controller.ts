@@ -4,7 +4,7 @@ import { GameStatisticsServiceImpl } from './game-statistics.service.impl';
 import { GameStatisticsService } from './game-statistics.service';
 import { GameStatistic } from './game-statistic.entity';
 
-@Controller('game/result')
+@Controller('games/results')
 export class GameStatisticsController {
   @Inject(GameStatisticsServiceImpl)
   gameStatisticsService: GameStatisticsService;

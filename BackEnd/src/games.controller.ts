@@ -5,7 +5,7 @@ import { GamesServiceImpl } from './games.service.impl';
 import { GamesService } from './games.service';
 import { Game } from './game.entity';
 
-@Controller('game')
+@Controller('games')
 export class GamesController {
   @Inject(GamesServiceImpl)
   gamesService: GamesService;

@@ -5,7 +5,7 @@ import { BeveragesServiceImpl } from './beverages.service.impl';
 import { Pagination } from 'nestjs-typeorm-paginate';
 import { ParseIntPipe } from '@nestjs/common';
 
-@Controller('beverage')
+@Controller('beverages')
 export class BeveragesController {
   @Inject(BeveragesServiceImpl)
   beveragesService: BeveragesService;

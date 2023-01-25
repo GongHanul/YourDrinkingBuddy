@@ -44,7 +44,7 @@ CREATE TABLE `recipe_ingredient` (
 CREATE TABLE `account` (
 	`account_id`	Integer	NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	`account_user_id`	VARCHAR(30)	NOT NULL,
-	`account_user_password`	VARCHAR(30)	NOT NULL,
+	`account_user_password`	CHAR(60)	NOT NULL,
 	`account_name`	VARCHAR(30)	NULL,
 	`role`	ENUM('admin','manager')	NOT NULL	DEFAULT 'manager',
 	`account_is_removed`	BOOLEAN	NOT NULL	DEFAULT false
@@ -142,7 +142,7 @@ CREATE TABLE `recipe_ingredient` (
 CREATE TABLE `account` (
 	`account_id`	Integer	NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	`account_user_id`	VARCHAR(30)	NOT NULL,
-	`account_user_password`	VARCHAR(30)	NOT NULL,
+	`account_user_password`	CHAR(60)	NOT NULL,
 	`account_name`	VARCHAR(30)	NULL,
 	`role`	ENUM('admin','manager')	NOT NULL	DEFAULT 'manager',
 	`account_is_removed`	BOOLEAN	NOT NULL	DEFAULT false
