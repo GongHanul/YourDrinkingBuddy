@@ -1,6 +1,8 @@
 import { Repository } from 'typeorm';
 import { Device } from './device.entity';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class DevicesRepository extends Repository<Device> {
   async findAllContainsName(name: string, account_id: number): Promise<Device[]> {
     return this.createQueryBuilder('device')
