@@ -19,19 +19,7 @@ import { APP_GUARD } from '@nestjs/core';
       signOptions: { expiresIn: '60s' },
     }),
   ],
-  providers: [
-    AuthService,
-    LocalStrategy,
-    JwtStrategy,
-    {
-      provide: APP_GUARD,
-      useClass: JwtAuthGuard,
-    },
-    {
-      provide: APP_GUARD,
-      useClass: LocalAuthGuard,
-    },
-  ],
+  providers: [AuthService, LocalStrategy, JwtStrategy],
   exports: [AuthService],
 })
 export class AuthModule {}
