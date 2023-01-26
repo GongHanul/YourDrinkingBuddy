@@ -3,9 +3,9 @@ import { AccountsServiceImpl } from './accounts.service.impl';
 import { AccountsService } from './accounts.service';
 import { Account } from './account.entity';
 import { Login } from './login.entity';
-import { LocalAuthGuard } from './auth/local-auth.guard';
+// import { LocalAuthGuard } from './auth/local-auth.guard';
 import { AuthService } from './auth/auth.service';
-import { JwtAuthGuard } from './auth/jwt-auth.guard';
+// import { JwtAuthGuard } from './auth/jwt-auth.guard';
 
 @Controller('accounts')
 export class AccountsController {
@@ -13,41 +13,38 @@ export class AccountsController {
   accountsService: AccountsService;
   authService: AuthService;
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Get(':id')
   async get(@Param('user_id') user_id: string): Promise<Account> {
     return this.accountsService.getAccountByUserID(user_id);
   }
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Post()
   async post(@Body() dto: Account): Promise<Account> {
     return this.accountsService.addAccount(dto);
   }
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Put()
   async put(@Body() dto: Account): Promise<Account> {
     return this.accountsService.updateAccount(dto);
   }
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Delete(':user_id')
   @HttpCode(204)
   async delete(@Param('user_id') user_id: string) {
-    //
-    // auth logic
-    //
     await this.accountsService.deleteAccountByUserID(user_id);
   }
 
-  @UseGuards(LocalAuthGuard)
+  // @UseGuards(LocalAuthGuard)
   @Post('login')
   async login(@Body() login: Login) {
     return this.authService.login(login);
   }
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Get('logout')
   @HttpCode(204)
   async logout() {
