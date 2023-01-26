@@ -1,10 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryColumn, Column } from 'typeorm';
 import { IsNotEmpty, IsPositive, MaxLength } from 'class-validator';
 
 @Entity({ name: 'device' })
 export class Device {
-  @PrimaryGeneratedColumn()
-  device_id: number;
+  @PrimaryColumn()
+  device_mac_address: string;
 
   @Column()
   private account_id: number;
@@ -13,15 +13,15 @@ export class Device {
   @IsNotEmpty()
   device_name: string;
 
-  @Column()
-  @IsNotEmpty()
-  @MaxLength(11)
-  recipe_maker_ip: string;
+  // @Column()
+  // @IsNotEmpty()
+  // @MaxLength(15)
+  // recipe_maker_ip: string;
 
-  @Column()
-  @IsNotEmpty()
-  @IsPositive()
-  recipe_maker_port: number;
+  // @Column()
+  // @IsNotEmpty()
+  // @IsPositive()
+  // recipe_maker_port: number;
 
   public setAccount(account_id: number) {
     this.account_id = account_id;
