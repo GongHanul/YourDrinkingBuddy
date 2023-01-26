@@ -1,7 +1,7 @@
 import { IsNotEmpty } from 'class-validator';
 import { Entity, Column, PrimaryColumn } from 'typeorm';
 
-@Entity({ name: 'game_statistic' })
+@Entity({ name: 'account_game_statistic' })
 export class GameStatistic {
   @PrimaryColumn()
   @IsNotEmpty()
