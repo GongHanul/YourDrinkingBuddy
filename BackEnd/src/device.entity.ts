@@ -1,5 +1,5 @@
 import { Entity, PrimaryColumn, Column } from 'typeorm';
-import { IsNotEmpty, IsPositive, MaxLength } from 'class-validator';
+import { IsNotEmpty } from 'class-validator';
 
 @Entity({ name: 'device' })
 export class Device {
