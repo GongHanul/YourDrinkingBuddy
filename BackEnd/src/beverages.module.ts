@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { Beverage } from './beverage.entity';
 import { BeveragesController } from './beverages.controller';
 import { BeveragesServiceImpl } from './beverages.service.impl';
+import { BeveragesRepository } from './beverages.repository';
+import { TypeOrmExModule } from './typeorm-ex.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Beverage])],
+  imports: [TypeOrmExModule.forCustomRepository([BeveragesRepository])],
   controllers: [BeveragesController],
   providers: [BeveragesServiceImpl],
 })
