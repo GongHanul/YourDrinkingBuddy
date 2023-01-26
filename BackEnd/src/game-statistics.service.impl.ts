@@ -1,15 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
 import { GameStatisticsService } from './game-statistics.service';
 import { GameStatisticsRepository } from './game-statistics.repository';
 import { GameStatistic } from './game-statistic.entity';
 
 @Injectable()
 export class GameStatisticsServiceImpl implements GameStatisticsService {
-  constructor(
-    @InjectRepository(GameStatistic)
-    private gameStatisticsRepository: GameStatisticsRepository,
-  ) {}
+  constructor(private gameStatisticsRepository: GameStatisticsRepository) {}
   async notifyPlay(account_id: number, game_id: number): Promise<GameStatistic> {
     // 갱신할 statistics를 찾는다.
     let gameStatisticInstance = await this.gameStatisticsRepository.findOne({ where: { account_id: account_id, game_id: game_id } });

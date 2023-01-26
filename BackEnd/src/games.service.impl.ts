@@ -13,10 +13,7 @@ const idDESC = { order: { beverage_id: 'DESC' } };
 
 @Injectable()
 export class GamesServiceImpl implements GamesService {
-  constructor(
-    @InjectRepository(Game)
-    private gamesRepository: GamesRepository,
-  ) {}
+  constructor(private gamesRepository: GamesRepository) {}
   async addGame(game: Game): Promise<Game> {
     const gameInstance = this.gamesRepository.create(game);
     await this.gamesRepository.insert(gameInstance);

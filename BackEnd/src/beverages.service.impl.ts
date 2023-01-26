@@ -1,7 +1,6 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { BeveragesRepository } from './beverages.repository';
 import { Beverage } from './beverage.entity';
-import { InjectRepository } from '@nestjs/typeorm';
 import { Like } from 'typeorm';
 import { BeveragesService } from './beverages.service';
 import { paginate, Pagination } from 'nestjs-typeorm-paginate';
@@ -14,10 +13,7 @@ const idDESC = { order: { beverage_id: 'DESC' } };
 
 @Injectable()
 export class BeveragesServiceImpl implements BeveragesService {
-  constructor(
-    @InjectRepository(Beverage)
-    private beveragesRepository: BeveragesRepository,
-  ) {}
+  constructor(private beveragesRepository: BeveragesRepository) {}
   async addBeverage(beverage: Beverage): Promise<Beverage> {
     if (!beverage.beverage_image_url) {
       beverage.beverage_image_url = env.noImageUrl;

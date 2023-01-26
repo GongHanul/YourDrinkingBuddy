@@ -15,10 +15,7 @@ const useCountDESC = { order: { recipe_use_count: 'DESC' } };
 
 @Injectable()
 export class RecipesServiceImpl implements RecipesService {
-  constructor(
-    @InjectRepository(Recipe)
-    private recipesRepository: RecipesRepository,
-  ) {}
+  constructor(private recipesRepository: RecipesRepository) {}
   async addUseCount(recipe_id: number): Promise<Recipe> {
     const recipeInstance = await this.recipesRepository.findOneBy({ recipe_id });
     if (recipeInstance) {
