@@ -1,7 +1,10 @@
 use `ssafy_project`;
 
-DROP TABLE IF EXISTS `recipe_ingredient`;
 DROP TABLE IF EXISTS `game_statistic`;
+
+DROP TABLE IF EXISTS `recipe_ingredient`;
+DROP TABLE IF EXISTS `account_game_statistic`;
+DROP TABLE IF EXISTS `game_log`;
 DROP TABLE IF EXISTS `recipe`;
 DROP TABLE IF EXISTS `beverage`;
 DROP TABLE IF EXISTS `device`;
@@ -22,11 +25,9 @@ CREATE TABLE `recipe` (
 );
 
 CREATE TABLE `device` (
-	`device_id`	Integer	NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	`device_mac_address`	CHAR(17)	NOT NULL PRIMARY KEY,
 	`account_id`	Integer	NOT NULL,
-	`device_name`	VARCHAR(30)	NOT NULL,
-	`recipe_maker_ip`	CHAR(11)	NOT NULL	DEFAULT '127.0.0.1',
-	`recipe_maker_port`	Integer	NOT NULL	DEFAULT 9090
+	`device_name`	VARCHAR(30)	NOT NULL
 );
 
 CREATE TABLE `game` (
@@ -44,21 +45,29 @@ CREATE TABLE `recipe_ingredient` (
 CREATE TABLE `account` (
 	`account_id`	Integer	NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	`account_user_id`	VARCHAR(30)	NOT NULL,
-	`account_user_password`	CHAR(60)	NOT NULL,
+	`account_user_password`	VARCHAR(60)	NOT NULL,
 	`account_name`	VARCHAR(30)	NULL,
 	`role`	ENUM('admin','manager')	NOT NULL	DEFAULT 'manager',
 	`account_is_removed`	BOOLEAN	NOT NULL	DEFAULT false
 );
 
-CREATE TABLE `game_statistic` (
+CREATE TABLE `account_game_statistic` (
 	`game_id`	Integer	NOT NULL,
 	`account_id`	Integer	NOT NULL,
 	`game_play_count`	Integer	NOT NULL	DEFAULT 0
 );
 
+CREATE TABLE `game_log` (
+	`log_id`	Integer	NOT NULL	PRIMARY KEY AUTO_INCREMENT,
+	`device_mac_address`	CHAR(17)	NOT NULL,
+	`game_id`	Integer	NOT NULL,
+	`log_date`	DATETIME	NULL	DEFAULT now(),
+	`log_player_count`	Integer	NOT NULL
+);
+
 ALTER TABLE `recipe_ingredient` ADD CONSTRAINT `PK_RECIPE_INGREDIENT` PRIMARY KEY (`recipe_id`,`beverage_id`);
 
-ALTER TABLE `game_statistic` ADD CONSTRAINT `PK_GAME_STATISTIC` PRIMARY KEY (`game_id`,`account_id`);
+ALTER TABLE `account_game_statistic` ADD CONSTRAINT `PK_ACCOUNT_GAME_STATISTIC` PRIMARY KEY (`game_id`,`account_id`);
 
 ALTER TABLE `device` ADD CONSTRAINT `FK_account_TO_device_1` FOREIGN KEY (`account_id`) 
 REFERENCES `account` (`account_id`)
@@ -76,13 +85,13 @@ ON DELETE CASCADE
 ON UPDATE CASCADE
 ;
 
-ALTER TABLE `game_statistic` ADD CONSTRAINT `FK_game_TO_game_statistic_1` FOREIGN KEY (`game_id`)
+ALTER TABLE `account_game_statistic` ADD CONSTRAINT `FK_game_TO_account_game_statistic_1` FOREIGN KEY (`game_id`)
 REFERENCES `game` (`game_id`)
 ON DELETE CASCADE
 ON UPDATE CASCADE
 ;
 
-ALTER TABLE `game_statistic` ADD CONSTRAINT `FK_account_TO_game_statistic_1` FOREIGN KEY (`account_id`)
+ALTER TABLE `account_game_statistic` ADD CONSTRAINT `FK_account_TO_account_game_statistic_1` FOREIGN KEY (`account_id`)
 REFERENCES `account` (`account_id`)
 ON DELETE CASCADE
 ON UPDATE CASCADE
@@ -94,12 +103,18 @@ CREATE INDEX `beverage_name` on beverage(beverage_name);
 CREATE INDEX `recipe_name` on recipe(recipe_name);
 CREATE INDEX `recipe_use_count` on recipe(recipe_use_count);
 CREATE INDEX `game_name` on game(game_name);
-CREATE INDEX `game_play_count` on game_statistic(game_play_count);
+CREATE INDEX `game_play_count` on account_game_statistic(game_play_count);
+CREATE INDEX `device_mac_address` on game_log(device_mac_address);
+CREATE INDEX `game_id` on game_log(game_id);
+CREATE INDEX `log_date` on game_log(log_date);
 
 use `ssafy_project_test`;
 
-DROP TABLE IF EXISTS `recipe_ingredient`;
 DROP TABLE IF EXISTS `game_statistic`;
+
+DROP TABLE IF EXISTS `recipe_ingredient`;
+DROP TABLE IF EXISTS `account_game_statistic`;
+DROP TABLE IF EXISTS `game_log`;
 DROP TABLE IF EXISTS `recipe`;
 DROP TABLE IF EXISTS `beverage`;
 DROP TABLE IF EXISTS `device`;
@@ -120,11 +135,9 @@ CREATE TABLE `recipe` (
 ) ENGINE=MEMORY;
 
 CREATE TABLE `device` (
-	`device_id`	Integer	NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	`device_mac_address`	CHAR(17)	NOT NULL PRIMARY KEY,
 	`account_id`	Integer	NOT NULL,
-	`device_name`	VARCHAR(30)	NOT NULL,
-	`recipe_maker_ip`	CHAR(11)	NOT NULL	DEFAULT '127.0.0.1',
-	`recipe_maker_port`	Integer	NOT NULL	DEFAULT 9090
+	`device_name`	VARCHAR(30)	NOT NULL
 ) ENGINE=MEMORY;
 
 CREATE TABLE `game` (
@@ -142,21 +155,29 @@ CREATE TABLE `recipe_ingredient` (
 CREATE TABLE `account` (
 	`account_id`	Integer	NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	`account_user_id`	VARCHAR(30)	NOT NULL,
-	`account_user_password`	CHAR(60)	NOT NULL,
+	`account_user_password`	VARCHAR(60)	NOT NULL,
 	`account_name`	VARCHAR(30)	NULL,
 	`role`	ENUM('admin','manager')	NOT NULL	DEFAULT 'manager',
 	`account_is_removed`	BOOLEAN	NOT NULL	DEFAULT false
 ) ENGINE=MEMORY;
 
-CREATE TABLE `game_statistic` (
+CREATE TABLE `account_game_statistic` (
 	`game_id`	Integer	NOT NULL,
 	`account_id`	Integer	NOT NULL,
 	`game_play_count`	Integer	NOT NULL	DEFAULT 0
 ) ENGINE=MEMORY;
 
+CREATE TABLE `game_log` (
+	`log_id`	Integer	NOT NULL	PRIMARY KEY AUTO_INCREMENT,
+	`device_mac_address`	CHAR(17)	NOT NULL,
+	`game_id`	Integer	NOT NULL,
+	`log_date`	DATETIME	NULL	DEFAULT now(),
+	`log_player_count`	Integer	NOT NULL
+) ENGINE=MEMORY;
+
 ALTER TABLE `recipe_ingredient` ADD CONSTRAINT `PK_RECIPE_INGREDIENT` PRIMARY KEY (`recipe_id`,`beverage_id`);
 
-ALTER TABLE `game_statistic` ADD CONSTRAINT `PK_GAME_STATISTIC` PRIMARY KEY (`game_id`,`account_id`);
+ALTER TABLE `account_game_statistic` ADD CONSTRAINT `PK_ACCOUNT_GAME_STATISTIC` PRIMARY KEY (`game_id`,`account_id`);
 
 ALTER TABLE `device` ADD CONSTRAINT `FK_account_TO_device_1` FOREIGN KEY (`account_id`) 
 REFERENCES `account` (`account_id`)
@@ -174,13 +195,13 @@ ON DELETE CASCADE
 ON UPDATE CASCADE
 ;
 
-ALTER TABLE `game_statistic` ADD CONSTRAINT `FK_game_TO_game_statistic_1` FOREIGN KEY (`game_id`)
+ALTER TABLE `account_game_statistic` ADD CONSTRAINT `FK_game_TO_account_game_statistic_1` FOREIGN KEY (`game_id`)
 REFERENCES `game` (`game_id`)
 ON DELETE CASCADE
 ON UPDATE CASCADE
 ;
 
-ALTER TABLE `game_statistic` ADD CONSTRAINT `FK_account_TO_game_statistic_1` FOREIGN KEY (`account_id`)
+ALTER TABLE `account_game_statistic` ADD CONSTRAINT `FK_account_TO_account_game_statistic_1` FOREIGN KEY (`account_id`)
 REFERENCES `account` (`account_id`)
 ON DELETE CASCADE
 ON UPDATE CASCADE
@@ -192,4 +213,7 @@ CREATE INDEX `beverage_name` on beverage(beverage_name);
 CREATE INDEX `recipe_name` on recipe(recipe_name);
 CREATE INDEX `recipe_use_count` on recipe(recipe_use_count);
 CREATE INDEX `game_name` on game(game_name);
-CREATE INDEX `game_play_count` on game_statistic(game_play_count);
+CREATE INDEX `game_play_count` on account_game_statistic(game_play_count);
+CREATE INDEX `device_mac_address` on game_log(device_mac_address);
+CREATE INDEX `game_id` on game_log(game_id);
+CREATE INDEX `log_date` on game_log(log_date);
