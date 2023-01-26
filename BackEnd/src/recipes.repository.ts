@@ -8,7 +8,22 @@ import { CustomRepository } from './typeorm-ex.decorator';
 @CustomRepository(Recipe)
 export class RecipesRepository extends Repository<Recipe> {
   async findAllContainsFilter(pageno: number, pagesize: number, searchOption?: FindManyOptions, filter?: number[]): Promise<Pagination<Recipe>> {
-    const query = this.createQueryBuilder('recipe').leftJoinAndSelect('recipe.recipe_id', 'recipe_ingredient').where('beverage_id = all(:filter)', { filter: filter });
-    return paginate<Recipe>(searchOption ? query.andWhere(searchOption) : query, { page: pageno, limit: pagesize });
+    let query = this.createQueryBuilder('recipe').leftJoinAndSelect('recipe.ingredients', 'recipe_ingredient');
+    if (filter) {
+      const subQuery = this.createQueryBuilder('recipe')
+        .subQuery()
+        .select('recipe_id')
+        .from('recipe_ingredient', 'r')
+        .where('beverage_id in(:...filter)')
+        .addSelect('count(*) as cnt')
+        .groupBy('recipe_id')
+        .having('cnt = :filterSize')
+        .getQuery();
+      query = query.where(`recipe.recipe_id in (SELECT recipe_id from ${subQuery} sq)`).setParameter('filter', filter).setParameter('filterSize', filter.length);
+    }
+    if (searchOption) {
+      query = query.andWhere(searchOption);
+    }
+    return paginate<Recipe>(query, { page: pageno, limit: pagesize });
   }
 }
