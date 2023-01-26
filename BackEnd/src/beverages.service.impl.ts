@@ -14,6 +14,7 @@ const idDESC = { order: { beverage_id: 'DESC' } };
 @Injectable()
 export class BeveragesServiceImpl implements BeveragesService {
   constructor(private beveragesRepository: BeveragesRepository) {}
+
   async addBeverage(beverage: Beverage): Promise<Beverage> {
     if (!beverage.beverage_image_url) {
       beverage.beverage_image_url = env.noImageUrl;
@@ -22,6 +23,7 @@ export class BeveragesServiceImpl implements BeveragesService {
     await this.beveragesRepository.insert(beverageInstance);
     return beverageInstance;
   }
+
   async getBeverageByID(beverage_id: number): Promise<Beverage> {
     const result = this.beveragesRepository.findOneBy({ beverage_id });
     if (!result) {
@@ -29,6 +31,7 @@ export class BeveragesServiceImpl implements BeveragesService {
     }
     return result;
   }
+
   async getBeverages(pageno: number, pagesize: number, sort?: string, query?: string): Promise<Pagination<Beverage>> {
     let searchOption = {};
     if (sort) {
@@ -52,9 +55,11 @@ export class BeveragesServiceImpl implements BeveragesService {
     }
     return paginate<Beverage>(this.beveragesRepository, { page: pageno, limit: pagesize }, searchOption);
   }
+
   async getAllBeverage(): Promise<Beverage[]> {
     return this.beveragesRepository.find();
   }
+
   async updateBeverage(beverage: Beverage): Promise<Beverage> {
     const result = await this.beveragesRepository.update({ beverage_id: beverage.beverage_id }, { beverage_name: beverage.beverage_name, beverage_image_url: beverage.beverage_image_url });
     if (result.affected > 0) {
@@ -62,6 +67,7 @@ export class BeveragesServiceImpl implements BeveragesService {
     }
     throw new BadRequestException();
   }
+
   async deleteBeverage(beverage_id: number): Promise<void> {
     if ((await this.beveragesRepository.delete(beverage_id)).affected == 0) {
       throw new NotFoundException();
