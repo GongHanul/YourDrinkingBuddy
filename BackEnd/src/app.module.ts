@@ -45,16 +45,6 @@ import { LocalAuthGuard } from './auth/local-auth.guard';
     AuthModule,
   ],
   controllers: [AppController],
-  providers: [
-    AppService,
-    {
-      provide: APP_GUARD,
-      useClass: JwtAuthGuard,
-    },
-    {
-      provide: APP_GUARD,
-      useClass: LocalAuthGuard,
-    },
-  ],
+  providers: [AppService],
 })
 export class AppModule {}
