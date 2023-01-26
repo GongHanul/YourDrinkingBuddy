@@ -11,10 +11,7 @@ const responseSelect = { account_user_id: true, account_name: true, role: true }
 
 @Injectable()
 export class AccountsServiceImpl implements AccountsService {
-  constructor(
-    @InjectRepository(Account)
-    private accountsRepository: AccountsRepository,
-  ) {}
+  constructor(private accountsRepository: AccountsRepository) {}
   async getAccountByID(account_id: number): Promise<Account> {
     return this.accountsRepository.findOne({ select: responseSelect, where: { account_id: account_id, account_is_removed: false } });
   }

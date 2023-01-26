@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, JoinColumn } from 'typeorm';
 import { IsNotEmpty, IsString } from 'class-validator';
 import { RecipeIngredient } from './recipe-ingredient.entity';
 
@@ -19,6 +19,10 @@ export class Recipe {
   @Column()
   recipe_use_count: number;
 
-  @OneToMany(() => RecipeIngredient, (ingredient) => ingredient.recipe)
+  @OneToMany(() => RecipeIngredient, (ingredient) => ingredient.recipe, {
+    cascade: ['insert', 'update'],
+    eager: true,
+  })
+  @JoinColumn({ name: 'recipe_id' })
   ingredients: RecipeIngredient[];
 }
