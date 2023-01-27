@@ -5,6 +5,8 @@ import { Beverage } from './beverage.entity';
 import { BeveragesServiceImpl } from './beverages.service.impl';
 import { BeveragesModule } from './beverages.module';
 import { DataSource } from 'typeorm';
+import { BeveragesRepository } from './beverages.repository';
+import { TypeOrmExModule } from './typeorm-ex.module';
 
 describe('BeveragesController', () => {
   let beveragesController: BeveragesController;
@@ -27,7 +29,7 @@ describe('BeveragesController', () => {
           logging: true,
         }),
         BeveragesModule,
-        TypeOrmModule.forFeature([Beverage]),
+        TypeOrmExModule.forCustomRepository([BeveragesRepository]),
       ],
       controllers: [BeveragesController],
       providers: [BeveragesServiceImpl],

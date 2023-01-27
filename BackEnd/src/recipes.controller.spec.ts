@@ -9,6 +9,10 @@ import { RecipesModule } from './recipes.module';
 import { RecipesServiceImpl } from './recipes.service.impl';
 import { BeveragesController } from './beverages.controller';
 import { BeveragesServiceImpl } from './beverages.service.impl';
+import { TypeOrmExModule } from './typeorm-ex.module';
+import { BeveragesRepository } from './beverages.repository';
+import { RecipesRepository } from './recipes.repository';
+import { BeveragesModule } from './beverages.module';
 
 describe('RecipesController', () => {
   let recipesController: RecipesController;
@@ -32,7 +36,8 @@ describe('RecipesController', () => {
           logging: true,
         }),
         RecipesModule,
-        TypeOrmModule.forFeature([Beverage, Recipe, RecipeIngredient]),
+        BeveragesModule,
+        TypeOrmExModule.forCustomRepository([BeveragesRepository, RecipesRepository]),
       ],
       controllers: [RecipesController, BeveragesController],
       providers: [RecipesServiceImpl, BeveragesServiceImpl],
@@ -46,8 +51,7 @@ describe('RecipesController', () => {
   afterAll(async () => {
     dataSource.destroy();
   });
-
-  afterEach(async () => {
+  beforeEach(async () => {
     const entities = dataSource.entityMetadatas;
 
     for (const entity of entities) {
@@ -76,15 +80,23 @@ describe('RecipesController', () => {
       beverage_id: undefined,
       beverage_image_url: undefined,
     };
+    const b4: Beverage = {
+      beverage_name: '사악한기운의액체',
+      beverage_id: undefined,
+      beverage_image_url: undefined,
+    };
 
     await beveragesController.post(b1);
     await beveragesController.post(b2);
     await beveragesController.post(b3);
+    await beveragesController.post(b4);
 
     const resultBeverage = await beveragesController.getAll();
-    expect(resultBeverage.items.length).toEqual(3);
+    expect(resultBeverage.items.length).toEqual(4);
 
     const ingredients: RecipeIngredient[] = [];
+    const ingredients2: RecipeIngredient[] = [];
+    const filter: number[] = [];
 
     for (const item of resultBeverage.items) {
       switch (item.beverage_name) {
@@ -95,6 +107,13 @@ describe('RecipesController', () => {
             recipe: undefined,
             recipe_id: undefined,
           });
+          ingredients2.push({
+            beverage_id: item.beverage_id,
+            recipe_ingredient_ratio: 10,
+            recipe: undefined,
+            recipe_id: undefined,
+          });
+          filter.push(item.beverage_id);
           break;
         case '피닉스의눈물':
           ingredients.push({
@@ -103,6 +122,7 @@ describe('RecipesController', () => {
             recipe: undefined,
             recipe_id: undefined,
           });
+          filter.push(item.beverage_id);
           break;
         case '봉황의정수':
           ingredients.push({
@@ -112,8 +132,18 @@ describe('RecipesController', () => {
             recipe_id: undefined,
           });
           break;
+        case '사악한기운의액체':
+          ingredients2.push({
+            beverage_id: item.beverage_id,
+            recipe_ingredient_ratio: 3,
+            recipe: undefined,
+            recipe_id: undefined,
+          });
+          break;
       }
     }
+
+    expect(ingredients.length).toEqual(3);
 
     const r1: Recipe = {
       recipe_name: '사악한마력의엘릭서',
@@ -122,10 +152,18 @@ describe('RecipesController', () => {
       recipe_use_count: undefined,
       ingredients: ingredients,
     };
+    const r2: Recipe = {
+      recipe_name: '악한드래곤의피',
+      recipe_id: undefined,
+      recipe_desc: '악한 기운이 깃든 드래곤의 피이다.',
+      recipe_use_count: undefined,
+      ingredients: ingredients2,
+    };
 
     await recipesController.post(r1);
+    await recipesController.post(r2);
 
-    const result = await recipesController.getAll();
+    const result = await recipesController.getAll(1, 10, filter);
     expect(result.items.length).toEqual(1);
 
     expect(result.items[0].recipe_name).toEqual('사악한마력의엘릭서');
