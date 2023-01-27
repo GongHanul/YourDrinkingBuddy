@@ -14,7 +14,7 @@ export class RecipesController {
   async getAll(
     @Query('pageno') pageno?: number,
     @Query('pagesize') pagesize?: number,
-    @Query('filter', new ParseArrayPipe({ items: Number, separator: ',' })) filter?: number[],
+    @Query('filter', new ParseArrayPipe({ items: Number, separator: ',', optional: true })) filter?: number[],
     @Query('sort') sort?: string,
     @Query('query') query?: string,
   ): Promise<Pagination<Recipe>> {
