@@ -1,0 +1,10 @@
+{
+  "host": "i8a103.p.ssafy.io",
+  "port": 3306,
+  "username": "ssafy",
+  "password": "1qks3xlaWkdWkdaosakfldkelql",
+  "database": "ssafy_project",
+  "test_database": "ssafy_project_test",
+  "timezone": "+09:00",
+  "charset": "utf8mb4"
+}
