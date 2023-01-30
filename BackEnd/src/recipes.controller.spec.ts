@@ -131,6 +131,7 @@ describe('RecipesController', () => {
             recipe: undefined,
             recipe_id: undefined,
           });
+          filter.push(item.beverage_id);
           break;
         case '사악한기운의액체':
           ingredients2.push({
@@ -139,6 +140,7 @@ describe('RecipesController', () => {
             recipe: undefined,
             recipe_id: undefined,
           });
+          filter.push(item.beverage_id);
           break;
       }
     }
@@ -163,8 +165,8 @@ describe('RecipesController', () => {
     await recipesController.post(r1);
     await recipesController.post(r2);
 
-    const result = await recipesController.getAll(1, 10, filter);
-    expect(result.items.length).toEqual(1);
+    const result = await recipesController.getAll(1, 10, filter, '', 'name');
+    expect(result.items.length).toEqual(2);
 
     expect(result.items[0].recipe_name).toEqual('사악한마력의엘릭서');
 
