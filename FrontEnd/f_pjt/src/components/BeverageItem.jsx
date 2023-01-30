@@ -27,12 +27,12 @@ function BeverageItem() {
         src = {image}></Beverageimg>
       <UpandDown><FontAwesomeIcon onClick={()=>{
         Incredible(count);
-      }} icon= {faChevronUp} size="5x"/>
+      }} icon= {faChevronUp}/>
       </UpandDown>
       <Num>{count}</Num>
       <UpandDown><FontAwesomeIcon onClick={()=>{
         Decredible(count);
-      }} icon= {faChevronDown} size="5x"/>
+      }} icon= {faChevronDown}/>
       </UpandDown>
       
     </Box>
@@ -55,8 +55,7 @@ const Box = styled.div`
   flex-direction: column;
   border-radius: 2vh;
   border: none;
-  margin: auto 2vh;
-  padding: 3vh;
+  padding: auto;
   background-image: linear-gradient(to bottom, white 30%, #DCDCDC 30%);
   align-items: center ;
   justify-content: space-evenly;
@@ -64,6 +63,7 @@ const Box = styled.div`
 const UpandDown = styled.div`
   color: #004680;
   margin: 3vh auto;
+  font-size: 4em;
 `
 const Num = styled.div`
   color: #494949;

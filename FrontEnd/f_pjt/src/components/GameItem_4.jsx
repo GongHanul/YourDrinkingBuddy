@@ -15,7 +15,6 @@ const GameList = styled.div`
   height: 50vh;
   background: #F4E5B2;
   flex: 1 1 30%;
-  border:none;
   align-items: center ;
   justify-content: center;
   display: flex;

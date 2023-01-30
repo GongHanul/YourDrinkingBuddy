@@ -21,20 +21,21 @@ function Drink() {
   </>
 )
 }
-const Maindiv = styled.div`
+const Maindiv = styled.body`
+  width:100vw;
+  height:100vh;
   display: flex;
   flex-direction: column;
 `
 const Topdiv = styled.div`
   display: flex;
-  margin: auto;
-  justify-content: space-around;
-
-`
+  justify-content: space-evenly;
+  margin : auto;
+  `
 const Bottomdiv = styled.div`
   display: flex;
-  margin: auto;
-  justify-content: space-around;
+  justify-content: space-evenly;
+  margin : auto 0;
 
 `
 const Mal = styled.div`
@@ -43,7 +44,7 @@ const Mal = styled.div`
   box-shadow: -5px -5px 30px 5px lightgreen, 5px 5px 30px 5px blue;
   font-family: 'Irish Grover';
   font-style: normal;
-  font-size: 5vh;
+  font-size: 4vh;
   color: #004680;
   box-sizing: border-box;
   padding: 2vh;

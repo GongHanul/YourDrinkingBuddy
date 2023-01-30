@@ -16,32 +16,29 @@ function SideNav() {
     <Bar>
     <Side>
       <NavStyle to="/game" >
-        <FontAwesomeIcon icon= { faGamepad } size="4x"/>
-        {/* <FontAwesomeIcon icon="fa-solid fa-gamepad" /> */}
-        {/* <Img alt="game" src="img/game.png"/> */}
+      <FontAwesomeIcon icon= { faGamepad }/>
       </NavStyle>
       <NavStyle to="/drink">
-        <FontAwesomeIcon icon = { faBomb } size="4x"/>
-        {/* <FontAwesomeIcon icon="fa-solid fa-bomb" /> */}
-        {/* <Img alt="drink" src="img/drink.png"/> */}
+        <FontAwesomeIcon icon = { faBomb }/>
       </NavStyle>
-      {/* <Button><Img alt="shot" src="img/shot.png"/></Button> */}
       <Shot>Shot!</Shot>
       <NavStyle to="/cocktail">
-        <FontAwesomeIcon icon={ faMartiniGlassCitrus } size="4x" />
-        {/* <FontAwesomeIcon icon="fa-solid fa-martini-glass-citrus" /> */}
-        {/* <Img alt="cocktail" src="img/cocktail.png"/> */}
+        <FontAwesomeIcon icon={ faMartiniGlassCitrus }/>
       </NavStyle>
     </Side>
     </Bar>
   );
 }
+const icon = styled.svg`
+
+`
 
 const Bar = styled.div`
   display: flex;
   background: #004680;
 `
-
+// const Svg = styled.svg`
+// `
 
 const Side = styled.div`
   display: flex;
@@ -58,6 +55,7 @@ const NavStyle = styled(NavLink)`
   margin: auto;
   color: white;
   padding: 2vh;
+  font-size: 8vh;
   &:link {
     transition : 0.5s;
     text-decoration: none;

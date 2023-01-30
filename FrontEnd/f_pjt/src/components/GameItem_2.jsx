@@ -3,10 +3,10 @@ import { React, useState } from 'react';
 
 function GameItem() {
   return (
-      <>
-      <GameList><Img src="img/gram.png"/>
-        <Title># 무게 측정 게임</Title>
-      </GameList>
+  <>
+    <GameList><Img src="img/gram.png"/>
+      <Title># 무게 측정 게임</Title>
+    </GameList>
   </>
   )
 }
@@ -15,7 +15,6 @@ const GameList = styled.div`
   height: 50vh;
   background: #0E538B;
   flex: 1 1 30%;
-  border:none;
   align-items: center ;
   justify-content: center;
   display: flex;
