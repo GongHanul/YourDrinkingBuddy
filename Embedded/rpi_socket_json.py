@@ -1,4 +1,4 @@
-# 최근 업데이트 2023.01.19 (목)
+# 최근 업데이트 2023.01.30 (월)
 
 import threading
 import socket
