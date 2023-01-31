@@ -18,7 +18,7 @@ export class RecipesController {
     @Query('query') query?: string,
     @Query('sort') sort?: string,
   ): Promise<Pagination<Recipe>> {
-    return this.recipesService.getRecipes(pageno ? pageno : 1, pagesize ? pagesize : 10, filter, query, sort);
+    return this.recipesService.getRecipes(pageno ? pageno : 1, pagesize ? pagesize : 100000, filter, query, sort);
   }
 
   @Get(':id')
