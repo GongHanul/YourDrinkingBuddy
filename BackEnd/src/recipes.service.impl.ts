@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { RecipesService } from './recipes.service';
 import { RecipesRepository } from './recipes.repository';
 import { Recipe } from './recipe.entity';
@@ -76,11 +76,7 @@ export class RecipesServiceImpl implements RecipesService {
   }
 
   async updateRecipe(recipe: Recipe): Promise<Recipe> {
-    const result = await this.recipesRepository.update({ recipe_id: recipe.recipe_id }, recipe);
-    if (result.affected == 0) {
-      throw new BadRequestException();
-    }
-    return this.getRecipeByRecipeID(recipe.recipe_id);
+    return this.recipesRepository.save(recipe);
   }
 
   async deleteRecipe(recipe_id: number): Promise<void> {
