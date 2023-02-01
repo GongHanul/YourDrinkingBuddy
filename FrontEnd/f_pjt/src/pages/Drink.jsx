@@ -1,24 +1,27 @@
 import styled from "styled-components";
 import { React, useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faRetweet } from "@fortawesome/free-solid-svg-icons"
 import BeverageItem from "../components/BeverageItem";
 
 
 function Drink() {  
+  let [Recipes, setRecipe] = useState(['쏘맥', '소백산맥', '막소사'])
   let [Pump, setPump] = useState([0,1,2,3])
   return(
-
-  <>
-  <Maindiv>
-    <Topdiv>
-      <Mal>ONE FOR THE ROAD  |  마지막으로 딱 한잔 만 더</Mal>
-    </Topdiv>
-    <Bottomdiv>
+    <Maindiv>
+      <Topdiv>
+          { Recipes.map(function(e, i){
+          return (<RecipeItem>{ Recipes[i] }</RecipeItem>)
+          })}
+        <Reset><FontAwesomeIcon icon= { faRetweet } /></Reset>
+      </Topdiv>
+      <Bottomdiv>
         { Pump.map(function(e, i){
-          return (<BeverageItem/>)
+          return (<BeverageItem index={i}/>)
         })}
-    </Bottomdiv>
-  </Maindiv>
-  </>
+      </Bottomdiv>
+    </Maindiv>
 )
 }
 const Maindiv = styled.body`
@@ -30,28 +33,48 @@ const Maindiv = styled.body`
 const Topdiv = styled.div`
   display: flex;
   justify-content: space-evenly;
-  margin : auto;
+  margin : auto 0;
   `
 const Bottomdiv = styled.div`
   display: flex;
   justify-content: space-evenly;
   margin : auto 0;
-
 `
-const Mal = styled.div`
+const Reset = styled.div`
+  align-items: center ;
+  justify-content: center;
+  color: #004680;
+  font-size: 8vh;
+  &:link {
+    transition : 0.5s;
+    text-decoration: none;
+  }
+  &:hover {
+    color: red;
+  }
+  &.active {
+    color: 	Goldenrod;
+    position: relative;
+    top: 1vh;
+    border-bottom: 1vh solid 	Goldenrod;
+  }
+`
+const RecipeItem = styled.div`
   border-radius: 2vh;
+  width: 25vh;
   box-shadow: inset 0 0 5px gray;
-  box-shadow: -5px -5px 30px 5px lightgreen, 5px 5px 30px 5px blue;
+  box-shadow: -1px -1px 30px 1px #ffffff , 1px 1px 30px 1px blue ;
   font-family: 'Irish Grover';
   font-style: normal;
   font-size: 4vh;
   color: #004680;
   box-sizing: border-box;
-  padding: 2vh;
-  margin: auto 4vh;
   display: flex;
   align-items: center ;
-  justify-content: space-around;
-`
+  justify-content: space-evenly;
+  padding: 2vh;
+  font-family: 'Do Hyeon', sans-serif;
+  font-weight : bold;
+  `
 
 export default Drink

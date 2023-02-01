@@ -7,10 +7,10 @@ import {
 
 import Sidebar from "./SideNav";
 
-import Drink from "./pages/Drink";
 import Game from "./pages/Game";
+import Drink from "./pages/Drink";
+import Recipe from "./pages/Recipe";
 import Warning from "./pages/Warning";
-import Cocktail from "./pages/Cocktail";
 import Splash from "./pages/Splash";
 
 import { useState } from "react";
@@ -25,8 +25,10 @@ function App() {
     return(
 
     <>
+    {/* {visible && 
+      <img alt ="splash" src="img/splash.jpg"></img>} */}
     {visible && 
-      <img alt ="splash" src="img/splash.jpg"></img>}
+      <Splash/>}
 
     {!visible && <Main> 
       {/* clearTimeout(timerId) 실행 시키는 로직 생각하기  */}
@@ -34,8 +36,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Warning />} />
         <Route path="/game" element={<Game />} />
+        <Route path="/recipe" element={<Recipe />} />
         <Route path="/drink" element={<Drink />} />
-        <Route path="/cocktail" element={<Cocktail />} />
         <Route path="/splash" element={<Splash />} />
       </Routes>
     </Main>}

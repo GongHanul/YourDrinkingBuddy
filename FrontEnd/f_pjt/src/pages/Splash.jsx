@@ -1,7 +1,47 @@
 import styled from "styled-components";
-import React from 'react';
+import { React, useEffect } from 'react';
+import{ inputBeverage, inputRecipe } from "../store.js"
+import { useDispatch, useSelector } from "react-redux"
+import axios from "axios";
 
 function Splash() {
+  const URL= 'http://i8a103.p.ssafy.io:3001'
+  
+  const dispatch = useDispatch();
+
+  const getBeverage = () => {
+    axios.get(URL+'/beverages').then((a)=>{
+      dispatch(inputBeverage(a.data.items))
+      console.log("dispatch_Beverage")
+
+    })
+    .catch((e)=>{
+      console.log("dispatch 실패error")
+
+    })
+  }
+  const getRecipe = () => {
+    axios.get(URL+'/recipes').then((a)=>{
+      dispatch(inputRecipe(a.data.items))
+      console.log("dispatch_inputRecipe")
+    })
+    .catch((e)=>{
+      console.log("dispatch 실패 레시피 error")
+
+    })
+  }
+
+  const Beverages = useSelector((state)=>{return state.beverage})
+  console.log('Bevarges 상태',Beverages)
+  const Recipes = useSelector((state)=>{return state.recipe})
+  console.log('Recipes 상태',Recipes)
+  
+  useEffect(()=>{
+    getBeverage()
+    getRecipe()
+    }, [])
+
+
   return (
     <>
     <Center>
@@ -20,11 +60,11 @@ const Center = styled.div`
   align-items: center ;
   justify-content: center;
   background: #004680;
-  width: 100%;
+  width: 100vw;
+  height: 100vh;
 `
 const Img = styled.img`
   display: flex;
-  width: 50vh;
   height : 50vh;
 `
 const Copyright = styled.div`
@@ -32,7 +72,7 @@ const Copyright = styled.div`
   position: sticky ;
   display: flex;
   top: 88vh;
-  font-size : 2.5vh;
+  font-size : 2vh;
 `
 
 export default Splash

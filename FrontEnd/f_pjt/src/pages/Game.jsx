@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { React, useState } from 'react';
-import GameItem1 from "../components/GameItem_0";
+import GameItem1 from "../components/GameItem_1";
 import GameItem2 from "../components/GameItem_2";
 import GameItem3 from "../components/GameItem_3";
 import GameItem4 from "../components/GameItem_4";

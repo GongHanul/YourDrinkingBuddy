@@ -1,17 +1,27 @@
-import React from "react";
+import { React, useState } from 'react';
 import { NavLink } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMartiniGlassCitrus, faGamepad, faBomb } from "@fortawesome/free-solid-svg-icons"
+import { faMartiniGlassCitrus, faGamepad, faClipboardList } from "@fortawesome/free-solid-svg-icons"
+import axios from 'axios'
+import { useSelector } from "react-redux"
+import Modal from '@mui/material/Modal';
+import ShotModal from "./components/ShotModal";
+
 
 function SideNav() {
-  const menus = [
-    { name: "game", path: "/game"},
-    { name: "drink", path: "/drink"},
-    { name: "shot"},
-    { name: "cocktail", path: "/cocktail"}
-  ]
-
+  // const menus = [
+    //   { name: "game", path: "/game"},
+    //   { name: "drink", path: "/drink"},
+    //   { name: "shot"},
+    //   { name: "cocktail", path: "/cocktail"}
+    // ]
+    const ratio = useSelector((state)=>state.ratio)
+    const URL = "http://70.12.226.153:5000/api/motor"
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);;
+    const handleClose = () => setOpen(false);
+    
   return (
     <Bar>
     <Side>
@@ -19,27 +29,40 @@ function SideNav() {
       <FontAwesomeIcon icon= { faGamepad }/>
       </NavStyle>
       <NavStyle to="/drink">
-        <FontAwesomeIcon icon = { faBomb }/>
-      </NavStyle>
-      <Shot>Shot!</Shot>
-      <NavStyle to="/cocktail">
         <FontAwesomeIcon icon={ faMartiniGlassCitrus }/>
+      </NavStyle>
+      <Shot 
+        onClick={()=>{
+        axios.post(URL, {ratio: [ String(ratio[0].rate) , String(ratio[1].rate) , String(ratio[2].rate) , String(ratio[3].rate)]})
+        .then((결과)=>{
+          console.log("good")
+        })
+        .catch(()=>{
+          console.log({ratio: [ String(ratio[0].rate) , String(ratio[1].rate) , String(ratio[2].rate) , String(ratio[3].rate)]})
+        })
+        handleOpen()
+        setTimeout(function(){handleClose()},5000)
+      }}>
+        SHOT!</Shot>
+        <Modal
+        open={open}
+        onClose={handleClose}
+      >
+       <ShotModal
+        />
+      </Modal>
+      <NavStyle to="/recipe">
+        <FontAwesomeIcon icon = { faClipboardList }/>
       </NavStyle>
     </Side>
     </Bar>
   );
 }
-const icon = styled.svg`
-
-`
 
 const Bar = styled.div`
   display: flex;
   background: #004680;
 `
-// const Svg = styled.svg`
-// `
-
 const Side = styled.div`
   display: flex;
   flex-direction: column;
@@ -50,6 +73,7 @@ const Side = styled.div`
   background: #004680;
 `
 const NavStyle = styled(NavLink)`
+  display: flex;
   align-items: center ;
   justify-content: center;
   margin: auto;
@@ -70,8 +94,10 @@ const NavStyle = styled(NavLink)`
     border-bottom: 1vh solid 	Goldenrod;
   }
 `
+
 const Shot = styled.div`
-  font-family: 'Irish Grover';
+  font-family: 'Play', sans-serif;
+  font-weight : bold;
   font-style: normal;
   font-size: 5vh;
   color: #ffffff;
