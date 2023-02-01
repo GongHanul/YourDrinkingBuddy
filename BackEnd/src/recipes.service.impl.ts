@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { RecipesService } from './recipes.service';
 import { RecipesRepository } from './recipes.repository';
 import { Recipe } from './recipe.entity';
