@@ -3,15 +3,43 @@ import Modal from '@mui/material/Modal';
 import { React, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronUp,faChevronDown } from "@fortawesome/free-solid-svg-icons"
-import BeverageListModal from "../components/BeverageListModal";
+import BeverageModal from "../components/BeverageModal";
 import{ increaseRatio, decreaseRatio } from "../store.js"
 import { useDispatch, useSelector } from "react-redux"
 
-function BeverageItem(props) {  
-
+function BeverageItem(props) { 
+  const Box = styled.div`
+  display: flex;
+  flex-direction: column;
+  border-radius: 2vh;
+  border: none;
+  background : ${props.background};
+  align-items: center ;
+  justify-content: space-evenly;
+  box-shadow: 0 2px 4px, 0px 2px 4px #474747 inset;
+  padding : 3vh;
+  `
+  const Circle = styled.div`
+  width : 20vh;
+  height : 20vh;
+  border-radius : 50%;
+  background: ${props.circleColor};
+  box-shadow: 0 1px 2px;
+`
+const Num = styled.div`
+  color:${props.circleColor};
+  font-family: 'Do Hyeon', sans-serif;
+  font-weight : bold;
+  font-size: 8vh;
+  margin: -3vh;
+  filter: drop-shadow(1px 3px 1px rgb(0 0 0 / 0.4));
+`
   const dispatch = useDispatch();
 
   let num = useSelector((state)=> state.ratio[props.index])
+  let Image = useSelector((state)=> state.port[props.index].beverage_image_url)
+  let port = useSelector((state)=>state.port)
+  console.log(port)
 
   const Decredible = () => {
     return num.rate > 0 ? dispatch(decreaseRatio(props.index)) : false
@@ -20,8 +48,6 @@ function BeverageItem(props) {
       return num.rate < 8 ? dispatch(increaseRatio(props.index)) : false
       }
       
-  const [image, setImage] = useState('http://cdn.veluga.kr/files/supplier/228/drinks/%E1%84%90%E1%85%A6%E1%84%85%E1%85%A1%20%E1%84%86%E1%85%A2%E1%86%A8%E1%84%8C%E1%85%AE(TERRA%20BEER)_%E1%84%92%E1%85%A1%E1%84%8B%E1%85%B5%E1%84%90%E1%85%B3%E1%84%8C%E1%85%B5%E1%86%AB%E1%84%85%E1%85%A9(hitejinro).png');
-
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -31,30 +57,29 @@ function BeverageItem(props) {
     <Box>
       <Beverageimg
        onClick={handleOpen}
-      src = {image}></Beverageimg>
+      src = {Image}></Beverageimg>
       <Modal
         open={open}
         onClose={handleClose}
       >
-       <BeverageListModal/>
+       <BeverageModal
+       index = { props.index }
+       handleClose = {handleClose}/>
       </Modal>
-      <UpandDown><FontAwesomeIcon onClick={()=>{
+      <Circle></Circle>
+      <UpandDown>
+      <FontAwesomeIcon onClick={()=>{
         Incredible()
-      }} icon= {faChevronUp}/>
+        }} icon= {faChevronUp}/>
       </UpandDown>
       <Num>{num.rate}</Num>
-      <UpandDown><FontAwesomeIcon onClick={()=>{
+      <UpandDown>
+        <FontAwesomeIcon onClick={()=>{
         Decredible()
-      }} icon= {faChevronDown}/>
+        }} icon= {faChevronDown}/>
       </UpandDown>
       
     </Box>
-      {/* {isOpen && (<Modal
-        open={isOpen}
-        onClose={() => {
-          setIsOpen(false);
-        }}
-      />)} */}
   </>
 )
 }
@@ -62,27 +87,14 @@ function BeverageItem(props) {
 
 const Beverageimg = styled.img`
   height : 30vh;
+  position: relative;
+  top: 5vh;
+  margin: -13vh 0;
 `
-const Box = styled.div`
-  display: flex;
-  flex-direction: column;
-  border-radius: 2vh;
-  border: none;
-  background-image: linear-gradient(to bottom, white 30%, #DCDCDC 30%);
-  align-items: center ;
-  justify-content: space-evenly;
-  `
 const UpandDown = styled.div`
-  color: #004680;
-  font-size: 10vh;
-  margin: auto;
-  `
-const Num = styled.div`
-  color: #494949;
-  font-family: 'Do Hyeon', sans-serif;
-  font-weight : bold;
-  font-size: 8vh;
-
+  color: #ffffff;
+  font-size: 10vh;  
+  filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.4));
 `
 
 export default BeverageItem

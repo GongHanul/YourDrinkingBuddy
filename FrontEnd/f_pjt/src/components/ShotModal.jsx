@@ -2,17 +2,15 @@ import styled from "styled-components";
 import { React, useState } from 'react';
 import Box from '@mui/material/Box';
 
-function ShotModal() {
-  const [open, setOpen] = useState(true);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+function ShotModal(props) {
 
   return (
   <>
   <Box sx={style}>
-     <Loading>제 조 중!</Loading>
+     <Loading>제 조 중 🍺</Loading>
      <Loading>가 마 니 이 써</Loading>
-     <StopBtn onClick={handleClose}>SSSSSTOP</StopBtn>
+     <br />
+     <StopBtn onClick={props.handleClose}>SSSSSTOP</StopBtn>
   </Box>
   </>
   )
@@ -29,7 +27,7 @@ const style = {
   height: '30vh',
   bgcolor: 'background.paper',
   border: 'none',
-  boxShadow: 24,
+  boxShadow: '0 2px 4px, 0px 1px 2px inset',
   borderRadius: '2vh',
   padding : 'auto',
   display: 'flex',
@@ -43,7 +41,6 @@ const Loading = styled.div`
 `
 const StopBtn = styled.button`
   display: flex;
-  margin: 3vh 0 0 0 ;
   background: #ffffff;
   border : none;
   border-radius : 1vh;
@@ -51,19 +48,8 @@ const StopBtn = styled.button`
   font-family: 'Play', sans-serif;
   font-weight : bold;
   font-style: normal;
-  font-size: 3vh;
-  padding : 1vh 3vh 1vh 2.5vh;
+  font-size: 4vh;
   &:hover {
     color: red;
   }
 `
-// const ModalBox = styled.div`
-// position: absolute;
-// top: 50%;
-// left: 50%;
-// transform: translate(-50%, -50%);
-// width: 50vh
-// bgcolor: background.paper;
-// border: none;
-// boxShadow: 24;
-// `

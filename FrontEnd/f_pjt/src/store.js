@@ -21,6 +21,20 @@ let ratio = createSlice({
 export let { increaseRatio, decreaseRatio, changeBeverage } = ratio.actions
 
 
+let port = createSlice({
+  name : 'port',
+  initialState : [{beverage_id : '1', beverage_image_url : '21'},{beverage_id : '2', beverage_image_url : '31'},{beverage_id : '3', beverage_image_url : '22'},{beverage_id : '4', beverage_image_url : '11'}],
+  reducers : {
+    changePort(state, action){
+      state[action.payload.idx] = { beverage_id : action.payload.beverage_id, beverage_image_url : action.payload.beverage_image_url}
+    }
+  }
+})
+
+export let { changePort } = port.actions
+
+
+
 let beverage = createSlice({
   name : 'beverage',
   initialState : [{brverage_name : '최성빈'},
@@ -28,12 +42,35 @@ let beverage = createSlice({
   reducers : {
     inputBeverage(state, action){
       return state = action.payload
+
     }
 
   }
 }) 
 
 export let { inputBeverage } = beverage.actions
+
+let beverageMap = createSlice({
+  name : 'beverageMap',
+  initialState : {},
+  reducers : {
+    setBeverages(state, action){
+      state = {}
+      action.payload.forEach( (beverage) => {
+        state[beverage.beverage_id] = beverage;
+      });
+      return state;
+    },
+    insertBeverageByID(state, action){
+      return state[action.payload] = beverage;
+    },
+    deleteBeverageByID(state, action){
+      delete state[action.payload]
+    }
+  }
+}) 
+
+export let { setBeverages, insertBeverageByID, deleteBeverageByID } = beverageMap.actions
 
 
 let recipe = createSlice({
@@ -53,6 +90,8 @@ export default configureStore({
   reducer: {
     ratio : ratio.reducer,
     beverage : beverage.reducer,
-    recipe : recipe.reducer
+    beverageMap : beverageMap.reducer,
+    recipe : recipe.reducer,
+    port : port.reducer
    }
 }) 

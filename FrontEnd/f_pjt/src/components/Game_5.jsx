@@ -1,42 +1,42 @@
 import styled from "styled-components";
 import ReactCardFlip from "react-card-flip";
 import { React, useState } from 'react';
+import { NavLink } from "react-router-dom";
 
-function GameItem() {
+function GameList() {
   // const [game, setGame] = useState([{title: '심장 박동 게임', color: '#063C69' },{title: '심장 박자 게임' , color:'#0E538B'},{title: '심장 자동 게임' , color:'#1966A5'},{title: '심장 수동 게임', color:'#F4E5B2'},{title: '심장 박수 게임', color:'#EDD582'},{title: '심장 소리 게임', color:'#D0BB70'}])
   const [isFlipped, setIsFlipped] = useState(false);
   
   
   return (
-    <>
-      <ReactCardFlip
-      className="characterCard"
-      isFlipped={isFlipped}
-      flipDirection="horizontal"
-      >
-      <CardFront
-        onClick={() => setIsFlipped((prev) => !prev)}
-        className="CardFront"
-      >
-        <Img src="img/heart.png"/>
-        <Title># 심장 박동 게임</Title>
-      </CardFront>
-      <CardBack
-        onClick={() => setIsFlipped((prev) => !prev)}
-        className="CardBack"
-      >
-        {/* This is the back of the card. */}
-        <Rule1># 일정 심박수에</Rule1>
-        <Rule1>도착하면</Rule1>
-        <Rule1>벌칙</Rule1>
-        <Rule2>게임 전 개인 심박수 측정</Rule2>
-        <Start>START!</Start>
-      </CardBack>
-      </ReactCardFlip>
-    </>
+  <>
+    <ReactCardFlip
+    className="characterCard"
+    isFlipped={isFlipped}
+    flipDirection="horizontal"
+    >
+    <CardFront
+      onClick={() => setIsFlipped((prev) => !prev)}
+    >
+      <Img src="img/gram_black.png"/>
+      <Title># 무게가 어느정도지?</Title>
+    </CardFront>
+    <CardBack
+      onClick={() => setIsFlipped((prev) => !prev)}
+    >
+      {/* This is the back of the card. */}
+      <Rule1># 한명씩 돌아가면서</Rule1>
+      <Rule1>물건을 올려</Rule1>
+      <Rule1>랜덤값에서 제일 먼 사람이 벌칙!</Rule1>
+      <Rule2>돌아가면서 무게 측정!</Rule2>
+      <NavStyle to="/gameitem5" >START!</NavStyle>
+      {/* <Start>START!</Start> */}
+    </CardBack>
+    </ReactCardFlip>
+  </>
   )
 }
-const Start = styled.button`
+const NavStyle = styled(NavLink)`
   position : absolute;
   margin: 4vh 0 0 0 ;
   bottom : 2em;
@@ -49,6 +49,9 @@ const Start = styled.button`
   font-style: normal;
   font-size: 3vh;
   padding : 1vh 3vh 1vh 2.5vh;
+  &:link {
+    text-decoration: none;
+  }
   &:hover {
     color: red;
   }
@@ -65,7 +68,7 @@ const Card = styled.div`
 const CardFront = styled.div`
   height: 50vh;
   width: 30vw;
-  background: #D0BB70;
+  background: #EDD582;
   flex: 1 1 30%;
   align-items: center ;
   justify-content: center;
@@ -74,7 +77,7 @@ const CardFront = styled.div`
   `
 const CardBack = styled.div`
   width: 30vw;
-  background: #D0BB70;
+  background: #EDD582;
   display: flex;
   flex: 1 1 30%;
   flex-direction: column;
@@ -101,7 +104,7 @@ const Rule1 = styled.div`
 const Rule2 = styled.div`
   color : black;
   font-size: 4vh;
-  margin: 2em 0 1em 0 ;
+  margin: 1em 0 1em 0 ;
   font-family: 'Do Hyeon', sans-serif;
 `
-export default GameItem
+export default GameList

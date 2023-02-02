@@ -3,8 +3,8 @@ import { NavLink } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMartiniGlassCitrus, faGamepad, faClipboardList } from "@fortawesome/free-solid-svg-icons"
-import axios from 'axios'
 import { useSelector } from "react-redux"
+import axios from 'axios'
 import Modal from '@mui/material/Modal';
 import ShotModal from "./components/ShotModal";
 
@@ -46,9 +46,9 @@ function SideNav() {
         SHOT!</Shot>
         <Modal
         open={open}
-        onClose={handleClose}
+        // onClose={handleClose}
       >
-       <ShotModal
+       <ShotModal handleClose = {handleClose}
         />
       </Modal>
       <NavStyle to="/recipe">
@@ -88,10 +88,10 @@ const NavStyle = styled(NavLink)`
     color: lightyellow;
   }
   &.active {
-    color: 	Goldenrod;
+    color: #FAE59C;
     position: relative;
     top: 1vh;
-    border-bottom: 1vh solid 	Goldenrod;
+    border-bottom: 1vh solid #FAE59C;
   }
 `
 
