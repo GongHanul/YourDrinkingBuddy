@@ -4,7 +4,7 @@ import { configureStore, createSlice } from '@reduxjs/toolkit'
 let ratio = createSlice({
   name : 'ratio',
   initialState : [
-    {rate: 1, id: 1},{rate: 2, id: 2},{rate: 3, id: 3},{rate: 4, id:4}],
+    {rate: 0, id: 1},{rate: 0, id: 2},{rate: 0, id: 3},{rate: 0, id:4}],
   reducers : {
     increaseRatio(state, action){
       state[action.payload].rate++
@@ -23,7 +23,7 @@ export let { increaseRatio, decreaseRatio, changeBeverage } = ratio.actions
 
 let port = createSlice({
   name : 'port',
-  initialState : [{beverage_id : '1', beverage_image_url : '21'},{beverage_id : '2', beverage_image_url : '31'},{beverage_id : '3', beverage_image_url : '22'},{beverage_id : '4', beverage_image_url : '11'}],
+  initialState : [{beverage_id : '1', beverage_image_url : 'img/bottle_pick.png'},{beverage_id : '2', beverage_image_url : 'img/bottle.png'},{beverage_id : '3', beverage_image_url : 'img/bottle_pick.png'},{beverage_id : '4', beverage_image_url : 'img/bottle.png'}],
   reducers : {
     changePort(state, action){
       state[action.payload.idx] = { beverage_id : action.payload.beverage_id, beverage_image_url : action.payload.beverage_image_url}
@@ -41,8 +41,8 @@ let beverage = createSlice({
     ],
   reducers : {
     inputBeverage(state, action){
+             action.payload.push({beverage_id: -1, beverage_name: '없음', beverage_image_url: 'asd'})
       return state = action.payload
-
     }
 
   }

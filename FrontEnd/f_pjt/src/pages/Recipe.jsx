@@ -1,59 +1,186 @@
 import styled from "styled-components";
-import { React, useState } from 'react';
+import { React } from 'react';
 import { useSelector } from "react-redux"
 
 function Recipe() {  
   const recipes = useSelector((state)=> state.recipe)
   const beverageMap = useSelector((state)=> state.beverageMap)
   
-  console.log(recipes)
   return(
-  <>
+    <>
   <Body>
   { recipes.map(function(recipe, i){
-    return (<Name>{ recipes[i].recipe_name }
-    {recipe.ingredients.map(function(ingredient,j){
-      return(<><br /><br />
-      <>{beverageMap[ingredient.beverage_id].beverage_name}</>
-        <>{ingredient.recipe_ingredient_ratio}</></>
-          )
+    const size = recipe.ingredients.length
+    return (
+      <ListCard>
+      <Tape></Tape>
+      <RecipeName>{ recipe.recipe_name }🍸</RecipeName>
+      <BeverageName>
+        { recipe.ingredients.map(function(ingredient, j){
+          if(j < size-1){
+          return (<>{beverageMap[ingredient.beverage_id].beverage_name} : </>)
         }
+        else{
+          return (<>{beverageMap[ingredient.beverage_id].beverage_name}</>)
+        }
+      }
       )
     }
-    </Name>
-        )
+      </BeverageName>
+      <BeverageRatio>
+      { recipe.ingredients.map(function(ingredient, j){
+        if(j < size-1){
+          return (<>{ingredient.recipe_ingredient_ratio} : </>)
+        }
+        else{
+          return (<>{ingredient.recipe_ingredient_ratio}</>)
+        }
       }
-    )
+      )
+    }
+      </BeverageRatio>
+      </ListCard>
+        )  
+      }
+      )
   }
   </Body>
   </>
-)
+  )
 }
+const Tape = styled.div`
+  position: relative;
+  margin: -3.8vh;
+  height: 7.5vh;
+  width: 1.7vw;
+  transform : rotate(70deg);
+  background: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 50px,
+      rgba(255, 127, 0, 0.25) 50px,
+      rgba(255, 127, 0, 0.25) 56px,
+      transparent 56px,
+      transparent 63px,
+      rgba(255, 127, 0, 0.25) 63px,
+      rgba(255, 127, 0, 0.25) 69px,
+      transparent 69px,
+      transparent 116px,
+      rgba(255, 206, 0, 0.25) 116px,
+      rgba(255, 206, 0, 0.25) 166px
+    ), repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 50px,
+      rgba(255, 127, 0, 0.25) 50px,
+      rgba(255, 127, 0, 0.25) 56px,
+      transparent 56px,
+      transparent 63px,
+      rgba(255, 127, 0, 0.25) 63px,
+      rgba(255, 127, 0, 0.25) 69px,
+      transparent 69px,
+      transparent 116px,
+      rgba(255, 206, 0, 0.25) 116px,
+      rgba(255, 206, 0, 0.25) 166px
+    ), repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 5px,
+      rgba(143, 77, 63, 0.25) 5px,
+      rgba(143, 77, 63, 0.25) 10px
+    ), repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(
+          143,
+          77,
+          63,
+          0.25
+        ) 5px, rgba(143, 77, 63, 0.25) 10px);
+
+  background: repeating-linear-gradient(
+      90deg,
+      transparent 0 50px,
+      rgba(255, 127, 0, 0.25) 50px 56px,
+      transparent 56px 63px,
+      rgba(255, 127, 0, 0.25) 63px 69px,
+      transparent 69px 116px,
+      rgba(255, 206, 0, 0.25) 116px 166px
+    ), repeating-linear-gradient(
+      0deg,
+      transparent 0 50px,
+      rgba(255, 127, 0, 0.25) 50px 56px,
+      transparent 56px 63px,
+      rgba(255, 127, 0, 0.25) 63px 69px,
+      transparent 69px 116px,
+      rgba(255, 206, 0, 0.25) 116px 166px
+    ), repeating-linear-gradient(
+      -45deg,
+      transparent 0 5px,
+      rgba(143, 77, 63, 0.25) 5px 10px
+    ), repeating-linear-gradient(45deg, transparent 0 5px, rgba(
+          143,
+          77,
+          63,
+          0.25
+        ) 5px 10px);
+`
+
+const ListCard = styled.div`
+display : flex;
+align-items: center ;
+flex-direction: column;
+position: relative;
+font-weight : bold;
+width : 15vw;
+margin: auto;
+padding: 10px;
+background: #B9D1E4;
+color : #474747;
+box-sizing: border-box;
+border-radius : 10px;
+border: 1px solid #ddd;
+background-size: cover;
+background-clip: content-box;
+&:after{
+  content: "";
+  display: block;
+  position: absolute;
+  border: 40px solid transparent;
+  border-bottom: 40px solid #fefefe;
+  bottom: -50px;
+  right: -45px;
+  box-shadow: 0px 7px 6px -9px black;
+  transform: rotate(135deg);
+}
+&:before{
+  content: "";
+  display: block;
+  position: absolute;
+  border: 40px solid transparent;
+  border-top: 40px solid #fefefe;
+  top: -50px;
+  left: -45px;
+  box-shadow: 0px -7px 6px -9px black;
+  transform: rotate(135deg);
+}
+`
 const Body = styled.div`
   display : flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center ;
 `
-const Cardlst = styled.div`
-  display : flex,
-  `
-const Name = styled.div`
-  display : flex,
-  justify-content: center;
-  align-items: center ;
-  background: #81D8CF;
-  color : #ffffff;
-  border-radius : 1vh;
-  font-weight : bold;
-  width : 200px;
-  margin: 2vh;
-  padding: 1em;
+const RecipeName = styled.div`
+  z-index: 1;
+  font-size : 1.9vh;
+  margin: 1.5vh;
+`
+const BeverageName = styled.div`
+  margin: 0.5vh;
+  font-size : 1.6vh;
+`
+const BeverageRatio = styled.div`
+  margin: 0.5vh 0 1.5vh;
+  font-size : 1.5vh;
 `
 // color : #89cff0;
-const BName = styled.div`
-`
-const Rate = styled.div`
-`
 
 export default Recipe

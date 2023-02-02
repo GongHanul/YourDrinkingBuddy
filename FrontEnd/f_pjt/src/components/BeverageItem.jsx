@@ -16,7 +16,7 @@ function BeverageItem(props) {
   background : ${props.background};
   align-items: center ;
   justify-content: space-evenly;
-  box-shadow: 0 2px 4px, 0px 2px 4px #474747 inset;
+  box-shadow: 0 2px 4px;
   padding : 3vh;
   `
   const Circle = styled.div`
@@ -24,7 +24,7 @@ function BeverageItem(props) {
   height : 20vh;
   border-radius : 50%;
   background: ${props.circleColor};
-  box-shadow: 0 1px 2px;
+  box-shadow: 1px 2px 4px #474747;
 `
 const Num = styled.div`
   color:${props.circleColor};
@@ -88,7 +88,7 @@ const Num = styled.div`
 const Beverageimg = styled.img`
   height : 30vh;
   position: relative;
-  top: 5vh;
+  top: 3vh;
   margin: -13vh 0;
 `
 const UpandDown = styled.div`

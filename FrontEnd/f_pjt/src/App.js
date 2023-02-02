@@ -26,7 +26,7 @@ import { useState } from "react";
 function App() {
     const [ visible, setVisible ] = useState(true);
     let timerId = setTimeout(() => {
-      setVisible(false)}, 1000);
+      setVisible(false)}, 2500);
         
     return(
 

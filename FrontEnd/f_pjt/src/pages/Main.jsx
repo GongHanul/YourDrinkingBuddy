@@ -46,7 +46,7 @@ const MainBody = styled.div`
 const Left = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center ;
+  align-items: start ;
   justify-content: center;
 `
 const Center = styled.div`
@@ -56,7 +56,7 @@ const Center = styled.div`
 const Right = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center ;
+  align-items: end ;
   justify-content: center;
 `
 const Mainlogo = styled.img`

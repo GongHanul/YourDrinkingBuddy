@@ -48,7 +48,7 @@ function Splash() {
     <Center>
     <Img alt="splashlogo" src="img/splashlogo.png"/>
     <Copyright>
-      <p>Copyright 2023. Korean Black Rasberry All rights reserved</p>
+      Copyright 2023. Korean Black Rasberry All rights reserved
     </Copyright>
     </Center>
   </>
@@ -68,12 +68,13 @@ const Img = styled.img`
   display: flex;
   height : 50vh;
 `
-const Copyright = styled.div`
+const Copyright = styled.p`
   color: #ffffff;
   position: sticky ;
   display: flex;
   top: 88vh;
   font-size : 2vh;
+  letter-spacing: 2px;
 `
 
 export default Splash

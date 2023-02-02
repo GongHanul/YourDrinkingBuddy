@@ -23,13 +23,13 @@ function BeverageModal(props) {
   <>
   <Box sx={style}>
     { Beverages.map(function(e, i){
-    return (<SulList onClick={()=>
+    return (<div onClick={props.handleClose}><SulList onClick={()=>
       dispatch(changePort({
       beverage_id : Beverages[i].beverage_id,
       beverage_image_url : Beverages[i].beverage_image_url,
       idx : props.index
     }))}>{ Beverages[i].beverage_name }
-    </SulList>)
+    </SulList></div>)
     })}
     </Box>
   </>

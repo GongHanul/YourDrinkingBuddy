@@ -4,46 +4,44 @@ import { React, useState } from 'react';
 import { NavLink } from "react-router-dom";
 
 function GameList() {
-  // const [game, setGame] = useState([{title: '심장 박동 게임', color: '#063C69' },{title: '심장 박자 게임' , color:'#0E538B'},{title: '심장 자동 게임' , color:'#1966A5'},{title: '심장 수동 게임', color:'#F4E5B2'},{title: '심장 박수 게임', color:'#EDD582'},{title: '심장 소리 게임', color:'#D0BB70'}])
   const [isFlipped, setIsFlipped] = useState(false);
   
   
   return (
   <>
-    <ReactCardFlip
-    className="characterCard"
-    isFlipped={isFlipped}
-    flipDirection="horizontal"
-    >
-    <CardFront
-      onClick={() => setIsFlipped((prev) => !prev)}
-    >
-      <Img src="img/sound_black.png"/>
-      <Title># 누가 더 시끄럽나!</Title>
-    </CardFront>
-    <CardBack
-      onClick={() => setIsFlipped((prev) => !prev)}
-    >
-      {/* This is the back of the card. */}
-      <Rule1># 각 순서에 따라서</Rule1>
-      <Rule1>가장 큰 데시벨이 나온사람이</Rule1>
-      <Rule1>벌칙!</Rule1>
-      <Rule2>눈치껏 조용한 타이밍에 시작</Rule2>
-      <NavStyle to="/gameitem4" >START!</NavStyle>
-      {/* <Start>START!</Start> */}
-    </CardBack>
-    </ReactCardFlip>
+  <ReactCardFlip
+  className="characterCard"
+  isFlipped={isFlipped}
+  flipDirection="horizontal"
+  >
+  <CardFront
+    onClick={() => setIsFlipped((prev) => !prev)}
+  >
+    {/* This is the front of the card. */}
+    <Img src="img/sound_black.png"/>
+    <Title># 누가 더 시끄럽나!</Title>
+  </CardFront>
+  <CardBack
+    onClick={() => setIsFlipped((prev) => !prev)}
+  >
+    {/* This is the back of the card. */}
+    <Rule1># 각 순서에 따라서</Rule1>
+    <Rule1>가장 큰 데시벨이</Rule1>
+    <Rule1>나온사람이 벌칙!</Rule1>
+    <br />
+    <Rule2>눈치껏 조용한 타이밍 시작</Rule2>
+    <NavStyle to="/gameitem4" >START!</NavStyle>
+  </CardBack>
+  </ReactCardFlip>
   </>
   )
 }
 const NavStyle = styled(NavLink)`
-  position : absolute;
   margin: 4vh 0 0 0 ;
-  bottom : 2em;
   background: #ffffff;
   border : none;
   border-radius : 1vh;
-  color : #004680;
+  color : #D0BB70;
   font-family: 'Play', sans-serif;
   font-weight : bold;
   font-style: normal;
@@ -56,18 +54,7 @@ const NavStyle = styled(NavLink)`
     color: red;
   }
 `
-const Card = styled.div`
-  display: flex;
-  height: 50vh;
-  background: #063C69;
-  flex: 1 1 30%;
-  flex-direction: column;
-  align-items: center ;
-  justify-content: center;
-  `
 const CardFront = styled.div`
-  height: 50vh;
-  width: 30vw;
   background: #F4E5B2;
   flex: 1 1 30%;
   align-items: center ;
@@ -75,18 +62,19 @@ const CardFront = styled.div`
   display: flex;
   flex-direction: column;
   color: black;
+  height : 50vh;
   `
 const CardBack = styled.div`
-  width: 30vw;
   background: #F4E5B2;
   display: flex;
   flex: 1 1 30%;
   flex-direction: column;
   align-content: stretch;
-  height: 50vh;
   align-content: "space-between";
   align-items: center ;
+  height : 50vh;
   justify-content: center;
+  padding: 0 4vh;
 `
 const Img = styled.img`
   height: 23vh;
@@ -105,7 +93,6 @@ const Rule1 = styled.div`
 const Rule2 = styled.div`
   color : black;
   font-size: 4vh;
-  margin: 1em 0 1em 0 ;
   font-family: 'Do Hyeon', sans-serif;
 `
 export default GameList
