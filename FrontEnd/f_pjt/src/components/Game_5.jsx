@@ -42,7 +42,6 @@ const NavStyle = styled(NavLink)`
   border : none;
   border-radius : 1vh;
   color : #EDD582;
-  font-family: 'Play', sans-serif;
   font-weight : bold;
   font-style: normal;
   font-size: 3vh;
@@ -82,16 +81,13 @@ const Img = styled.img`
 const Title = styled.div`
   color : black;
   font-size: 4vh;
-  font-family: 'Do Hyeon', sans-serif;
 `
 const Rule1 = styled.div`
   color : black;
   font-size: 4vh;
-  font-family: 'Do Hyeon', sans-serif;
 `
 const Rule2 = styled.div`
   color : black;
   font-size: 4vh;
-  font-family: 'Do Hyeon', sans-serif;
 `
 export default GameList

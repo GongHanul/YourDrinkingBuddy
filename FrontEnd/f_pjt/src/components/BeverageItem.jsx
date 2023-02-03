@@ -84,9 +84,9 @@ const Num = styled.div`
 )
 }
 
-
 const Beverageimg = styled.img`
   height : 30vh;
+  max-width : 5vw;
   position: relative;
   top: 3vh;
   margin: -13vh 0;

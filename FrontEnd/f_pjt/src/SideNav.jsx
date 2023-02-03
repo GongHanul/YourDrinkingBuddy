@@ -96,10 +96,10 @@ const NavStyle = styled(NavLink)`
 `
 
 const Shot = styled.div`
-  font-family: 'Play', sans-serif;
+  font-family: 'Jua', sans-serif;
   font-weight : bold;
   font-style: normal;
-  font-size: 5vh;
+  font-size: 6vh;
   color: #ffffff;
   align-items: center ;
   justify-content: center;

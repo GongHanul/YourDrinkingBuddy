@@ -15,8 +15,9 @@ function Drink() {
   let [Recipes, setRecipe] = useState([' ', ' ', ' '])
   let [Pump, setPump] = useState([0,1,2,3])
   let port = useSelector((state)=> state.port)
- 
+  let [recoRecipes, setrecpRecipes] = useState([])
   let beverages = []
+  let recos = []
   for (let i of port) {
     if(i.beverage_id >= 0){
       beverages.push(i.beverage_id)
@@ -25,17 +26,22 @@ function Drink() {
   const URL = 'http://i8a103.p.ssafy.io:3001'
   const getRecipes = () => {
     axios.get(URL+'/recipes',{params: {filter: beverages.join(",")}}).then((a)=>{
-      console.log(a.data)
+      setrecpRecipes(a.data.items)
+      setRecipe(a.data.items)
     })
     .catch((e)=>{
       console.log("추천레시피 실패")
     })
   }
+  for (let i of recoRecipes) {
+    recos.push(i.recipe_name)
+
+  }
   return(
     <Maindiv>
       <Topdiv>
           { Recipes.map(function(e, i){
-          return (<RecipeItem>{ Recipes[i] }</RecipeItem>)
+          return (<RecipeItem>{ Recipes[i].recipe_name }</RecipeItem>)
           })}
         <Reset onClick={getRecipes}><FontAwesomeIcon icon= { faRotateRight } /></Reset>
       </Topdiv>

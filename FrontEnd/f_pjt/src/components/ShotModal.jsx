@@ -37,15 +37,15 @@ const style = {
 };
 const Loading = styled.div`
   font-size: 5vh;
-  font-family: 'Do Hyeon', sans-serif;
+  font-family: 'Jua', sans-serif;
 `
 const StopBtn = styled.button`
   display: flex;
   background: #ffffff;
+  font-family: 'Jua', sans-serif;
   border : none;
   border-radius : 1vh;
   color : #004680;
-  font-family: 'Play', sans-serif;
   font-weight : bold;
   font-style: normal;
   font-size: 4vh;

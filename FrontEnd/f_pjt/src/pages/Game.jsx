@@ -24,7 +24,9 @@ function Game() {
 const Gamee = styled.div`
   display: flex;
   flex-wrap: wrap;
+  font-family: 'Jua', sans-serif;
   `
+  // font-family: 'Do Hyeon', sans-serif;
 const Flexdiv = styled.div`
   flex: 1 1 30%;
 `

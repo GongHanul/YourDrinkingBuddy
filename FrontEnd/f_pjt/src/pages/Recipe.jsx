@@ -13,7 +13,7 @@ function Recipe() {
     const size = recipe.ingredients.length
     return (
       <ListCard>
-      <Tape></Tape>
+      {/* <Tape></Tape> */}
       <RecipeName>{ recipe.recipe_name }🍸</RecipeName>
       <BeverageName>
         { recipe.ingredients.map(function(ingredient, j){
@@ -130,7 +130,7 @@ flex-direction: column;
 position: relative;
 font-weight : bold;
 width : 15vw;
-margin: auto;
+margin: 1vh;
 padding: 10px;
 background: #B9D1E4;
 color : #474747;
@@ -167,19 +167,21 @@ const Body = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   align-items: center ;
+  font-family: 'Jua', sans-serif;
+  height: 100vh;
 `
+// font-family: 'Black Han Sans', sans-serif;
 const RecipeName = styled.div`
   z-index: 1;
-  font-size : 1.9vh;
-  margin: 1.5vh;
+  font-size : 1.5em;
+  margin : 10px 0;
 `
 const BeverageName = styled.div`
-  margin: 0.5vh;
-  font-size : 1.6vh;
+  font-size : 1em;
 `
 const BeverageRatio = styled.div`
-  margin: 0.5vh 0 1.5vh;
-  font-size : 1.5vh;
+  font-size : 1em;
+  margin : 0 0 10px 0 ;
 `
 // color : #89cff0;
 
