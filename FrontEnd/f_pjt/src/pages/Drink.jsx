@@ -6,8 +6,24 @@ import BeverageItem from "../components/BeverageItem";
 import { useSelector } from "react-redux"
 import axios from 'axios'
 
-
 function Drink() {  
+  const setLengthIfLessFills = (array, length, fills) => {
+    let newArray = [];
+    if(array.length < length){
+      const needed = length - array.length
+      for(const item of array){
+        newArray.push(item);
+      }
+      for(let i=0; i<needed; i++){
+        newArray.push(fills);
+      }
+    }else{
+      for(let i=0; i<length; i++){
+        newArray.push(array.splice(Math.floor(Math.random() * (array.length-i)),1)[0])
+      }
+    }
+    return newArray;
+  }
   const Background = ['#33559C', '#5674BD','#6683D1', '#7996E6']
   const CircleColor = ['#1C2F56', '#223B77', '#2E4C9E', '#3253AC']
   // const Background = ['#646D71', '#9A836F','#EEBC9E', '#F4DBB2']
@@ -17,7 +33,6 @@ function Drink() {
   let port = useSelector((state)=> state.port)
   let [recoRecipes, setrecpRecipes] = useState([])
   let beverages = []
-  let recos = []
   for (let i of port) {
     if(i.beverage_id >= 0){
       beverages.push(i.beverage_id)
@@ -26,16 +41,11 @@ function Drink() {
   const URL = 'http://i8a103.p.ssafy.io:3001'
   const getRecipes = () => {
     axios.get(URL+'/recipes',{params: {filter: beverages.join(",")}}).then((a)=>{
-      setrecpRecipes(a.data.items)
-      setRecipe(a.data.items)
+      setRecipe(setLengthIfLessFills(a.data.items,3, {beverages_name: ""}));
     })
     .catch((e)=>{
       console.log("추천레시피 실패")
     })
-  }
-  for (let i of recoRecipes) {
-    recos.push(i.recipe_name)
-
   }
   return(
     <Maindiv>
