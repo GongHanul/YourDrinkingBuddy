@@ -42,6 +42,7 @@ const style = {
   position: 'absolute',
   top: '50%',
   left: '50%',
+  height : '70%',
   transform: 'translate(-50%, -50%)',
   bgcolor: 'background.paper',
   border: 'none',
@@ -52,17 +53,24 @@ const style = {
   flexWrap: 'wrap',
   alignItems: 'center',
   justifyContent: 'center',
+  overflowY : 'auto',
+  background : '#004680',
+
 };
 
 const SulList = styled.div`
   display: flex;
   justify-content: center;
   align-items: center ;
-  margin: 2vh;
-  padding: 1em;
-  box-shadow: 0 2px 4px, 0px 2px 4px #474747 inset;
-  border-radius : 2em;
+  margin: 1vh;
+  padding: 1vh;
+  /* box-shadow: 0 2px 4px, 0px 2px 4px #474747 inset; */
+  /* border-radius : 1vh; */
   font-weight : bold;
+  color: #ffffff;
   min-width: 5vw;
-  font-size : 2vh;
+  font-size : 2.2em;
+  font-family: 'Jua', sans-serif;
+  /* font-family: 'Do Hyeon', sans-serif; */
+  letter-spacing: 5px;
   `

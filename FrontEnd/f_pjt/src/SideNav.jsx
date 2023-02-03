@@ -76,7 +76,6 @@ const NavStyle = styled(NavLink)`
   display: flex;
   align-items: center ;
   justify-content: center;
-  margin: auto;
   color: white;
   padding: 2vh;
   font-size: 8vh;
@@ -103,7 +102,6 @@ const Shot = styled.div`
   color: #ffffff;
   align-items: center ;
   justify-content: center;
-  margin: auto;
   color: white;
   padding: 2vh;
 `

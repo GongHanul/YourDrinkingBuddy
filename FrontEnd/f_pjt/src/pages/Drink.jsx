@@ -6,7 +6,8 @@ import BeverageItem from "../components/BeverageItem";
 import { useSelector } from "react-redux"
 import axios from 'axios'
 
-function Drink() {  
+
+function Drink() {
   const setLengthIfLessFills = (array, length, fills) => {
     let newArray = [];
     if(array.length < length){
@@ -24,11 +25,10 @@ function Drink() {
     }
     return newArray;
   }
+
   const Background = ['#33559C', '#5674BD','#6683D1', '#7996E6']
   const CircleColor = ['#1C2F56', '#223B77', '#2E4C9E', '#3253AC']
-  // const Background = ['#646D71', '#9A836F','#EEBC9E', '#F4DBB2']
-  // const CircleColor = ['#2F3335', '#5C4531','#915938', '#8A6528']
-  let [Recipes, setRecipe] = useState([' ', ' ', ' '])
+  let [Recipes, setRecipe] = useState(['레', '시', '피'])
   let [Pump, setPump] = useState([0,1,2,3])
   let port = useSelector((state)=> state.port)
   let [recoRecipes, setrecpRecipes] = useState([])
@@ -39,7 +39,7 @@ function Drink() {
     }
   }
   const URL = 'http://i8a103.p.ssafy.io:3001'
-  const getRecipes = () => {
+const getRecipes = () => {
     axios.get(URL+'/recipes',{params: {filter: beverages.join(",")}}).then((a)=>{
       setRecipe(setLengthIfLessFills(a.data.items,3, {beverages_name: ""}));
     })
@@ -47,6 +47,7 @@ function Drink() {
       console.log("추천레시피 실패")
     })
   }
+
   return(
     <Maindiv>
       <Topdiv>
@@ -68,6 +69,8 @@ const Maindiv = styled.body`
   height:100vh;
   display: flex;
   flex-direction: column;
+  overflow-y : auto;
+  overflow-x : auto;
 `
 const Topdiv = styled.div`
   display: flex;
@@ -90,8 +93,7 @@ const Reset = styled.div`
   padding: 3vh;
   color: #004680;
   font-size: 2em;
-  letter-spacing:10px
-
+  letter-spacing:10px;
   &:link {
     transition : 0.5s;
     text-decoration: none;
@@ -119,6 +121,7 @@ const RecipeItem = styled.div`
   font-size: 4vh;
   font-family: 'Do Hyeon', sans-serif;
   font-weight : bold;
+  letter-spacing: 5px;
 `
 
 export default Drink

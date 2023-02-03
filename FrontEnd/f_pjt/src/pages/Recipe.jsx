@@ -124,13 +124,13 @@ const Tape = styled.div`
 `
 
 const ListCard = styled.div`
+margin : 5vh 7vh 3vh;
 display : flex;
 align-items: center ;
 flex-direction: column;
 position: relative;
 font-weight : bold;
-width : 15vw;
-margin: 1vh;
+width : 20vw;
 padding: 10px;
 background: #B9D1E4;
 color : #474747;
@@ -169,18 +169,19 @@ const Body = styled.div`
   align-items: center ;
   font-family: 'Jua', sans-serif;
   height: 100vh;
+  overflow-y : auto;
 `
 // font-family: 'Black Han Sans', sans-serif;
 const RecipeName = styled.div`
   z-index: 1;
-  font-size : 1.5em;
+  font-size : 2em;
   margin : 10px 0;
 `
 const BeverageName = styled.div`
-  font-size : 1em;
+  font-size : 1.5em;
 `
 const BeverageRatio = styled.div`
-  font-size : 1em;
+  font-size : 1.5em;
   margin : 0 0 10px 0 ;
 `
 // color : #89cff0;
