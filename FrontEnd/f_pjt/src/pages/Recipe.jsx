@@ -177,7 +177,7 @@ const RecipeName = styled.div`
   font-size : 4vh;
   margin : 10px 0;
   color : #0a2133;
-  filter: drop-shadow(2px 2px 1px rgb(0 0 0 / 0.3));
+  filter: drop-shadow(0.2vh 0.2vh 0.1vh rgb(0 0 0 / 0.5));
 `
 const BeverageName = styled.div`
   font-size : 3vh;
@@ -187,7 +187,7 @@ const BeverageRatio = styled.div`
   font-size : 3vh;
   margin : 0 0 10px 0 ;
   color : #004680;
-  filter: drop-shadow(2px 2px 1px rgb(0 0 0 / 0.3));
+  filter: drop-shadow(0.2vh 0.2vh 0.1vh rgb(0 0 0 / 0.5));
 `
 // color : #89cff0;
 

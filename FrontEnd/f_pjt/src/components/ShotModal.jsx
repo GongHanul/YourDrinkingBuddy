@@ -38,7 +38,7 @@ const style = {
 const Loading = styled.div`
   font-size: 5vh;
   font-family: 'Jua', sans-serif;
-  filter: drop-shadow(2px 2px 1px rgb(0 0 0 / 0.3));
+  filter: drop-shadow(0.2vh 0.2vh 0.1vh rgb(0 0 0 / 0.5));
 `
 const StopBtn = styled.button`
   display: flex;

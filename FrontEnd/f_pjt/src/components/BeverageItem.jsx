@@ -32,7 +32,7 @@ const Num = styled.div`
   font-weight : bold;
   font-size: 8vh;
   margin: -3vh;
-  filter: drop-shadow(1px 3px 1px rgb(0 0 0 / 0.4));
+  filter: drop-shadow(0.2vh 0.4vh 0.1vh rgb(0 0 0 / 0.5));
 `
   const dispatch = useDispatch();
 
@@ -94,7 +94,7 @@ const Beverageimg = styled.img`
 const UpandDown = styled.div`
   color: #ffffff;
   font-size: 10vh;  
-  filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.4));
+  filter: drop-shadow(0.4vh 0.4vh 0.1vh rgb(0 0 0 / 0.5));
 `
 
 export default BeverageItem

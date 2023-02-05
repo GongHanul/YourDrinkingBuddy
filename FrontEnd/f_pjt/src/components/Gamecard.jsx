@@ -22,7 +22,7 @@ function GameList(props) {
   font-style: normal;
   font-size: 3vh;
   padding : 1.2vh 3vh 1vh;
-  filter: drop-shadow(3px 3px 1px rgb(0 0 0 / 0.3));
+  filter: drop-shadow(0.3vh 0.3vh 0.1vh rgb(0 0 0 / 0.3));
   &:link {
     text-decoration: none;
   }
@@ -56,7 +56,7 @@ const Img = styled.img`
 const Title = styled.div`
   color : ${props.font};
   font-size: 4vh;
-  filter: drop-shadow(3px 3px 1px rgb(0 0 0 / 0.3));
+  filter: drop-shadow(0.3vh 0.3vh 0.1vh rgb(0 0 0 / 0.5));
 `
 const Rule = styled.div`
   color : ${props.font};
@@ -65,7 +65,7 @@ const Rule = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  filter: drop-shadow(3px 3px 1px rgb(0 0 0 / 0.3));
+  filter: drop-shadow(0.3vh 0.3vh 0.1vh rgb(0 0 0 / 0.5));
 `
 const Rule1 = styled.div`
   

@@ -69,7 +69,7 @@ const Top = styled.div`
   font-size: 5vh;
   letter-spacing: 0.5vh;
   margin : auto;
-  filter: drop-shadow(2px 2px 1px rgb(0 0 0 / 0.5));
+  filter: drop-shadow(0.4vh 0.4vh 0.1vh rgb(0 0 0 / 0.5));
 `
 const Mid = styled.div`
   display: flex;
@@ -83,7 +83,7 @@ const Btm = styled.div`
 const PlusMinus = styled.div`
   font-size: 7vh;
   margin: 0 4vh;
-  filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.4));
+  filter: drop-shadow(0.4vh 0.4vh 0.1vh rgb(0 0 0 / 0.5));
 `
 const PlayerCnt = styled.div`
   margin: auto;
@@ -96,7 +96,7 @@ const PlayerCnt = styled.div`
   width : 3vw;
   display: flex;
   justify-content : center;
-  filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.4));
+  filter: drop-shadow(0.4vh 0.4vh 0.1vh rgb(0 0 0 / 0.5));
 `
 const Back = styled.div`
   position: relative;
@@ -104,7 +104,7 @@ const Back = styled.div`
   bottom : -3.5vh;
   font-size: 5vh;
   color : #ffffff;
-  filter: drop-shadow(2px 2px 1px rgb(0 0 0 / 0.5));
+  filter: drop-shadow(0.4vh 0.4vh 0.1vh rgb(0 0 0 / 0.5));
   &:hover {
     color: #004680;
   }
@@ -120,7 +120,7 @@ const GameStart = styled.button`
   font-weight : bold;
   font-size: 4vh;
   letter-spacing: 0.5vh;
-  filter: drop-shadow(2px 2px 1px rgb(0 0 0 / 0.5));
+  filter: drop-shadow(0.3vh 0.3vh 0.1vh rgb(0 0 0 / 0.5));
   &:link {
     text-decoration: none;
   }
