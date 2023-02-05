@@ -79,6 +79,7 @@ const NavStyle = styled(NavLink)`
   &:hover {
     color: #004680;
     background : #ffffff;
+    filter: drop-shadow(0.6vh 0.6vh 0.3vh rgb(0 0 0 / 0.6));
   }
 `
 const UseRule = styled.div`

@@ -79,8 +79,10 @@ const NavStyle = styled(NavLink)`
   }
   &:hover {
     color: lightyellow;
+    filter: drop-shadow(0.6vh 0.6vh 0.3vh rgb(0 0 0 / 0.6));
   }
   &.active {
+    filter: drop-shadow(0.6vh 0.6vh 0.3vh rgb(0 0 0 / 0.6));
     color: #FAE59C;
     position: relative;
     top: 1vh;
@@ -98,6 +100,10 @@ const Shot = styled.div`
   justify-content: center;
   color: white;
   padding: 2vh;
+  &:hover {
+    filter: drop-shadow(0.6vh 0.6vh 0.3vh rgb(0 0 0 / 0.6));
+    /* color: #BB2649; */
+  }
 `
 // const Img = styled.img`
 //   width: 10vh;

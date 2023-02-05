@@ -69,7 +69,6 @@ const Top = styled.div`
   font-size: 5vh;
   letter-spacing: 0.5vh;
   margin : auto;
-  filter: drop-shadow(0.4vh 0.4vh 0.1vh rgb(0 0 0 / 0.5));
 `
 const Mid = styled.div`
   display: flex;
@@ -107,6 +106,7 @@ const Back = styled.div`
   filter: drop-shadow(0.4vh 0.4vh 0.1vh rgb(0 0 0 / 0.5));
   &:hover {
     color: #004680;
+    filter: drop-shadow(0.4vh 0.4vh 0.1vh rgb(0 0 0 / 0.6));
   }
 `
 const GameStart = styled.button`
@@ -120,12 +120,12 @@ const GameStart = styled.button`
   font-weight : bold;
   font-size: 4vh;
   letter-spacing: 0.5vh;
-  filter: drop-shadow(0.3vh 0.3vh 0.1vh rgb(0 0 0 / 0.5));
   &:link {
     text-decoration: none;
   }
   &:hover {
-    color: #004680;
+    color: red;
+    filter: drop-shadow(0.4vh 0.4vh 0.1vh rgb(0 0 0 / 0.6));
   }
 `
 export default PlayerModal

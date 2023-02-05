@@ -28,6 +28,7 @@ function GameList(props) {
   }
   &:hover {
     color: red;
+    filter: drop-shadow(0.6vh 0.6vh 0.3vh rgb(0 0 0 / 0.6));
   }
 `
 const CardFront = styled.div`
