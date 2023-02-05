@@ -50,17 +50,15 @@ const style = {
   left: '50%',
   height : '70%',
   transform: 'translate(-50%, -50%)',
-  bgcolor: 'background.paper',
-  border: 'none',
   boxShadow: '0 2px 4px, 0px 1px 2px inset',
-  p: 4,
+  p: 2,
   borderRadius: '2vh',
   display : 'flex',
   flexWrap: 'wrap',
   alignItems: 'center',
   justifyContent: 'center',
   overflowY : 'auto',
-  background : '#004680',
+  background : '#004680f0',
 
 };
 
@@ -70,13 +68,11 @@ const SulList = styled.div`
   align-items: center ;
   margin: 1vh;
   padding: 1vh;
-  /* box-shadow: 0 2px 4px, 0px 2px 4px #474747 inset; */
-  /* border-radius : 1vh; */
-  font-weight : bold;
+  border-radius : 1vh;
   color: #ffffff;
-  min-width: 5vw;
-  font-size : 2.2em;
-  font-family: 'Jua', sans-serif;
-  /* font-family: 'Do Hyeon', sans-serif; */
+  font-size : 5vh;
+  /* font-family: 'Jua', sans-serif; */
+  font-family: 'Do Hyeon', sans-serif;
+  filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.7));
   letter-spacing: 5px;
   `

@@ -130,8 +130,8 @@ align-items: center ;
 flex-direction: column;
 position: relative;
 font-weight : bold;
-width : 20vw;
-padding: 10px;
+min-width : 20vw;
+padding: 1vh;
 background: #B9D1E4;
 color : #474747;
 box-sizing: border-box;
@@ -177,6 +177,7 @@ const RecipeName = styled.div`
   font-size : 4vh;
   margin : 10px 0;
   color : #0a2133;
+  filter: drop-shadow(2px 2px 1px rgb(0 0 0 / 0.3));
 `
 const BeverageName = styled.div`
   font-size : 3vh;
@@ -186,6 +187,7 @@ const BeverageRatio = styled.div`
   font-size : 3vh;
   margin : 0 0 10px 0 ;
   color : #004680;
+  filter: drop-shadow(2px 2px 1px rgb(0 0 0 / 0.3));
 `
 // color : #89cff0;
 

@@ -1,13 +1,17 @@
 import styled from "styled-components";
-import { React, useState } from 'react';
+import { React, useState, useEffect } from 'react';
 
-function GameReady() {
+function GameReady(props) {
+  useEffect(() => {setPlayer([...Array(props.cnt).keys()])} ,[])
+  let [Player, setPlayer] = useState([])
+  console.log(11111111111)
+  console.log(props.cnt)
+  // setPlayer([...Array(playercount).keys()])
   return (
   <><TopDiv>
-  <Waiting>1</Waiting>
-  <Waiting>2</Waiting>
-  <Waiting>3</Waiting>
-  <Waiting>4</Waiting>
+  { Player.map(function(e, i){
+    return (<Setting index={i}>{i}</Setting>)
+  })}
   </TopDiv>
   </>
   )
@@ -17,7 +21,7 @@ display : flex;
 flex-wrap: wrap;
 width : 100%
 `
-const Waiting = styled.div`
+const Setting = styled.div`
 display : flex;
 justify-content: center;
 align-items: center ;

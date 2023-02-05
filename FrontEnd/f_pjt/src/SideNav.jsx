@@ -1,6 +1,6 @@
 import { React, useState } from 'react';
 import { NavLink } from "react-router-dom";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMartiniGlassCitrus, faGamepad, faClipboardList } from "@fortawesome/free-solid-svg-icons"
 import { useSelector } from "react-redux"
@@ -10,12 +10,6 @@ import ShotModal from "./components/ShotModal";
 
 
 function SideNav() {
-  // const menus = [
-    //   { name: "game", path: "/game"},
-    //   { name: "drink", path: "/drink"},
-    //   { name: "shot"},
-    //   { name: "cocktail", path: "/cocktail"}
-    // ]
     const ratio = useSelector((state)=>state.ratio)
     const URL = "http://70.12.226.153:5000/api/motor"
     const [open, setOpen] = useState(false);

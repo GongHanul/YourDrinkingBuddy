@@ -21,7 +21,8 @@ function GameList(props) {
   font-weight : bold;
   font-style: normal;
   font-size: 3vh;
-  padding : 1vh 3vh 1vh 2.5vh;
+  padding : 1.2vh 3vh 1vh;
+  filter: drop-shadow(3px 3px 1px rgb(0 0 0 / 0.3));
   &:link {
     text-decoration: none;
   }
@@ -32,18 +33,17 @@ function GameList(props) {
 const CardFront = styled.div`
   background: ${props.background};
   display: flex;
+  flex-direction: column;
   align-items: center ;
   justify-content: center;
-  flex-direction: column;
   height : 50vh;
+  padding: 0 4vh;
   `
 const CardBack = styled.div`
   background: ${props.background};
   display: flex;
   /* flex: 1 1 30%; */
   flex-direction: column;
-  align-content: stretch;
-  align-content: "space-between";
   align-items: center ;
   justify-content: center;
   height : 50vh;
@@ -56,6 +56,7 @@ const Img = styled.img`
 const Title = styled.div`
   color : ${props.font};
   font-size: 4vh;
+  filter: drop-shadow(3px 3px 1px rgb(0 0 0 / 0.3));
 `
 const Rule = styled.div`
   color : ${props.font};
@@ -64,6 +65,7 @@ const Rule = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  filter: drop-shadow(3px 3px 1px rgb(0 0 0 / 0.3));
 `
 const Rule1 = styled.div`
   

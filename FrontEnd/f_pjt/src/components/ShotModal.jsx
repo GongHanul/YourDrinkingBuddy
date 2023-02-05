@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { React, useState } from 'react';
+import { React } from 'react';
 import Box from '@mui/material/Box';
 
 function ShotModal(props) {
@@ -38,6 +38,7 @@ const style = {
 const Loading = styled.div`
   font-size: 5vh;
   font-family: 'Jua', sans-serif;
+  filter: drop-shadow(2px 2px 1px rgb(0 0 0 / 0.3));
 `
 const StopBtn = styled.button`
   display: flex;

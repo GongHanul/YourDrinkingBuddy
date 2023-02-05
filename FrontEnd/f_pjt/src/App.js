@@ -1,9 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import {
-  Routes,
-  Route,
-  Link } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 import Main from "./pages/Main";
 import Game from "./pages/Game";
