@@ -8,9 +8,11 @@ import axios from 'axios'
 
 
 function Drink() {
+
+
   const setLengthIfLessFills = (array, length, fills) => {
     let newArray = [];
-    if(array.length < length){
+    if(array.length <= length){
       const needed = length - array.length
       for(const item of array){
         newArray.push(item);
@@ -31,7 +33,7 @@ function Drink() {
   let [Recipes, setRecipe] = useState(['레', '시', '피'])
   let [Pump, setPump] = useState([0,1,2,3])
   let port = useSelector((state)=> state.port)
-  let [recoRecipes, setrecpRecipes] = useState([])
+ 
   let beverages = []
   for (let i of port) {
     if(i.beverage_id >= 0){
@@ -41,7 +43,7 @@ function Drink() {
   const URL = 'http://i8a103.p.ssafy.io:3001'
 const getRecipes = () => {
     axios.get(URL+'/recipes',{params: {filter: beverages.join(",")}}).then((a)=>{
-      setRecipe(setLengthIfLessFills(a.data.items,3, {beverages_name: ""}));
+      setRecipe(setLengthIfLessFills(a.data.items, 3, {beverages_name: ""}));
     })
     .catch((e)=>{
       console.log("추천레시피 실패")
@@ -52,7 +54,7 @@ const getRecipes = () => {
     <Maindiv>
       <Topdiv>
           { Recipes.map(function(e, i){
-          return (<RecipeItem>{ Recipes[i].recipe_name }</RecipeItem>)
+          return (<RecipeItem >{ Recipes[i].recipe_name }</RecipeItem>)
           })}
         <Reset onClick={getRecipes}><FontAwesomeIcon icon= { faRotateRight } /></Reset>
       </Topdiv>

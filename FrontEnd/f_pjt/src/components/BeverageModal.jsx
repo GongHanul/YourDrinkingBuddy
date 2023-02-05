@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Box from '@mui/material/Box';
 import { React } from 'react';
 import { useSelector, useDispatch } from "react-redux"
-import{ changePort } from "../store.js"
+import{ changePort, changeBeverage } from "../store.js"
 
 
 function BeverageModal(props) {
@@ -24,11 +24,17 @@ function BeverageModal(props) {
   <Box sx={style}>
     { Beverages.map(function(e, i){
     return (<div onClick={props.handleClose}><SulList onClick={()=>
-      dispatch(changePort({
+      {dispatch(changePort({
       beverage_id : Beverages[i].beverage_id,
       beverage_image_url : Beverages[i].beverage_image_url,
       idx : props.index
-    }))}>{ Beverages[i].beverage_name }
+    }))
+    dispatch(changeBeverage({
+      beverage_id : Beverages[i].beverage_id,
+      idx : props.index
+    }))
+  }
+      }>{ Beverages[i].beverage_name }
     </SulList></div>)
     })}
     </Box>

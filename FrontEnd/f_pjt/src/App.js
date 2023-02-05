@@ -5,19 +5,19 @@ import {
   Route,
   Link } from "react-router-dom";
 
-  
 import Main from "./pages/Main";
 import Game from "./pages/Game";
 import Drink from "./pages/Drink";
 import Sidebar from "./SideNav";
 import Recipe from "./pages/Recipe";
 import Splash from "./pages/Splash";
-import GameItem1 from "./components/Game_1_Item";
-import GameItem2 from "./components/Game_2_Item";
-import GameItem3 from "./components/Game_3_Item";
-import GameItem4 from "./components/Game_4_Item";
-import GameItem5 from "./components/Game_5_Item";
-import GameItem6 from "./components/Game_6_Item";
+import GamePlay from "./components/Game/GamePlay";
+import Game1 from "./components/Game/Game1";
+import Game2 from "./components/Game/Game2";
+import Game3 from "./components/Game/Game3";
+import Game4 from "./components/Game/Game4";
+import Game5 from "./components/Game/Game5";
+import Game6 from "./components/Game/Game6";
 
 import { useState } from "react";
 
@@ -45,12 +45,13 @@ function App() {
         <Route path="/drink" element={<Drink />} />
         <Route path="/recipe" element={<Recipe />} />
         <Route path="/splash" element={<Splash />} />
-        <Route path="/gameitem1" element={<GameItem1 />} />
-        <Route path="/gameitem2" element={<GameItem2 />} />
-        <Route path="/gameitem3" element={<GameItem3 />} />
-        <Route path="/gameitem4" element={<GameItem4 />} />
-        <Route path="/gameitem5" element={<GameItem5 />} />
-        <Route path="/gameitem6" element={<GameItem6 />} />
+        <Route path="/gameplay" element={<GamePlay />} />
+        <Route path="/game1" element={<Game1 />} />
+        <Route path="/game2" element={<Game2 />} />
+        <Route path="/game3" element={<Game3 />} />
+        <Route path="/game4" element={<Game4 />} />
+        <Route path="/game5" element={<Game5 />} />
+        <Route path="/game6" element={<Game6 />} />
       </Routes>
     </MainBody>}
     </>

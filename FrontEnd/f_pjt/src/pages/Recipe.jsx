@@ -174,15 +174,18 @@ const Body = styled.div`
 // font-family: 'Black Han Sans', sans-serif;
 const RecipeName = styled.div`
   z-index: 1;
-  font-size : 2em;
+  font-size : 4vh;
   margin : 10px 0;
+  color : #0a2133;
 `
 const BeverageName = styled.div`
-  font-size : 1.5em;
+  font-size : 3vh;
+  color : #004680;
 `
 const BeverageRatio = styled.div`
-  font-size : 1.5em;
+  font-size : 3vh;
   margin : 0 0 10px 0 ;
+  color : #004680;
 `
 // color : #89cff0;
 

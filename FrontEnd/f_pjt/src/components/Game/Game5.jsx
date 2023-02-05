@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { React, useState } from 'react';
 
-function GameItem4() {
+function Game5() {
   return (
     <><TopDiv>
     <Waiting>1</Waiting>
@@ -29,7 +29,7 @@ function GameItem4() {
   background : blue;
   border : black;
   background: #ffffff;
-  box-shadow: 0 0 4px #F4E5B2 inset;
+  box-shadow: 0 0 4px #EDD582 inset;
   box-sizing: border-box;
   `
-export default GameItem4
+export default Game5
