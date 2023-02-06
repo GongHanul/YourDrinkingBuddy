@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import { React, useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowLeftLong, faArrowRightLong} from "@fortawesome/free-solid-svg-icons"
 
 function GamePlay() {
   const navigate = useNavigate();
@@ -11,6 +13,9 @@ function GamePlay() {
 
   const start = () => {
   navigate(GameId, { state: { cnt : Playercnt} });}
+
+  const back = () => {
+    navigate('/game');}
   
   useEffect(() => {setPlayer([...Array(Playercnt).keys()])} ,[])
   let [Player, setPlayer] = useState([])
@@ -18,6 +23,7 @@ function GamePlay() {
   console.log(Playercnt)
   return (
   <>
+  <Full>
   <Display>
   { Player.map(function(e, i){
     return (
@@ -26,14 +32,32 @@ function GamePlay() {
     </Ready>)
   })}
   </Display>
-  <Start onClick={start}>START!</Start>
+  <Side>
+  <Start onClick={back}><FontAwesomeIcon icon= {faArrowLeftLong}/> BACK</Start>
+  <Start onClick={start}>START <FontAwesomeIcon icon= {faArrowRightLong}/></Start>
+  </Side>
+  </Full>
   </>
   )
 }
+const Full = styled.div`
+  display : flex;
+  flex-wrap: wrap;
+  width : 100vw;
+  `
 const Display = styled.div`
   display : flex;
   flex-wrap: wrap;
   width : 100%;
+  height : 85%;
+`
+const Side = styled.div`
+  display : flex;
+  justify-content: space-evenly;
+  padding : 2vh;
+  width : 100%;
+  height : 10%;
+
 `
 const Ready = styled.div`
   display : flex;
@@ -44,23 +68,18 @@ const Ready = styled.div`
   justify-content: center;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 0 4px #474747 inset;
+  box-shadow: 0 1px 2px #474747, 0 1px 2px #474747 inset;
   box-sizing: border-box;
 `
 const Start = styled.div`
-  display : grid;
+  display : flex;
+  justify-content: center;
   align-items : center;
-  background: #ffffff;
-  border : none;
-  border-radius : 1vh;
   color : #1966A5;
-  font-weight : bold;
-  font-style: normal;
   font-size: 3vh;
-  padding : 1vh 3vh 1vh 2.5vh;
-  &:link {
-    text-decoration: none;
-  }
+  font-family: 'Jua', sans-serif;
+  font-weight : bold;
+  letter-spacing: 0.3vh;
   &:hover {
     color: red;
   }

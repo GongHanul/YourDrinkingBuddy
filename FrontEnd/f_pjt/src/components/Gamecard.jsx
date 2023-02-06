@@ -22,10 +22,8 @@ function GameList(props) {
   font-style: normal;
   font-size: 3vh;
   padding : 1.2vh 3vh 1vh;
+  font-family: 'Jua', sans-serif;
   filter: drop-shadow(0.3vh 0.3vh 0.1vh rgb(0 0 0 / 0.3));
-  &:link {
-    text-decoration: none;
-  }
   &:hover {
     color: red;
     filter: drop-shadow(0.6vh 0.6vh 0.3vh rgb(0 0 0 / 0.6));

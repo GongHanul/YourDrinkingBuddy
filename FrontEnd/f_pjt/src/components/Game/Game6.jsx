@@ -30,7 +30,7 @@ function Game6() {
   justify-content: center;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 0 4px #D0BB70 inset;
+  box-shadow: 0 1px 2px #D0BB70 , 0 1px 2px #D0BB70 inset;
   box-sizing: border-box;
   `
 export default Game6

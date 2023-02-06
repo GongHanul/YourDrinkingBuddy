@@ -98,7 +98,8 @@ function Game() {
 const Gamee = styled.div`
   display: flex;
   flex-wrap: wrap;
-  font-family: 'Jua', sans-serif;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: bold;
   overflow-y : auto;
   `
   // font-family: 'Do Hyeon', sans-serif;

@@ -30,7 +30,7 @@ function Game4() {
   justify-content: center;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 0 4px #F4E5B2 inset;
+  box-shadow: 0 1px 2px #F4E5B2 , 0 1px 2px #F4E5B2 inset;
   box-sizing: border-box;
   `
 export default Game4

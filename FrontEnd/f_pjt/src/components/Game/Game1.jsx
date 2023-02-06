@@ -30,7 +30,7 @@ const Display = styled.div`
   justify-content: center;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 0 4px #063C69 inset;
+  box-shadow: 0 1px 2px #063C69, 0 1px 2px #063C69 inset;
   box-sizing: border-box;
 `
 export default Game1

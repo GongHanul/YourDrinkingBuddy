@@ -61,7 +61,9 @@ const style = {
   alignItems: 'center',
   justifyContent : 'center',
   flexDirection: 'column',
-  background : '#d2dbf3',
+  background: 'linear-gradient(45deg, #5674BD, #F0F2F0)',
+  color : '#1b1b1b',
+  // background : '#d2dbf3',
 };
 const Top = styled.div` 
   font-family: 'Jua', sans-serif;
@@ -89,7 +91,6 @@ const PlayerCnt = styled.div`
   font-family: 'Do Hyeon', sans-serif;
   font-weight : bold;
   font-size: 8vh;
-  /* box-shadow: 0 1px 2px #474747 , 0px 1px 2px inset #474747 ; */
   border-radius : 100vh;
   padding: 0.5vh 3vh ;
   width : 3vw;
@@ -99,32 +100,26 @@ const PlayerCnt = styled.div`
 `
 const Back = styled.div`
   position: relative;
-  left : -6vh;
-  bottom : -3.5vh;
+  left : -5vh;
+  bottom : -2vh;
   font-size: 5vh;
   color : #ffffff;
   filter: drop-shadow(0.4vh 0.4vh 0.1vh rgb(0 0 0 / 0.5));
   &:hover {
-    color: #004680;
+    color: #FAE59C;
     filter: drop-shadow(0.4vh 0.4vh 0.1vh rgb(0 0 0 / 0.6));
   }
 `
-const GameStart = styled.button`
-  background: none;
+const GameStart = styled.div`
   position: relative;
-  top : -1vh;
   left : -1vh;
-  color : #000000;
-  border : none;
   font-family: 'Jua', sans-serif;
   font-weight : bold;
   font-size: 4vh;
   letter-spacing: 0.5vh;
-  &:link {
-    text-decoration: none;
-  }
+  color : #1b1b1b;
   &:hover {
-    color: red;
+    color: #FAE59C;
     filter: drop-shadow(0.4vh 0.4vh 0.1vh rgb(0 0 0 / 0.6));
   }
 `

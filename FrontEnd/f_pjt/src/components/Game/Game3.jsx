@@ -48,7 +48,7 @@ function Game3() {
   justify-content: center;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 0 4px #1966A5 inset;
+  box-shadow: 0 1px 2px #1966A5, 0 1px 2px #1966A5 inset;
   box-sizing: border-box;
   `
 export default Game3

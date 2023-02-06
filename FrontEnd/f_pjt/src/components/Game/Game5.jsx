@@ -26,7 +26,7 @@ function Game5() {
   justify-content: center;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 0 4px #EDD582 inset;
+  box-shadow: 0 1px 2px #EDD582 , 0 1px 2px #EDD582 inset;
   box-sizing: border-box;
   `
 export default Game5

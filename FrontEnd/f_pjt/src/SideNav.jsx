@@ -120,5 +120,4 @@ const Shot = styled.div`
 // const Img = styled.img`
 //   width: 10vh;
 // `
-// https://m.blog.naver.com/hyj5657/110167206983
 export default SideNav;

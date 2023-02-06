@@ -107,7 +107,8 @@ const SulList = styled.div`
   color: #ffffff;
   font-size : 5vh;
   /* font-family: 'Jua', sans-serif; */
-  font-family: 'Do Hyeon', sans-serif;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: bold;
   filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.7));
   letter-spacing: 5px;
   `
