@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { React, useState } from 'react';
 import Gamecard from "../components/Gamecard";
+import Gamecard2 from "../components/Gamecard2";
 
 function Game() {
   return (
@@ -21,7 +22,7 @@ function Game() {
       ></Gamecard></Flexdiv>
 
       <Flexdiv>
-      <Gamecard id = {'2'}
+      <Gamecard2 id = {'2'}
       ready = {'#0E538B'}
       background= {'#0E538B'}
       font = {'#ffffff'}
@@ -32,7 +33,7 @@ function Game() {
       rule3 = {'랜덤값을 넘으면 벌칙!'}
       rule4 = {'게임 전 잔을 무게 센서에 올리기'}
       nav = {'/game2'}
-      ></Gamecard></Flexdiv>
+      ></Gamecard2></Flexdiv>
       
       <Flexdiv>
       <Gamecard id = {'3'}
@@ -63,7 +64,7 @@ function Game() {
       ></Gamecard></Flexdiv>
       
       <Flexdiv>
-      <Gamecard id = {'5'}
+      <Gamecard2 id = {'5'}
       ready = {'#EDD582'}
       background= {'#EDD582'}
       font = {'#000000'}
@@ -74,7 +75,7 @@ function Game() {
       rule3 = {'제일 먼 사람이 벌칙!'}
       rule4 = {'돌아가면서 무게 측정!'}
       nav = {'/game5'}
-      ></Gamecard></Flexdiv>
+      ></Gamecard2></Flexdiv>
       
       <Flexdiv>
       <Gamecard id = {'6'}

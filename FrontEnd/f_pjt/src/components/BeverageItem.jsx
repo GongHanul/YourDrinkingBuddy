@@ -33,24 +33,25 @@ const Num = styled.div`
   font-size: 8vh;
   margin: -3vh;
   filter: drop-shadow(0.2vh 0.4vh 0.1vh rgb(0 0 0 / 0.5));
-`
+  `
   const dispatch = useDispatch();
-
+  
   let num = useSelector((state)=> state.ratio[props.index])
   let Image = useSelector((state)=> state.port[props.index].beverage_image_url)
   let port = useSelector((state)=>state.port)
-  console.log(port)
 
+  
   const Decredible = () => {
     return num.rate > 0 ? dispatch(decreaseRatio(props.index)) : false
-      }
+  }
   const Incredible = () => {
-      return num.rate < 8 ? dispatch(increaseRatio(props.index)) : false
-      }
-      
+    return num.rate < 8 ? dispatch(increaseRatio(props.index)) : false
+  }
+  
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
   
   return(
   <>
@@ -63,6 +64,7 @@ const Num = styled.div`
         onClose={handleClose}
       >
        <BeverageModal
+       reco = { props.getRecipes }
        index = { props.index }
        handleClose = {handleClose}/>
       </Modal>

@@ -1,23 +1,23 @@
 import styled from "styled-components";
-import { React, useState } from 'react';
+import { React, useState, useEffect } from 'react';
 
 function Game2() {
+  let [Player, setPlayer] = useState([1])
   return (
-    <><TopDiv>
-    <Waiting>1</Waiting>
-    <Waiting>2</Waiting>
-    <Waiting>3</Waiting>
-    <Waiting>4</Waiting>
-    </TopDiv>
-    </>
-    )
-  }
+  <><TopDiv>
+  { Player.map(function(e, i){
+    return (<Display index={i}>{i}</Display>)
+  })}
+  </TopDiv>
+  </>
+  )
+}
   const TopDiv = styled.div`
   display : flex;
   flex-wrap: wrap;
   width : 100%
   `
-  const Waiting = styled.div`
+  const Display = styled.div`
   display : flex;
   justify-content: center;
   align-items: center ;
@@ -26,9 +26,7 @@ function Game2() {
   justify-content: center;
   display: flex;
   flex-direction: column;
-  background : blue;
   border : black;
-  background: #ffffff;
   box-shadow: 0 0 4px #0E538B inset;
   box-sizing: border-box;
   `

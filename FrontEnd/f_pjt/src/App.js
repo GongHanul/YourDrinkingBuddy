@@ -15,6 +15,7 @@ import Game3 from "./components/Game/Game3";
 import Game4 from "./components/Game/Game4";
 import Game5 from "./components/Game/Game5";
 import Game6 from "./components/Game/Game6";
+import TestPage from "./pages/TestPage";
 
 import { useState } from "react";
 
@@ -49,6 +50,7 @@ function App() {
         <Route path="/game4" element={<Game4 />} />
         <Route path="/game5" element={<Game5 />} />
         <Route path="/game6" element={<Game6 />} />
+        <Route path="/testpage" element={<TestPage />} />
       </Routes>
     </MainBody>}
     </>

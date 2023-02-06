@@ -15,6 +15,18 @@ function SideNav() {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);;
     const handleClose = () => setOpen(false);
+
+
+    const Cancle = ()=>{
+    axios.post(URL,{ msg : "stop"})
+    .then((결과)=>{
+      console.log("stop")
+    })
+    .catch(()=>{
+      console.log("can't stop")
+    })
+   }
+   
     
   return (
     <Bar>
@@ -42,7 +54,7 @@ function SideNav() {
         open={open}
         // onClose={handleClose}
       >
-       <ShotModal handleClose = {handleClose}
+       <ShotModal handleClose = {handleClose} Cancle = { Cancle }
         />
       </Modal>
       <NavStyle to="/recipe">

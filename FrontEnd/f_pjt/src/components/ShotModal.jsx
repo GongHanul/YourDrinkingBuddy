@@ -3,14 +3,19 @@ import { React } from 'react';
 import Box from '@mui/material/Box';
 
 function ShotModal(props) {
-
+  const Cancle = props.Cancle
+  const handleClose = props.handleClose
   return (
   <>
   <Box sx={style}>
     <Loading>제 조 중 🍺</Loading>
     <Loading>가 마 니 이 써</Loading>
     <br />
-    <StopBtn onClick={props.handleClose}>SSSSSTOP</StopBtn>
+    <StopBtn onClick={()=>{
+    Cancle()
+    handleClose()
+
+    }} >SSSSSTOP</StopBtn>
   </Box>
   </>
   )

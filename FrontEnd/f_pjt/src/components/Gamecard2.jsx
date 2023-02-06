@@ -1,18 +1,14 @@
 import styled from "styled-components";
 import ReactCardFlip from "react-card-flip";
 import { React, useState } from 'react';
-import Modal from '@mui/material/Modal';
-import PlayerModal from "./Game/PlayerModal";
+import { useNavigate } from "react-router-dom";
 
 function GameList(props) {
-  console.log(props.id)
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);;
-  const handleClose = () => setOpen(false);
+  const navigate = useNavigate();
   const [isFlipped, setIsFlipped] = useState(false);
-  // const Changelist = [`img/${pros}.png`,]
-
-  const Ready = styled.div`
+  const start = () => {
+    navigate(`/game${props.id}`);}
+const Ready = styled.div`
   margin: 4vh 0 0 0 ;
   background: #ffffff;
   border : none;
@@ -68,7 +64,6 @@ const Rule = styled.div`
   filter: drop-shadow(0.3vh 0.3vh 0.1vh rgb(0 0 0 / 0.5));
 `
 const Rule1 = styled.div`
-  
 `
   return (
   <>
@@ -92,17 +87,7 @@ const Rule1 = styled.div`
     <br/>
     <Rule1>{props.rule4}</Rule1>
     </Rule>
-    <Ready onClick={handleOpen}
-    >READY!</Ready>
-    <Modal
-      open={open}
-      onClose={handleClose}
-      >
-      <PlayerModal
-      gameid = {props.id}
-      handleClose = {handleClose}
-      />
-      </Modal>
+    <Ready onClick={start}>START!</Ready>
   </CardBack>
   </ReactCardFlip>
   </>

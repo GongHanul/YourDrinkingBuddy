@@ -3,13 +3,15 @@ import { React, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faRotateRight } from "@fortawesome/free-solid-svg-icons"
 import BeverageItem from "../components/BeverageItem";
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
+import{ changeReco, changeRatio, resetRatio } from "../store.js"
 import axios from 'axios'
 
 
-function Drink() {
-
-
+  function Drink() {
+  
+  
+  const dispatch = useDispatch()
   const setLengthIfLessFills = (array, length, fills) => {
     let newArray = [];
     if(array.length <= length){
@@ -30,10 +32,40 @@ function Drink() {
 
   const Background = ['#33559C', '#5674BD','#6683D1', '#7996E6']
   const CircleColor = ['#1C2F56', '#223B77', '#2E4C9E', '#3253AC']
-  let [Recipes, setRecipe] = useState(['레', '시', '피'])
+
+    
+
+  let Recipes = useSelector((state)=> state.recoRecipes)
   let [Pump, setPump] = useState([0,1,2,3])
   let port = useSelector((state)=> state.port)
- 
+  let Ratio = useSelector((state)=> state.ratio)
+  
+
+
+  
+  const MatchRecipe = (ingredients) => {
+   
+    for (let i = 0; i<4; i++){
+      let Port = Ratio[i]
+      dispatch(resetRatio({
+        idx : i
+      }))
+    
+      for (const ingredient of ingredients){
+        
+        console.log(" 레시피 재료 id ",ingredient.beverage_id)
+        console.log("포트 번호", Port.id)
+        console.log(" 포트 꼽힌 음료 id ", Port.beverage_id)
+        if(Port.beverage_id == ingredient.beverage_id){
+          console.log( "둘이 일치해~~", i,ingredient.recipe_ingredient_ratio )
+          dispatch(changeRatio({
+            idx : i,
+            rate : ingredient.recipe_ingredient_ratio
+          }))
+        }
+      }
+    }}
+  
   let beverages = []
   for (let i of port) {
     if(i.beverage_id >= 0){
@@ -43,7 +75,7 @@ function Drink() {
   const URL = 'http://i8a103.p.ssafy.io:3001'
 const getRecipes = () => {
     axios.get(URL+'/recipes',{params: {filter: beverages.join(",")}}).then((a)=>{
-      setRecipe(setLengthIfLessFills(a.data.items, 3, {beverages_name: ""}));
+      dispatch(changeReco(setLengthIfLessFills(a.data.items, 3, {beverages_name: ""})));
     })
     .catch((e)=>{
       console.log("추천레시피 실패")
@@ -54,7 +86,10 @@ const getRecipes = () => {
     <Maindiv>
       <Topdiv>
           { Recipes.map(function(e, i){
-          return (<RecipeItem >{ Recipes[i].recipe_name }</RecipeItem>)
+          return (<RecipeItem onClick={()=>{
+            MatchRecipe(Recipes[i].ingredients)
+            console.log("preset")
+          }}>{ Recipes[i].recipe_name }</RecipeItem>)
           })}
         <Reset onClick={getRecipes}><FontAwesomeIcon icon= { faRotateRight } /></Reset>
       </Topdiv>
@@ -104,10 +139,10 @@ const Reset = styled.div`
     color: red;
   }
   &.active {
-    color: 	Goldenrod;
+    color:     Goldenrod;
     position: relative;
     top: 1vh;
-    border-bottom: 1vh solid 	Goldenrod;
+    border-bottom: 1vh solid     Goldenrod;
   }
 `
 const RecipeItem = styled.div`

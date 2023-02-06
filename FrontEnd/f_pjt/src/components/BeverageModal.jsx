@@ -2,23 +2,56 @@ import styled from "styled-components";
 import Box from '@mui/material/Box';
 import { React } from 'react';
 import { useSelector, useDispatch } from "react-redux"
-import{ changePort, changeBeverage } from "../store.js"
+import{ changePort, changeBeverage, changeReco } from "../store.js"
+import axios from "axios"
 
 
 function BeverageModal(props) {
 
+  let port = useSelector((state)=> state.port)
+  let Recipes = useSelector((state)=> state.recoRecipes)
+
+  let beverages = []
+  for (let i of port) {
+    if(i.beverage_id >= 0){
+      beverages.push(i.beverage_id)
+    }
+  }
+
   let Beverages = useSelector((state)=> state.beverage)
-  // let port = useSelector((state)=>state.port[props.index])
-  
+
   const dispatch = useDispatch();
-  // const onclickhandler = (i)=>{
-  //   dispatch(changePort(
-  //     {idx: props.index,
-  //      beverage_id : Beverages[i].beverage_id }
-  //     )
-  //   )
-  //   console.log("dispatch")
-  // }
+
+  const setLengthIfLessFills = (array, length, fills) => {
+    let newArray = [];
+    if(array.length <= length){
+      const needed = length - array.length
+      for(const item of array){
+        newArray.push(item);
+      }
+      for(let i=0; i<needed; i++){
+        newArray.push(fills);
+      }
+    }else{
+      for(let i=0; i<length; i++){
+        newArray.push(array.splice(Math.floor(Math.random() * (array.length-i)),1)[0])
+      }
+    }
+    return newArray;
+  }
+  const URL = 'http://i8a103.p.ssafy.io:3001'
+  const getRecipes = () => {
+      axios.get(URL+'/recipes',{params: {filter: beverages.join(",")}}).then((a)=>{
+        dispatch(changeReco(setLengthIfLessFills(a.data.items, 3, {beverages_name: ""})));
+      })
+      .catch((e)=>{
+        console.log("추천레시피 실패")
+      })
+    }
+  
+
+
+
   return (
   <>
   <Box sx={style}>
@@ -33,6 +66,8 @@ function BeverageModal(props) {
       beverage_id : Beverages[i].beverage_id,
       idx : props.index
     }))
+    getRecipes()
+    console.log(">>>>>>>>>>><<<<<<<<<<<",Recipes)
   }
       }>{ Beverages[i].beverage_name }
     </SulList></div>)

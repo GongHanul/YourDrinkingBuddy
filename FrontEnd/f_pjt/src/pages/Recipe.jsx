@@ -124,7 +124,7 @@ const Tape = styled.div`
 `
 
 const ListCard = styled.div`
-margin : 5vh 7vh 3vh;
+margin : 5vh 3vh 3vh;
 display : flex;
 align-items: center ;
 flex-direction: column;

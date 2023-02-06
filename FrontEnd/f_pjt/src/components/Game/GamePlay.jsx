@@ -1,7 +1,5 @@
 import styled from "styled-components";
-import { React, useState } from 'react';
-import GameReady from './GameReady';
-import { NavLink } from "react-router-dom";
+import { React, useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 function GamePlay() {
@@ -10,23 +8,48 @@ function GamePlay() {
   const id = location.state.id
   const Playercnt = location.state.cnt
   const GameId = `/game${id}`
-  const start = () => {
-    navigate(GameId, { state: { cnt : Playercnt} });}
 
+  const start = () => {
+  navigate(GameId, { state: { cnt : Playercnt} });}
+  
+  useEffect(() => {setPlayer([...Array(Playercnt).keys()])} ,[])
+  let [Player, setPlayer] = useState([])
   console.log(GameId)
   console.log(Playercnt)
   return (
   <>
-  <GameReady cnt = {Playercnt} ></GameReady>
-  <Start onClick={start} >START!</Start>
+  <Display>
+  { Player.map(function(e, i){
+    return (
+    <Ready index={i}>
+      {i}
+    </Ready>)
+  })}
+  </Display>
+  <Start onClick={start}>START!</Start>
   </>
   )
 }
-
-const Start = styled.div`
+const Display = styled.div`
   display : flex;
+  flex-wrap: wrap;
+  width : 100%;
+`
+const Ready = styled.div`
+  display : flex;
+  justify-content: center;
+  align-items: center ;
+  flex: 1 1 50%;
+  align-items: center ;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 4px #474747 inset;
+  box-sizing: border-box;
+`
+const Start = styled.div`
+  display : grid;
   align-items : center;
-  margin: 4vh 0 0 0 ;
   background: #ffffff;
   border : none;
   border-radius : 1vh;
