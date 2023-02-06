@@ -49,7 +49,7 @@ let ratio = createSlice({
 });
 
 
-export let { increaseRatio, decreaseRatio, changeBeverage, changeRatio, resetRatio, requestMakeCocktail, requestForceStopMakingCocktail } = ratio.actions
+export let { increaseRatio, decreaseRatio, changeBeverage, changeRatio, resetRatio, makeCocktail, stopMakeCocktail } = ratio.actions
 
 
 let port = createSlice({
