@@ -14,6 +14,26 @@ import {
   requestDestoryGame
 } from './socket';
 
+export const CocktailMakerState = {
+  IDLE : 0,
+  BUSY : 1
+}
+
+let cocktailMakerState = createSlice({
+  name: 'cocktailMakerState',
+  initState : CocktailMakerState.IDLE,
+  reducers : {
+    setStateIdle(state){
+      return state = CocktailMakerState.IDLE;
+    },
+    setStateBusy(state){
+      return state = CocktailMakerState.BUSY;
+    }
+  }
+})
+
+export let { setStateIdle, setStateBusy } = cocktailMakerState.actions
+
 
 let ratio = createSlice({
   name : 'ratio',
@@ -280,6 +300,7 @@ export let { removePlayer, addPlayer, setGameDataHandler, updateGameData, setGam
 
 export default configureStore({
   reducer: {
+    cocktailMakerState : cocktailMakerState.reducer,
     ratio : ratio.reducer,
     beverage : beverage.reducer,
     beverageMap : beverageMap.reducer,
