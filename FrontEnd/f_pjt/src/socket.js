@@ -1,8 +1,8 @@
 import { io } from "socket.io-client"
-import { addPlayer, getPreservedGameDataHandler, updateGameData } from "./store";
+import { addPlayer, removePlayer, getPreservedGameDataHandler, updateGameData, initializePlayerViewPos } from "./store";
 import store from "./store";
 
-export const socket = io("localhost:9000", { transports: ["websocket"] });
+export const socket = io("70.12.246.22:3000", { transports: ["websocket"] });
 
 export let StatusCode = {
   SUCCESS: 0,
@@ -15,8 +15,12 @@ export let StatusCode = {
 export const listenOnPlayerParticipate = (notifyCallback) => {
   socket.on("server:playerParticipate", (requestData, requestCallback) => {
     const game = store.getState().game;
-    if (game.player.indexOf(requestData.playerId) !== -1) {
-      store.dispatch(addPlayer(requestData.playerId))
+    if (game.player.indexOf(requestData.id) !== -1) {
+      if(requestData.connect === 1){
+        store.dispatch(addPlayer(requestData.id))
+      }else{
+        store.dispatch(removePlayer(requestData.id))
+      }
       notifyCallback(requestData);
       requestCallback({ statusCode: StatusCode.SUCCESS, data: "participate" });
     } else {
@@ -25,9 +29,21 @@ export const listenOnPlayerParticipate = (notifyCallback) => {
   })
 }
 
-export const listenOffPlayerParticipate = () => {
-  socket.off("server:playerParticipate");
-}
+listenOnPlayerParticipate();
+
+// // 서버-> 클라이언트  게임 시작전 플레이어 참가 의사를 밝힐 때
+// export const listenOnPlayerStatus = (notifyCallback) => {
+//   socket.on("server:playerParticipate", (requestData) => {
+//     store.dispatch(setPlayer(requestData))
+//     notifyCallback(requestData);
+//   })
+// }
+
+// export const listenoffPlayerStatus = () => {
+//   socket.off("server:playerParticipate");
+// }
+
+// listenOnPlayerStatus();
 
 // 서버-> 클라이언트 라즈베리파이 서버가 화면 변경을 요청할 때
 export const listenOnChangeGame = (notifyCallback) => {
@@ -98,17 +114,21 @@ export const requestForceStopMakingCocktail = (requestCallback) => {
 export const requestCreateGame = (gameId, playerCount) => {
   send("client:createGame", { gameId: gameId, playerCount: playerCount }, (response) => {
     const game = store.getState().game;
+    store.dispatch(initializePlayerViewPos(playerCount))
     getPreservedGameDataHandler().onCreated(game.gameData, response.statusCode, response.data);
   });
 }
 
 // 클라이언트 -> 서버 게임 파기 요청
-
 export const requestDestoryGame = (isGameResultNeeded) => {
   send("client:destoryGame", { isGameResultNeeded: isGameResultNeeded }, (response) => {
     const game = store.getState().game;
     getPreservedGameDataHandler().onDestroyed(game.gameData, response.statusCode, response.data);
   });
+}
+
+export const isConnected = () => {
+  return !socket || socket.connected === false;
 }
 
 // 소켓 연결
@@ -118,7 +138,7 @@ const trySocketConnection = () => {
 };
 
 const send = (event, data, callback) => {
-  if (!socket || socket.connected === false) {
+  if (isConnected()) {
     trySocketConnection();
   }
   socket.emit(event, data, callback);

@@ -6,8 +6,6 @@ import {
   listenOffDestroyGame,
   requestMakeCocktail,
   requestForceStopMakingCocktail,
-  listenOnPlayerParticipate,
-  listenOffPlayerParticipate,
   listenOnCompleteGame,
   listenOffCompleteGame,
   requestCreateGame,
@@ -65,7 +63,6 @@ let cocktailMaker = createSlice({
 export let { setStateIdle, setStateBusy, makeCocktail, stopMakeCocktail } = cocktailMaker.actions
 
 
-
 let ratio = createSlice({
   name : 'ratio',
   initialState : [
@@ -94,7 +91,7 @@ let ratio = createSlice({
 });
 
 
-export let { increaseRatio, decreaseRatio, changeBeverage, changeRatio, resetRatio,  } = ratio.actions
+export let { increaseRatio, decreaseRatio, changeBeverage, changeRatio, resetRatio } = ratio.actions
 
 
 let port = createSlice({
@@ -115,7 +112,10 @@ let port = createSlice({
   },
 });
 
+
 export let { changePort } = port.actions
+
+
 
 let beverage = createSlice({
   name : 'beverage',
@@ -198,14 +198,42 @@ export const getPreservedGameDataHandler = () => {
 
 let game = createSlice({
   name: 'game',
-  initialState: { gameState: GameState.IDLE, gameData: undefined, player: [] },
+  initialState: { gameState: GameState.IDLE, gameData: undefined, playerStatus: [{id:1, connection:1},{id:2, connection:1}], playerCount: 2, playerViewPos: [] },
   reducers: {
+
+    // 여기서 플레이어 : 화면 map을 세팅한다. 임의배치한다.
+    initializePlayerViewPos(state, action){
+      if(state.gameState !== GameState.READY){
+        throw new Error("게임 준비중일때만 화면 당 플레이어 유저를 배치 할 수 있습니다.");
+      }
+      const NeededplayerCount = action.payload;
+      let result = [];
+      for(let i=0; i<state.playerStatus.length; i++){
+        if(state.playerStatus[i].connection === 1){
+          result.push(state.playerStatus[i].id);
+        }
+        if(result.length === NeededplayerCount){
+          break;
+        }
+      }
+      state.playerViewPos = result;
+    },
+
+    // setPlayer(state, action){
+    //   const playerStatus = action.payload.playerStatus;
+    //   const playerCount = action.payload.playerNum;
+    //   state.playerStatus[playerStatus.id] = state.playerStatus = playerStatus;
+    //   state.playerCount = playerCount;
+    //   return state
+    // },
+
     removePlayer(state, action){
       const playerId = action.payload;
       const idx = state.player.indexOf(playerId)
       if(idx > -1){
         state.player = state.player.splice(idx, 1)
       }
+      return state
     },
 
     addPlayer(state, action){
@@ -222,23 +250,26 @@ let game = createSlice({
       // DI (Dependency Injection) 패턴을 사용하였기 때문에, 반드시 외부에서 생성하여 주입해야 한다.
       const gameDataInstance = getPreservedGameDataHandler().createGameData();
       
-      return state = {gameState: state.gameState, gameData: gameDataInstance, player: state.player};
+      return state.gameData = gameDataInstance;
     },
 
     updateGameData(state, action){
       const gameData = action.payload;
-      return state = {gameState: state.gameState, gameData: gameData, player: state.player};
+      return state.gameData = gameData;
     },
 
     // 게임 상태를 Idle로 바꾼다.
     setGameStateIdle(state) {
-      listenOffPlayerParticipate();
+      
+      // listenOffPlayerParticipate();
       listenOffChangeGame();
       listenOffCompleteGame();
       listenOffDestroyGame();
 
       // IDLE상태가 되며 이제부터 게임 구성 이전으로 돌아간다.
-      return state = {gameState: GameState.IDLE, gameData: state.gameData, player: state.player};
+      state.gameState = GameState.IDLE;
+      state.playerViewPos = [];
+      return state
     },
 
     // 게임 상태를 Ready로 바꾼다.
@@ -246,16 +277,18 @@ let game = createSlice({
     setGameStateReady(state, action) {
       const param = action.payload;
 
-      const playerParticipateCallback = param && param.playerParticipateCallback ? param.playerParticipateCallback : (data) => { };
+      // const playerParticipateCallback = param && param.playerParticipateCallback ? param.playerParticipateCallback : (data) => { };
       const destroyGameCallback = param && param.destroyGameCallback ? param.destroyGameCallback : (data) => { };
 
-      listenOnPlayerParticipate(playerParticipateCallback);
+      // listenOnPlayerParticipate(playerParticipateCallback);
       listenOnDestroyGame(destroyGameCallback);
       listenOffChangeGame();
       listenOffCompleteGame();
 
       // READY상태가 되며 이제부터 플레이어 참여를 기다린다.
-      return state = {gameState: GameState.READY, gameData: state.gameData, player: []};
+      state.gameState = GameState.READY;
+      state.playerViewPos = [];
+      return state
     },
 
     // 게임 상태를 Play로 바꾼다.
@@ -272,34 +305,41 @@ let game = createSlice({
       const destroyGameCallback = param && param.destroyGameCallback ? param.destroyGameCallback : (data) => { };
       const completeGameCallback = param && param.completeGameCallback ? param.completeGameCallback : (data) => { };
 
-      listenOffPlayerParticipate();
+      // listenOffPlayerParticipate();
       listenOnChangeGame(changeGameCallback);
       listenOnDestroyGame(destroyGameCallback);
       listenOnCompleteGame(completeGameCallback);
 
       // READY상태가 되며 이제부터 게임 변경 사항, 완료등을 받는다.
-      return state = {gameState: GameState.PLAY, gameData: state.gameData, player: state.player};
+      state.gameState = GameState.PLAY;
+      return state;
     },
 
     // 게임을 생성한다.
-    // payload 예시 : {gameId : 1, playerCount : 4, notifyCallback : function}
+    // payload 예시 : {playerCount : 4}
     // notifyCallback은 player 데이터를 받아 View를 변경시키는 Callback 함수이다.
     // 단순히 redux와 바인딩 하는 경우 => 생략한다.
     // 바인딩이 불가능 한 상황인 경우 => playerID를 파라미터로 받아 View를 처리하는 Callback함수를 넣는다.
     createGame(state, action) {
       const param = action.payload;
 
-      const gameId = param.gameId;
+      const handler = getPreservedGameDataHandler();
+      if(handler.getGameId === undefined || !handler.getGameId()){
+        throw new Error("GameDataHandler는 반드시 getGameId를 구현해야 합니다.")
+      }
+
+      const gameId = getPreservedGameDataHandler().getGameId();
       const playerCount = param.playerCount;
 
       // idle 상태가 아니면 게임 생성을 못하도록 막는다.
-      if (state.gameState !== GameState.IDLE) {
-        throw new Error("게임은 반드시 상태가 IDLE 인 경우만 생성이 가능합니다. 웹 당 하나의 게임만 생성가능합니다. 기존 게임을 파기해주세요.");
+      if (state.gameState !== GameState.READY) {
+        throw new Error("게임은 반드시 상태가 READY 인 경우만 생성이 가능합니다. 웹 당 하나의 게임만 생성가능합니다. 기존 게임을 파기해주세요.");
       }
 
       // gameId로 playerCount만큼 참여한다고 라즈베리파이 서버에 요청한다.
       // 해당 통신은 bloking/동기 통신이 보장되어야 한다.
       requestCreateGame(gameId, playerCount);
+      return state
     },
 
     // 게임을 강제로 파기한다.
@@ -314,25 +354,12 @@ let game = createSlice({
       // 게임 파기 요청을 라즈베리파이 서버에 요청한다.
       // 해당 통신은 bloking/동기 통신이 보장되어야 한다.
       requestDestoryGame(false);
+      return state
     }
   },
 });
 
-export let { removePlayer, addPlayer, setGameDataHandler, updateGameData, setGameStateIdle, setGameStateReady, setGameStatePlay, createGame, destroyGame } = game.actions;
-
-let game1 = createSlice({
-  name: 'game1',
-  initialState : [
-  {cnt :0},{cnt: 0},{cnt: 0},{cnt: 0}
-],
-  reducers : {
-    changeGame1Data(state, action){
-      state[action.payload.idx].cnt++
-    }
-  }
-})
-
-export let { changeGame1Data } = game1.actions;
+export let { setPlayer, removePlayer, addPlayer, initializePlayerViewPos, setGameDataHandler, updateGameData, setGameStateIdle, setGameStateReady, setGameStatePlay, createGame, destroyGame } = game.actions;
 
 const store = configureStore({
   reducer: {
@@ -344,8 +371,6 @@ const store = configureStore({
     port : port.reducer,
     recoRecipes : recoRecipes.reducer,
     game: game.reducer,
-    game1 : game1.reducer,
-
   },
 });
 
