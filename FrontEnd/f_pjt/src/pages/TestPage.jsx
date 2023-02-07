@@ -25,6 +25,7 @@ function TestPage(){
   preserveGameDataHandler(new DummyGameDataHandler())
   dispatch(setGameDataHandler())
   dispatch(setGameStatePlay())
+
   return(
     <MessageComponent/>
   )

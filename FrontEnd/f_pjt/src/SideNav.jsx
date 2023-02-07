@@ -3,30 +3,29 @@ import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMartiniGlassCitrus, faGamepad, faClipboardList } from "@fortawesome/free-solid-svg-icons"
-import { useSelector } from "react-redux"
-import axios from 'axios'
+import { useSelector, useDispatch } from "react-redux"
 import Modal from '@mui/material/Modal';
 import ShotModal from "./components/ShotModal";
+import { makeCocktail, stopMakeCocktail } from './store';
+
 
 
 function SideNav() {
     const ratio = useSelector((state)=>state.ratio)
-    const URL = "http://70.12.226.153:5000/api/motor"
+    // const URL = "http://70.12.226.153:5000/api/motor"
     const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);;
+    const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    const dispatch = useDispatch();
+    
 
+    const cancel = ()=>{
+      dispatch(stopMakeCocktail())
+    }
 
-    const Cancle = ()=>{
-    axios.post(URL,{ msg : "stop"})
-    .then((결과)=>{
-      console.log("stop")
-    })
-    .catch(()=>{
-      console.log("can't stop")
-    })
-   }
-   
+    const make = () => {
+      dispatch(makeCocktail([ratio[0].rate,ratio[1].rate,ratio[2].rate,ratio[3].rate]))
+    }
     
   return (
     <Bar>
@@ -38,23 +37,17 @@ function SideNav() {
         <FontAwesomeIcon icon={ faMartiniGlassCitrus }/>
       </NavStyle>
       <Shot 
-        onClick={()=>{
-        axios.post(URL, {ratio: [ String(ratio[0].rate) , String(ratio[1].rate) , String(ratio[2].rate) , String(ratio[3].rate)]})
-        .then((결과)=>{
-          console.log("good")
-        })
-        .catch(()=>{
-          console.log({ratio: [ String(ratio[0].rate) , String(ratio[1].rate) , String(ratio[2].rate) , String(ratio[3].rate)]})
-        })
-        handleOpen()
-        setTimeout(function(){handleClose()},5000)
+        onClick={async ()=>{
+          make()
+          handleOpen()
+          // setTimeout(function(){handleClose()},5000)
       }}>
         SHOT!</Shot>
         <Modal
         open={open}
         // onClose={handleClose}
       >
-       <ShotModal handleClose = {handleClose} Cancle = { Cancle }
+       <ShotModal handleClose = {handleClose} cancel = { cancel }
         />
       </Modal>
       <NavStyle to="/recipe">

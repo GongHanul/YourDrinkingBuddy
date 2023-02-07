@@ -11,7 +11,8 @@ import {
   listenOnCompleteGame,
   listenOffCompleteGame,
   requestCreateGame,
-  requestDestoryGame
+  requestDestoryGame,
+  StatusCode
 } from './socket';
 
 export const CocktailMakerState = {
@@ -19,20 +20,49 @@ export const CocktailMakerState = {
   BUSY : 1
 }
 
-let cocktailMakerState = createSlice({
-  name: 'cocktailMakerState',
+let cocktailMaker = createSlice({
+  name: 'cocktailMaker',
   initialState : CocktailMakerState.IDLE,
   reducers : {
     setStateIdle(state){
+      console.log("set state idle")
       return state = CocktailMakerState.IDLE;
+      
     },
     setStateBusy(state){
       return state = CocktailMakerState.BUSY;
-    }
+    },
+    makeCocktail(state, action) {
+      const ratio = action.payload;
+      console.log(ratio)
+      if(state === CocktailMakerState.IDLE){
+        requestMakeCocktail(ratio, (responseData)=>{
+          console.log("wait")
+          if(responseData.statusCode === StatusCode.SUCCESS){
+            console.log("make request good")
+            store.dispatch(setStateIdle());
+          }
+        });
+        console.log("abc")
+        return state = CocktailMakerState.BUSY;
+      }
+    },
+    stopMakeCocktail(state) {
+      console.log(state)
+      if(state === CocktailMakerState.BUSY){
+        requestForceStopMakingCocktail((responseData)=>{
+          if(responseData.statusCode === StatusCode.SUCCESS){
+            console.log("stop request good")
+            store.dispatch(setStateIdle());
+          }
+        });
+      }
+      return state
+    },
   }
 })
 
-export let { setStateIdle, setStateBusy } = cocktailMakerState.actions
+export let { setStateIdle, setStateBusy, makeCocktail, stopMakeCocktail } = cocktailMaker.actions
 
 
 let ratio = createSlice({
@@ -59,17 +89,11 @@ let ratio = createSlice({
     resetRatio(state, action) {
       state[action.payload.idx].rate = 0
     },
-    makeCocktail(state, action) {
-      requestMakeCocktail(state, action.payload.callback);
-    },
-    stopMakeCocktail(state, action) {
-      requestForceStopMakingCocktail(state, action.payload.callback);
-    },
   },
 });
 
 
-export let { increaseRatio, decreaseRatio, changeBeverage, changeRatio, resetRatio, makeCocktail, stopMakeCocktail } = ratio.actions
+export let { increaseRatio, decreaseRatio, changeBeverage, changeRatio, resetRatio } = ratio.actions
 
 
 let port = createSlice({
@@ -296,11 +320,11 @@ let game = createSlice({
   },
 });
 
-export let { removePlayer, addPlayer, setGameDataHandler, updateGameData, setGameStateIdle, setGameStateReady, setGameStatePlay, createGame, destroyGame,  } = game.actions;
+export let { removePlayer, addPlayer, setGameDataHandler, updateGameData, setGameStateIdle, setGameStateReady, setGameStatePlay, createGame, destroyGame } = game.actions;
 
-export default configureStore({
+const store = configureStore({
   reducer: {
-    cocktailMakerState : cocktailMakerState.reducer,
+    cocktailMaker : cocktailMaker.reducer,
     ratio : ratio.reducer,
     beverage : beverage.reducer,
     beverageMap : beverageMap.reducer,
@@ -310,3 +334,5 @@ export default configureStore({
     game: game.reducer,
   },
 });
+
+export default store;

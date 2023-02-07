@@ -2,7 +2,7 @@ import { io } from "socket.io-client"
 import { addPlayer, getPreservedGameDataHandler, updateGameData } from "./store";
 import store from "./store";
 
-export const socket = io("70.12.227.241:3000", { transports: ["websocket"] });
+export const socket = io("localhost:9000", { transports: ["websocket"] });
 
 export let StatusCode = {
   SUCCESS: 0,
@@ -77,6 +77,7 @@ export const listenOffDestroyGame = () => {
 
 // 클라이언트 -> 서버 칵테일 제조 요청
 export const requestMakeCocktail = (ports, requestCallback) => {
+  console.log(`ports : ${ports}`)
   send("client:makeCocktail", ports, requestCallback);
 }
 

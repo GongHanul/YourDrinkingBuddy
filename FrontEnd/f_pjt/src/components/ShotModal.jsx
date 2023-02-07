@@ -1,20 +1,30 @@
 import styled from "styled-components";
-import { React } from 'react';
+import { React, useEffect } from 'react';
 import Box from '@mui/material/Box';
+import { CocktailMakerState } from './../store';
+import { useSelector } from 'react-redux';
+import store from '../store'
 
 function ShotModal(props) {
-  const Cancle = props.Cancle
+  const cancel = props.cancel
   const handleClose = props.handleClose
+  const cocktailMakerState = useSelector((state) => state.cocktailMaker);
+
+  useEffect(()=>{
+    if( cocktailMakerState === CocktailMakerState.IDLE ){
+      handleClose()
+    }
+  })
+
   return (
   <>
   <Box sx={style}>
+    <State> 상태 : {cocktailMakerState}</State>
     <Loading>제 조 중 🍺</Loading>
     <Loading>가 마 니 이 써</Loading>
     <br />
     <StopBtn onClick={()=>{
-    Cancle()
-    handleClose()
-
+      cancel()
     }} >SSSSSTOP</StopBtn>
   </Box>
   </>
@@ -58,4 +68,8 @@ const StopBtn = styled.button`
   &:hover {
     color: red;
   }
+`
+
+const State = styled.div`
+  display: none;
 `
