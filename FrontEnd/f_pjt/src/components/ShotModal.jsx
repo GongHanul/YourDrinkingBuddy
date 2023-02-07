@@ -69,7 +69,6 @@ const StopBtn = styled.button`
     color: red;
   }
 `
-
 const State = styled.div`
   display: none;
 `

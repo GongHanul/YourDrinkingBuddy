@@ -58,6 +58,7 @@ function SideNav() {
   );
 }
 
+
 const Bar = styled.div`
   display: flex;
   background: #004680;

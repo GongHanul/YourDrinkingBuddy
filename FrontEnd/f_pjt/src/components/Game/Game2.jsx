@@ -27,7 +27,7 @@ function Game2() {
   display: flex;
   flex-direction: column;
   border : black;
-  box-shadow:0 1px 2px #0E538B, 0 1px 2px #0E538B inset;
+  box-shadow: 0 1px 2px #0E538B, 0 1px 2px #0E538B inset;
   box-sizing: border-box;
   `
 export default Game2

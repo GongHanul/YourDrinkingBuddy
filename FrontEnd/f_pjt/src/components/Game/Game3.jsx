@@ -1,6 +1,9 @@
 import styled from "styled-components";
 import { React, useState, useEffect } from 'react';
 import { useNavigate , useLocation } from 'react-router-dom';
+import Stack from '@mui/material/Stack';
+import LinearProgress from '@mui/material/LinearProgress';
+import CircularProgress from '@mui/material/CircularProgress';
 
 function Game3() {
   const navigate = useNavigate();
@@ -15,7 +18,7 @@ function Game3() {
   let intervalId = setInterval(() => {
   setTimeLeft((prevTime) => {
   if (prevTime === 0) {
-    navigate("/");
+    navigate("/game");
   } else {
     return prevTime - 1;
   }});}, 1000);
@@ -28,6 +31,19 @@ function Game3() {
     <Display index={i}>
       <h1>{timeLeft}</h1>
       <progress value={timeLeft} max={20} />
+      {/* https://coreui.io/react/docs/components/progress/ */}
+      {/* https://mui.com/material-ui/react-progress/ */}
+      {/* https://freefrontend.com/react-progress-bars/ */}
+      <Stack sx={{ width: '50%', color: 'grey.500' }} spacing={2}>
+      <LinearProgress color="secondary" />
+      <LinearProgress color="success" />
+      <LinearProgress color="inherit" />
+    </Stack>
+    <Stack sx={{ color: 'grey.500' }} spacing={2} direction="row">
+      <CircularProgress color="secondary" />
+      <CircularProgress color="success" />
+      <CircularProgress color="inherit" />
+    </Stack>
     </Display>)
   })}
   </TopDiv>

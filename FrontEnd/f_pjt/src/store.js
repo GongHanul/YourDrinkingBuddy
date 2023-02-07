@@ -65,6 +65,7 @@ let cocktailMaker = createSlice({
 export let { setStateIdle, setStateBusy, makeCocktail, stopMakeCocktail } = cocktailMaker.actions
 
 
+
 let ratio = createSlice({
   name : 'ratio',
   initialState : [
@@ -93,7 +94,7 @@ let ratio = createSlice({
 });
 
 
-export let { increaseRatio, decreaseRatio, changeBeverage, changeRatio, resetRatio } = ratio.actions
+export let { increaseRatio, decreaseRatio, changeBeverage, changeRatio, resetRatio,  } = ratio.actions
 
 
 let port = createSlice({
@@ -114,10 +115,7 @@ let port = createSlice({
   },
 });
 
-
 export let { changePort } = port.actions
-
-
 
 let beverage = createSlice({
   name : 'beverage',
@@ -322,7 +320,30 @@ let game = createSlice({
 
 export let { removePlayer, addPlayer, setGameDataHandler, updateGameData, setGameStateIdle, setGameStateReady, setGameStatePlay, createGame, destroyGame } = game.actions;
 
-const store = configureStore({
+let game1 = createSlice({
+  name: 'game1',
+  initialState : [
+    { player : 1,
+      cnt: 0,
+  }, { player : 2,
+    cnt: 0,
+  }, { player : 3,
+  cnt: 0,
+  },
+  { player : 4,
+    cnt: 0,
+    }
+],
+  reducers : {
+    changeGame1Data(state, action){
+      state[action.payload.idx].cnt++
+    }
+  }
+})
+
+export let { changeGame1Data } = game1.actions;
+
+export default configureStore({
   reducer: {
     cocktailMaker : cocktailMaker.reducer,
     ratio : ratio.reducer,
@@ -332,7 +353,6 @@ const store = configureStore({
     port : port.reducer,
     recoRecipes : recoRecipes.reducer,
     game: game.reducer,
+    game1 : game1.reducer
   },
 });
-
-export default store;
