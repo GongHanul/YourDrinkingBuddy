@@ -1,8 +1,8 @@
 import { io } from "socket.io-client"
-import { addPlayer, removePlayer, getPreservedGameDataHandler, updateGameData, initializePlayerViewPos } from "./store";
+import { addPlayer, removePlayer, getPreservedGameDataHandler, updateGameData, initializePlayerViewPos, setGameStatePlay, setGameStateIdle } from "./store";
 import store from "./store";
 
-export const socket = io("70.12.246.22:3000", { transports: ["websocket"] });
+export const socket = io("localhost:9000", { transports: ["websocket"] });
 
 export let StatusCode = {
   SUCCESS: 0,
@@ -16,9 +16,9 @@ export const listenOnPlayerParticipate = (notifyCallback) => {
   socket.on("server:playerParticipate", (requestData, requestCallback) => {
     const game = store.getState().game;
     if (game.player.indexOf(requestData.id) !== -1) {
-      if(requestData.connect === 1){
+      if (requestData.connect === 1) {
         store.dispatch(addPlayer(requestData.id))
-      }else{
+      } else {
         store.dispatch(removePlayer(requestData.id))
       }
       notifyCallback(requestData);
@@ -51,7 +51,7 @@ export const listenOnChangeGame = (notifyCallback) => {
     const game = store.getState().game;
     console.log(game);
     console.log(store)
-    const changeGameResult = getPreservedGameDataHandler().onChanged(game.gameData, requestData);
+    const changeGameResult = getPreservedGameDataHandler().onChanged(game, requestData);
     store.dispatch(updateGameData(changeGameResult));
     notifyCallback(requestData);
   })
@@ -65,7 +65,7 @@ export const listenOffChangeGame = () => {
 export const listenOnCompleteGame = (notifyCallback) => {
   socket.on("server:completeGame", (requestData) => {
     const game = store.getState().game;
-    const completeGameResult = getPreservedGameDataHandler().onCompleted(game.gameData, requestData);
+    const completeGameResult = getPreservedGameDataHandler().onCompleted(game, requestData);
     store.dispatch(updateGameData(completeGameResult));
     notifyCallback(requestData);
   })
@@ -79,7 +79,7 @@ export const listenOffCompleteGame = () => {
 export const listenOnDestroyGame = (notifyCallback) => {
   socket.on("server:destroyGame", (requestData) => {
     const game = store.getState().game;
-    const destroyGameResult = getPreservedGameDataHandler().onDestroyed(game.gameData, StatusCode.SUCCESS, requestData);
+    const destroyGameResult = getPreservedGameDataHandler().onDestroyed(game, StatusCode.SUCCESS, requestData);
     store.dispatch(updateGameData(destroyGameResult));
     notifyCallback(requestData);
   })
@@ -114,8 +114,9 @@ export const requestForceStopMakingCocktail = (requestCallback) => {
 export const requestCreateGame = (gameId, playerCount) => {
   send("client:createGame", { gameId: gameId, playerCount: playerCount }, (response) => {
     const game = store.getState().game;
-    store.dispatch(initializePlayerViewPos(playerCount))
-    getPreservedGameDataHandler().onCreated(game.gameData, response.statusCode, response.data);
+    store.dispatch(initializePlayerViewPos(playerCount));
+    getPreservedGameDataHandler().onCreated(game, response.statusCode, response.data);
+    store.dispatch(setGameStatePlay());
   });
 }
 
@@ -123,7 +124,8 @@ export const requestCreateGame = (gameId, playerCount) => {
 export const requestDestoryGame = (isGameResultNeeded) => {
   send("client:destoryGame", { isGameResultNeeded: isGameResultNeeded }, (response) => {
     const game = store.getState().game;
-    getPreservedGameDataHandler().onDestroyed(game.gameData, response.statusCode, response.data);
+    getPreservedGameDataHandler().onDestroyed(game, response.statusCode, response.data);
+    store.dispatch(setGameStateIdle());
   });
 }
 

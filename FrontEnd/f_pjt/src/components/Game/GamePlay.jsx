@@ -5,7 +5,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeftLong, faArrowRightLong} from "@fortawesome/free-solid-svg-icons"
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { createGame, initializePlayerViewPos, setGameStateReady } from "../../store";
+import { createGame, initializePlayerViewPos, preserveGameDataHandler, setGameDataHandler, setGameStatePlay, setGameStateReady } from "../../store";
+import gameEnv from './GameEnv';
 
 function GamePlay() {
   const navigate = useNavigate();
@@ -21,7 +22,11 @@ function GamePlay() {
     console.log(game.playerCount)
     if( game.playerCount < Playercnt ){
       alert(`플레이어 모자릅니다. 현재 플레이어 수 : ${game.playerCount}, 목표 플레이어 수 : ${Playercnt}`)
-    }else{
+    } else {
+      console.log(gameEnv)
+      preserveGameDataHandler(new gameEnv[id].handler());
+      dispatch(setGameDataHandler())
+      dispatch(createGame({playerCount : Playercnt}))
       navigate(GameId, { state: { cnt : Playercnt} });
     }
   }
