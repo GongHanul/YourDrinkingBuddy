@@ -323,16 +323,7 @@ export let { removePlayer, addPlayer, setGameDataHandler, updateGameData, setGam
 let game1 = createSlice({
   name: 'game1',
   initialState : [
-    { player : 1,
-      cnt: 0,
-  }, { player : 2,
-    cnt: 0,
-  }, { player : 3,
-  cnt: 0,
-  },
-  { player : 4,
-    cnt: 0,
-    }
+  {cnt :0},{cnt: 0},{cnt: 0},{cnt: 0}
 ],
   reducers : {
     changeGame1Data(state, action){
@@ -343,7 +334,7 @@ let game1 = createSlice({
 
 export let { changeGame1Data } = game1.actions;
 
-export default configureStore({
+const store = configureStore({
   reducer: {
     cocktailMaker : cocktailMaker.reducer,
     ratio : ratio.reducer,
@@ -353,6 +344,9 @@ export default configureStore({
     port : port.reducer,
     recoRecipes : recoRecipes.reducer,
     game: game.reducer,
-    game1 : game1.reducer
+    game1 : game1.reducer,
+
   },
 });
+
+export default store;
