@@ -4,15 +4,29 @@ import { useNavigate , useLocation } from 'react-router-dom';
 import Stack from '@mui/material/Stack';
 import LinearProgress from '@mui/material/LinearProgress';
 import CircularProgress from '@mui/material/CircularProgress';
+import { useDispatch, useSelector } from "react-redux";
+import { /*changeGame3Data,*/ preserveGameDataHandler, createGame, setGameStatePlay, setGameDataHandler, GameState } from "../../store.js";
+import ClickGameDataHandler from './../../ClickGameDataHandler';
 
 function Game3() {
-  const navigate = useNavigate();
   const location = useLocation();
-  const Playercnt = location.state.cnt
-  useEffect( () => {setPlayer([...Array(Playercnt).keys()]) } ,[])
-  let [Player, setPlayer] = useState([])
-  
+  // const Playercnt = location.state.cnt
+  const navigate = useNavigate();
   const [timeLeft, setTimeLeft] = useState(20);
+  // useEffect( () => {setPlayer([...Array(Playercnt).keys()]) } ,[])
+  // let [Player, setPlayer] = useState([])
+  
+  const game = useSelector((state)=>state.game);
+  const game3 = game.gameData
+  const players = game.playerViewPos;
+  const img1 = ['img/game3/1-1.png', 'img/game3/1-2.png', 'img/game3/1-3.png']
+  const img2 = ['img/game3/2-1.png', 'img/game3/2-2.png']
+  const img3 = ['img/game3/3-1.png', 'img/game3/3-2.png']
+  const img4 = ['img/game3/4-1.png', 'img/game3/4-2.png']
+
+  // if (game.gameState !== GameState.PLAY) {
+  //   return (<><TopDiv> 게임 생성 중입니다. 기다려주세요... </TopDiv></>)
+  // } else {
 
   useEffect(() => {
   let intervalId = setInterval(() => {
@@ -25,16 +39,15 @@ function Game3() {
   return () => clearInterval(intervalId);}, []);
 
   return (
-  <><TopDiv>
-  { Player.map(function(e, i){
-    return (
-    <Display index={i}>
-      <h1>{timeLeft}</h1>
-      <progress value={timeLeft} max={20} />
-      {/* https://coreui.io/react/docs/components/progress/ */}
-      {/* https://mui.com/material-ui/react-progress/ */}
-      {/* https://freefrontend.com/react-progress-bars/ */}
-      <Stack sx={{ width: '50%', color: 'grey.500' }} spacing={2}>
+  <>
+  <Full>
+  <Side>
+  <h1>{timeLeft}</h1>
+  <progress value={timeLeft} max={20} />
+  {/* https://coreui.io/react/docs/components/progress/ */}
+  {/* https://mui.com/material-ui/react-progress/ */}
+  {/* https://freefrontend.com/react-progress-bars/ */}
+  <Stack sx={{ width: '50%', color: 'grey.500' }} spacing={2}>
       <LinearProgress color="secondary" />
       <LinearProgress color="success" />
       <LinearProgress color="inherit" />
@@ -44,18 +57,81 @@ function Game3() {
       <CircularProgress color="success" />
       <CircularProgress color="inherit" />
     </Stack>
-    </Display>)
+      {/* https://coreui.io/react/docs/components/progress/ */}
+      {/* https://mui.com/material-ui/react-progress/ */}
+      {/* https://freefrontend.com/react-progress-bars/ */}
+  </Side>
+  <Display>
+  { players.map(function(e, i){
+    return (
+    <PlayerDisplay index={i}>
+      <Player>Player : {game3[i].playerId}</Player>
+      { game3[i].cnt < 15 &&<IMG 
+      // onClick={()=>{
+      //   dispatch(changeGame3Data({
+      //     idx : i
+      //   }))
+      // }}
+      src={img1[game3[i].cnt%3]}></IMG>}
+      { game3[i].cnt < 30 && game3[i].cnt >= 15 && <IMG 
+      // onClick={()=>{
+      //   dispatch(changeGame3Data({
+      //     idx : i
+      //   }))
+      // }}
+      src={img2[game3[i].cnt%2]}></IMG>}
+      { game3[i].cnt >= 30 && game3[i].cnt < 45 && <IMG 
+      // onClick={()=>{
+      //   dispatch(changeGame3Data({
+      //     idx : i
+      //   }))
+      // }}
+      src={img3[game3[i].cnt%2]}></IMG>}
+      { game3[i].cnt >= 45 && <IMG 
+      // onClick={()=>{
+      //   dispatch(changeGame3Data({
+      //     idx : i
+      //   }))
+      // }}
+      src={img4[game3[i].cnt%2]}></IMG>}
+      <SCORE>{game3[i].cnt}</SCORE>
+    </PlayerDisplay>)
   })}
-  </TopDiv>
+  </Display>
+  </Full>
   </>
   )
 }
-  const TopDiv = styled.div`
+const SCORE = styled.div`
+  font-family: 'Silkscreen', cursive;
+  font-size: 20vh;
+`
+const IMG = styled.img`
+  justify-content: center;
+  align-items: center ;
+`
+const Player = styled.div`
+  display : flex;
+`
+const Full = styled.div`
   display : flex;
   flex-wrap: wrap;
-  width : 100%
-  `
-  const Display = styled.div`
+  width : 100vw;
+`
+const Display = styled.div`
+  display : flex;
+  flex-wrap: wrap;
+  width : 100%;
+  height : 85%;
+`
+const Side = styled.div`
+  display : flex;
+  justify-content: space-evenly;
+  padding : 2vh;
+  width : 100%;
+  height : 10%;
+`
+const PlayerDisplay = styled.div`
   display : flex;
   justify-content: center;
   align-items: center ;
@@ -66,5 +142,6 @@ function Game3() {
   flex-direction: column;
   box-shadow: 0 1px 2px #1966A5, 0 1px 2px #1966A5 inset;
   box-sizing: border-box;
-  `
+  background-image: url(${'img/game3/game3_bg.gif'});
+`
 export default Game3

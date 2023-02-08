@@ -83,7 +83,7 @@ function Game() {
       background= {'#D0BB70'}
       font = {'#000000'}
       src = {'img/joystick_black.png'}
-      title = {'# 60초는 언제?!'}
+      title = {'# 10초는 언제?!'}
       rule1 = {'# START 누른 후'}
       rule2 = {'10초 후 버튼 클릭!'}
       rule3 = {'차이가 젤 큰 사람 벌칙!'}
