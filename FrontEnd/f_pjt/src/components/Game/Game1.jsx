@@ -17,58 +17,58 @@ function Game1() {
   const img3 = ['img/game1/3-1.png', 'img/game1/3-2.png']
   const img4 = ['img/game1/4-1.png', 'img/game1/4-2.png']
   
-  if (game.gameState !== GameState.PLAY) {
-    return (<><TopDiv> 게임 생성 중입니다. 기다려주세요... </TopDiv></>)
-  } else {
-    return (
-      <><TopDiv>
-          {players.map(function (e, i) {
-            return (
-          
-          <Display index={i}>
-          <Player>Player : {game1[i].playerId}</Player>
-          {game1[i].cnt}
-          { game1[i].cnt < 15 &&<IMG 
-          // onClick={()=>{
-          //   dispatch(changeGame1Data({
-          //     idx : i
-          //   }))
-          // }}
-          src={img1[game1[i].cnt%3]}></IMG>}
-          { game1[i].cnt < 30 && game1[i].cnt >= 15 && <IMG 
-          // onClick={()=>{
-          //   dispatch(changeGame1Data({
-          //     idx : i
-          //   }))
-          // }}
-          src={img2[game1[i].cnt%2]}></IMG>}
-          { game1[i].cnt >= 30 && game1[i].cnt < 45 && <IMG 
-          // onClick={()=>{
-          //   dispatch(changeGame1Data({
-          //     idx : i
-          //   }))
-          // }}
-          src={img3[game1[i].cnt%2]}></IMG>}
-          { game1[i].cnt >= 45 && <IMG 
-          // onClick={()=>{
-          //   dispatch(changeGame1Data({
-          //     idx : i
-          //   }))
-          // }}
-          src={img4[game1[i].cnt%2]}></IMG>}
-          <br>
-          </br>
-          </Display>
-        )
-      })}
-      </TopDiv>
-      </>
-      )
-  }
+  // if (game.gameState !== GameState.PLAY) {
+  //   return (<><TopDiv> 게임 생성 중입니다. 기다려주세요... </TopDiv></>)
+  // } else {
+  return (
+    <>
+    <TopDiv>
+      {players.map(function (e, i) {
+        return (
+      
+      <Display index={i}>
+      <Player>Player : {game1[i].playerId}</Player>
+      { game1[i].cnt < 15 &&<IMG 
+      // onClick={()=>{
+      //   dispatch(changeGame1Data({
+      //     idx : i
+      //   }))
+      // }}
+      src={img1[game1[i].cnt%3]}></IMG>}
+      { game1[i].cnt < 30 && game1[i].cnt >= 15 && <IMG 
+      // onClick={()=>{
+      //   dispatch(changeGame1Data({
+      //     idx : i
+      //   }))
+      // }}
+      src={img2[game1[i].cnt%2]}></IMG>}
+      { game1[i].cnt >= 30 && game1[i].cnt < 45 && <IMG 
+      // onClick={()=>{
+      //   dispatch(changeGame1Data({
+      //     idx : i
+      //   }))
+      // }}
+      src={img3[game1[i].cnt%2]}></IMG>}
+      { game1[i].cnt >= 45 && <IMG 
+      // onClick={()=>{
+      //   dispatch(changeGame1Data({
+      //     idx : i
+      //   }))
+      // }}
+      src={img4[game1[i].cnt%2]}></IMG>}
+      <SCORE>{game1[i].cnt}</SCORE>
+      </Display>
+    )
+    })}
+    </TopDiv>
+    </>
+    )
+  // }
 }
-const BUTTON = styled.button`
-  justify-content: center;
-  align-items: center ;
+
+const SCORE = styled.div`
+  font-family: 'Silkscreen', cursive;
+  font-size: 20vh;
 `
 
 const IMG = styled.img`

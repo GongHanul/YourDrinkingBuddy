@@ -106,5 +106,10 @@ const Gamee = styled.div`
 const Flexdiv = styled.div`
   flex: 1 1 30%;
 `
-
+// font-family: 'Changa', sans-serif;
+// font-family: 'Hanalei Fill', cursive;
+// font-family: 'Nabla', cursive;
+// font-family: 'Orbitron', sans-serif;
+// font-family: 'Shojumaru', cursive;
+// font-family: 'Silkscreen', cursive;
 export default Game
