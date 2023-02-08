@@ -9,7 +9,7 @@ import { faMinus, faPlus, faCircleLeft, faArrowRight } from "@fortawesome/free-s
 function PlayerModal(props) {
   console.log(props)
   const navigate = useNavigate();
-  const [playerCount, setPlayerCount] = useState(0);
+  const [playerCount, setPlayerCount] = useState(1);
   console.log(playerCount)
 
   const move = () => {
@@ -21,7 +21,7 @@ function PlayerModal(props) {
     }
   };
   const handleDecrement = () => {
-    if (playerCount > 0) {
+    if (playerCount > 1) {
       setPlayerCount(playerCount - 1);
     }
   };
