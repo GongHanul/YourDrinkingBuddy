@@ -11,10 +11,10 @@ import {
   requestCreateGame,
   requestDestoryGame,
   StatusCode,
-  isConnected,
   requestChangeBeverage,
   requestConnectServer,
-  requestChangeGameViaEventName
+  requestChangeGameViaEventName,
+  requestClearBeverage
 } from './socket';
 
 export const CocktailMakerState = {
@@ -35,9 +35,6 @@ let cocktailMaker = createSlice({
       state.state = CocktailMakerState.BUSY;
     },
     makeCocktail(state, action) {
-      // if(!isConnected()){
-      //   throw new Error("술 디스펜서와의 통신에 실패했습니다.");
-      // }
       const ratio = action.payload;
       console.log(ratio)
       if (state.state === CocktailMakerState.IDLE) {
@@ -50,34 +47,52 @@ let cocktailMaker = createSlice({
       }
     },
     stopMakeCocktail(state) {
-      // if(!isConnected()){
-      //   throw new Error("술 디스펜서와의 통신에 실패했습니다.");
-      // }
       if (state.state === CocktailMakerState.BUSY) {
         requestForceStopMakingCocktail((responseData) => {
-          console.log("stop")
-          if (responseData.statusCode === StatusCode.SUCCESS) {
-            store.dispatch(setStateIdle());
+          if (responseData.statusCode === StatusCode.FAILURE) {
+            alert("술 디스펜서로 부터 예외가 발생했습니다. 술 디스펜서를 확인해주세요.")
           }
+          store.dispatch(setStateIdle());
         });
       }
     },
-    changeBeverage(state, action) {
-      if(!isConnected()){
-        throw new Error("술 디스펜서와의 통신에 실패했습니다.");
-      }
+    clearBeverage(state, action){
       if(state.state === CocktailMakerState.BUSY){
-        throw new Error("현재 음료 제조 중입니다.");
+        alert("술 디스펜서가 작동중입니다. 기달려주세요.");
+        return
       }
       const beverageIdsInPort = action.payload;
-      let ports = [];
-      for(let i=0; i<beverageIdsInPort.length; i++){
-        ports.push(beverageIdsInPort[i] === state.before[i]);
+        let ports = [];
+        for(let i=0; i<beverageIdsInPort.length; i++){
+          ports.push(beverageIdsInPort[i] === state.before[i]);
+        }
+        requestClearBeverage(ports,(responseData)=>{
+          if (responseData.statusCode === StatusCode.FAILURE) {
+            alert("술 디스펜서로 부터 예외가 발생했습니다. 술 디스펜서를 확인해주세요.")
+          }
+          store.dispatch(setStateIdle());
+        });
+      state.state = CocktailMakerState.BUSY;
+    },
+    changeBeverage(state, action) {
+      if(state.state === CocktailMakerState.BUSY){
+        alert("술 디스펜서가 작동중입니다. 기달려주세요.");
+        return
       }
-      requestChangeBeverage(ports,()=>{});
-      state.before = beverageIdsInPort;
+      const beverageIdsInPort = action.payload;
+        let ports = [];
+        for(let i=0; i<beverageIdsInPort.length; i++){
+          ports.push(beverageIdsInPort[i] === state.before[i]);
+        }
+        requestChangeBeverage(ports,(responseData)=>{
+          if (responseData.statusCode === StatusCode.FAILURE) {
+            alert("술 디스펜서로 부터 예외가 발생했습니다. 술 디스펜서를 확인해주세요.")
+          }
+          store.dispatch(setStateIdle());
+        });
+        state.before = beverageIdsInPort;
+      state.state = CocktailMakerState.BUSY;
     }
-
   }
 })
 
@@ -226,7 +241,8 @@ let game = createSlice({
     // 여기서 플레이어 : 화면 map을 세팅한다. 임의배치한다.
     initializePlayerViewPos(state, action) {
       if (state.gameState !== GameState.READY) {
-        throw new Error("게임 준비중일때만 화면 당 플레이어 유저를 배치 할 수 있습니다.");
+        // throw new Error("게임 준비중일때만 화면 당 플레이어 유저를 배치 할 수 있습니다.");
+        return
       }
       const NeededplayerCount = action.payload;
       let result = [];
@@ -381,6 +397,9 @@ let game = createSlice({
       requestDestoryGame(false);
     },
 
+    // 이벤트 이름을 기준으로 라즈베리파이 서버에 요청한다.
+    // 해당 통신은 게임 형태에 따라 동기 통신이 보장 되어야 할 수도 있다.
+    // 현재 존재하는 6개 게임 기준으로는 동기화가 필요없다.
     changeGameViaEventName(state, action){
       const requestData = action.payload.data;
       const eventName = action.payload.eventName;

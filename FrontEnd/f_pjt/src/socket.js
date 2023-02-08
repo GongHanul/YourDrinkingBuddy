@@ -112,6 +112,10 @@ export const requestForceStopMakingCocktail = (requestCallback) => {
 }
 
 // 클라이언트 -> 서버 음료 변경시 초기화 요청
+export const requestClearBeverage = (ports, requestCallback) => {
+  send("client:clearBeverage", ports, requestCallback);
+}
+
 export const requestChangeBeverage = (ports, requestCallback) => {
   send("client:changeBeverage", ports, requestCallback);
 }
