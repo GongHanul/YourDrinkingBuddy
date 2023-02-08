@@ -1,17 +1,24 @@
 import styled from "styled-components";
 import { React, useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faRotateRight } from "@fortawesome/free-solid-svg-icons"
 import BeverageItem from "../components/BeverageItem";
 import { useDispatch, useSelector } from "react-redux"
 import{ changeReco, changeRatio, resetRatio } from "../store.js"
 import axios from 'axios'
+import Modal from '@mui/material/Modal';
+import ShotModal from "../components/ShotModal";
+import ChangeModal from "../components/ChangeModal";
 
-
-  function Drink() {
-  
-  
+function Drink() {
   const dispatch = useDispatch()
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const [open2, setOpen2] = useState(false);
+  const handleOpen2 = () => setOpen2(true);
+  const handleClose2 = () => setOpen2(false);
+
   const setLengthIfLessFills = (array, length, fills) => {
     let newArray = [];
     if(array.length <= length){
@@ -33,16 +40,11 @@ import axios from 'axios'
   const Background = ['#33559C', '#5674BD','#6683D1', '#7996E6']
   const CircleColor = ['#1C2F56', '#223B77', '#2E4C9E', '#3253AC']
 
-    
-
   let Recipes = useSelector((state)=> state.recoRecipes)
   let [Pump, setPump] = useState([0,1,2,3])
   let port = useSelector((state)=> state.port)
   let Ratio = useSelector((state)=> state.ratio)
-  
 
-
-  
   const MatchRecipe = (ingredients) => {
    
     for (let i = 0; i<4; i++){
@@ -91,7 +93,24 @@ const getRecipes = () => {
             console.log("preset")
           }}>{ Recipes[i].recipe_name }</RecipeItem>)
           })}
-        <Reset onClick={getRecipes}><FontAwesomeIcon icon= { faRotateRight } /></Reset>
+        <BtnDiv>
+          <Btn onClick={getRecipes}>레시피 추천</Btn>
+          <Btn onClick={()=>{
+            handleOpen2()}}>
+            술교체</Btn>
+            <Modal
+            open={open2}
+            onClose2={handleClose2}>
+            <ChangeModal handleClose2 = {handleClose2}/>
+            </Modal>
+          <Btn onClick={()=>{
+            handleOpen()}}>
+            SHOT!</Btn>
+            <Modal
+            open={open}>
+            <ShotModal handleClose = {handleClose}/>
+            </Modal>
+        </BtnDiv>
       </Topdiv>
       <Bottomdiv>
         { Pump.map(function(e, i){
@@ -111,6 +130,7 @@ const Maindiv = styled.body`
 `
 const Topdiv = styled.div`
   display: flex;
+  align-items: center;
   justify-content: space-evenly;
   margin : auto 0;
 `
@@ -119,30 +139,33 @@ const Bottomdiv = styled.div`
   justify-content: space-evenly;
   margin : auto 0;
 `
-const Reset = styled.div`
+const BtnDiv = styled.div`
+  flex-direction : column;
+`
+const Btn = styled.div`
   display: flex;
   align-items: center ;
   justify-content: center;
-  box-shadow: 0 2px 4px #004680, 0px 2px 4px #004680 inset;
-  box-sizing: border-box;
-  border-radius: 1vh;
-  width: 25vh;
-  padding: 3vh;
+  margin : 1vh 0 ;
   color: #004680;
-  font-size: 2em;
-  letter-spacing:10px;
+  font-family: 'Jua', sans-serif;
+  font-weight : bold;
+  font-size: 5vh;
+  letter-spacing:6px;
   &:link {
     transition : 0.5s;
     text-decoration: none;
   }
   &:hover {
-    color: red;
+    color: #ce0808;
+    filter: drop-shadow(0.3vh 0.3vh 0.1vh rgb(0 0 0 / 0.5));
   }
   &.active {
-    color:     Goldenrod;
+    filter: drop-shadow(0.3vh 0.3vh 0.1vh rgb(0 0 0 / 0.5));
+    color: #FAE59C;
     position: relative;
     top: 1vh;
-    border-bottom: 1vh solid     Goldenrod;
+    border-bottom: 1vh solid #FAE59C;
   }
 `
 const RecipeItem = styled.div`
@@ -153,6 +176,7 @@ const RecipeItem = styled.div`
   box-sizing: border-box;
   border-radius: 2vh;
   width: 25vh;
+  max-height : 13vh;
   padding: 2vh;
   color: #004680;
   font-size: 4vh;
