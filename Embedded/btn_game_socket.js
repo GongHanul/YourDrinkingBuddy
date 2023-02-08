@@ -68,11 +68,13 @@ io.on('connection', (socket) => {
   //FE에서 받아온 사람 숫자만큼 배열 선언
   
   const req = socket.request;
+  // 연결 ip parsing
   const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
   const ipslice = ip.slice(7);
+  //console.log("connection with", ipslice, playerData[ipslice]);
+  //console.log(playerCNT)
+
   //지금 연결된 컨트롤러만 count
-  console.log("connection with", ipslice, playerData[ipslice]);
-  console.log(playerCNT)
   if(playerCNT[playerData[ipslice]]==0)
   {
     playerIng+=1; 
@@ -87,7 +89,8 @@ io.on('connection', (socket) => {
     io.to(clientFE).emit('server connection', json);
     //io.to(clientFE).emit('chat message', json);
   }
-  //
+
+  // FE와 연결되면 현재 컨트롤러 연결상태 송신
     socket.on('server:connectFront', (msg) => {
       console.log(msg);
       clientFE = socket.id;
@@ -105,7 +108,7 @@ io.on('connection', (socket) => {
       }
     });
 
-    //FE에서 어떤 게임인지 받는다.
+    //FE로부터 어떤 게임인지 수신
     socket.on('client:createGame', (msg) => {
       //FE로 게임의 초깃값을 보내준다.
       //실제 데이터 msg.gameId
@@ -116,7 +119,8 @@ io.on('connection', (socket) => {
       gameStatus['statusCode'] = 0;
       gameStatus['data'] = "";
       console.log("gameStatus:", gameStatus);
-      const json = JSON.stringify(gameStatus);                    
+      const json = JSON.stringify(gameStatus);     
+      //client로 게임 연결/실행 상태 전송               
       //io.to(clientFE).emit('chat message', json);
       io.to(clientFE).emit('client:createGame', json);
     });
@@ -136,7 +140,7 @@ io.on('connection', (socket) => {
     });
     socket.on('client:destroyGame', (msg) => {
       console.log(msg);
-      // 필요하다면 데이터 init
+      // 필요하다면 데이터 init 추가
       gameStatus['statusCode'] = 0;
       delete gameStatus['data'];
       const json = JSON.stringify(gameStatus);
