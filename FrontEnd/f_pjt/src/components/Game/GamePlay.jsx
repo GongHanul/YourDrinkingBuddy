@@ -1,8 +1,12 @@
 import styled from "styled-components";
-import { React, useState, useEffect } from 'react';
+import { React, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeftLong, faArrowRightLong} from "@fortawesome/free-solid-svg-icons"
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { createGame, initializePlayerViewPos, preserveGameDataHandler, setGameDataHandler, setGameStatePlay, setGameStateReady } from "../../store";
+import gameEnv from './GameEnv';
 
 function GamePlay() {
   const navigate = useNavigate();
@@ -10,25 +14,44 @@ function GamePlay() {
   const id = location.state.id
   const Playercnt = location.state.cnt
   const GameId = `/game${id}`
+  const game = useSelector((state) => state.game)
+
+  const dispatch = useDispatch();
 
   const start = () => {
-  navigate(GameId, { state: { cnt : Playercnt} });}
+    console.log(game.playerCount)
+    if( game.playerCount < Playercnt ){
+      alert(`플레이어 모자릅니다. 현재 플레이어 수 : ${game.playerCount}, 목표 플레이어 수 : ${Playercnt}`)
+    } else {
+      console.log(gameEnv)
+      preserveGameDataHandler(new gameEnv[id].handler());
+      dispatch(setGameDataHandler())
+      dispatch(createGame({playerCount : Playercnt}))
+      navigate(GameId, { state: { cnt : Playercnt} });
+    }
+  }
 
   const back = () => {
     navigate('/game');}
   
-  useEffect(() => {setPlayer([...Array(Playercnt).keys()])} ,[])
-  let [Player, setPlayer] = useState([])
+  useEffect(() => {
+    dispatch(setGameStateReady())
+  } ,[])
+
+  useEffect(() => {
+    dispatch(initializePlayerViewPos(Playercnt));
+  }, [game.playerStatus])
+
   console.log(GameId)
   console.log(Playercnt)
   return (
   <>
   <Full>
   <Display>
-  { Player.map(function(e, i){
+  { game.playerViewPos.map(function(e, i){
     return (
     <Ready index={i}>
-      {i}
+      Player: {e} is Ready.
     </Ready>)
   })}
   </Display>

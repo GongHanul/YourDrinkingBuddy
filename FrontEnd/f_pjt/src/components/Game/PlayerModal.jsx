@@ -11,6 +11,7 @@ function PlayerModal(props) {
   const navigate = useNavigate();
   const [playerCount, setPlayerCount] = useState(0);
   console.log(playerCount)
+
   const move = () => {
     navigate('/gameplay', { state: {id : props.gameid, cnt : playerCount} });}
   
