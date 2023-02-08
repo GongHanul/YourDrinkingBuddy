@@ -3,7 +3,7 @@ import AbstractGameDataHandler from './AbstractGameDataHandler'
 class ClickGameDataHandler extends AbstractGameDataHandler {
 
   getGameId() {
-    return 0;
+    return 3;
   }
 
   createGameData(gameState) {
