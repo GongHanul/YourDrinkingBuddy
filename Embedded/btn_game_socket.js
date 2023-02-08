@@ -35,7 +35,8 @@ let playerCNT ={1:0 , 2:0, 3:0, 4:0}; // 내부 관리용
 
 //game 정상 실행
 let gameStatus={};
-
+//음료 정상 실행
+let beverageStatus={};
 
 // var Gpio = require('onoff').Gpio;
 // var Relay1 = new Gpio(2, 'out');
@@ -86,12 +87,12 @@ io.on('connection', (socket) => {
     console.log(sendStatus)
     console.log("connectionAll", playerCNT)
     const json = JSON.stringify(sendStatus);
-    io.to(clientFE).emit('server connection', json);
+    io.to(clientFE).emit('server:playerParticipate', json);
     //io.to(clientFE).emit('chat message', json);
   }
 
   // FE와 연결되면 현재 컨트롤러 연결상태 송신
-    socket.on('server:connectFront', (msg) => {
+    socket.on('client:connectServer', (msg) => {
       console.log(msg);
       clientFE = socket.id;
       console.log("clientFE", clientFE)
@@ -103,13 +104,13 @@ io.on('connection', (socket) => {
         const json = JSON.stringify(sendStatus);
         sendStatus['playerNum']=playerIng;
         sendStatus['playerStatus']=playerStatus;
-        io.to(clientFE).emit('server connection', json);
+        io.to(clientFE).emit('server:playerParticipate', json);
         //io.to(clientFE).emit('chat message', json);
       }
     });
 
     //FE로부터 어떤 게임인지 수신
-    socket.on('client:createGame', (msg) => {
+    socket.on('client:createGame', (msg, callback) => {
       //FE로 게임의 초깃값을 보내준다.
       //실제 데이터 msg.gameId
       console.log('message: ' + msg);
@@ -121,8 +122,7 @@ io.on('connection', (socket) => {
       console.log("gameStatus:", gameStatus);
       const json = JSON.stringify(gameStatus);     
       //client로 게임 연결/실행 상태 전송               
-      //io.to(clientFE).emit('chat message', json);
-      io.to(clientFE).emit('client:createGame', json);
+      callback(json)
     });
     
     //arduino에서 값을 받아온다.
@@ -138,16 +138,13 @@ io.on('connection', (socket) => {
       io.to(clientFE).emit('server:changeGame', json);
       //io.to(clientFE).emit('chat message', json);
     });
-    socket.on('client:destroyGame', (msg) => {
+    socket.on('client:destroyGame', (msg, callback) => {
       console.log(msg);
       // 필요하다면 데이터 init 추가
       gameStatus['statusCode'] = 0;
       delete gameStatus['data'];
       const json = JSON.stringify(gameStatus);
-      
-      io.to(clientFE).emit('client:destroyGame', json);
-      //io.to(clientFE).emit('chat message', json);
-
+      callback(json);
     });
     socket.on('disconnect', () => {
       console.log('user disconnected', ipslice);
@@ -169,10 +166,11 @@ io.on('connection', (socket) => {
        }
     });
 
-    socket.on('makeCocktail', (msg)=> {
+    socket.on('makeCocktail', (msg, callback)=> {
       // [1, 3, 0, 0]
       console.log(typeof msg);
       controlRelay();
+      callback(json);
     })
   });
 
