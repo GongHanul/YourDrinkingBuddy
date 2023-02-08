@@ -64,7 +64,8 @@ function Game3() {
   <Display>
   { players.map(function(e, i){
     return (
-    <PlayerDisplay index={i}>
+      <PlayerDisplay index={i}>
+      <SCORE>{game3[i].cnt}</SCORE>
       <Player>Player : {game3[i].playerId}</Player>
       { game3[i].cnt < 15 &&<IMG 
       // onClick={()=>{
@@ -88,13 +89,7 @@ function Game3() {
       // }}
       src={img3[game3[i].cnt%2]}></IMG>}
       { game3[i].cnt >= 45 && <IMG 
-      // onClick={()=>{
-      //   dispatch(changeGame3Data({
-      //     idx : i
-      //   }))
-      // }}
       src={img4[game3[i].cnt%2]}></IMG>}
-      <SCORE>{game3[i].cnt}</SCORE>
     </PlayerDisplay>)
   })}
   </Display>

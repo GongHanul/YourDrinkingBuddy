@@ -219,7 +219,7 @@ export const getPreservedGameDataHandler = () => {
 
 let game = createSlice({
   name: 'game',
-  initialState: { gameState: GameState.IDLE, gameData: undefined, playerStatus: [], playerCount: 0, playerViewPos: [] },
+  initialState: { gameState: GameState.IDLE, gameData: undefined, playerStatus: [{id: 1, connection:1}, {id: 2, connection:1}, {id: 3, connection:1}], playerCount: 3, playerViewPos: [] },
   reducers: {
 
     // 여기서 플레이어 : 화면 map을 세팅한다. 임의배치한다.
