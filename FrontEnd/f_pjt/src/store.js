@@ -13,7 +13,8 @@ import {
   StatusCode,
   isConnected,
   requestChangeBeverage,
-  requestConnectServer
+  requestConnectServer,
+  requestChangeGameViaEventName
 } from './socket';
 
 export const CocktailMakerState = {
@@ -34,27 +35,27 @@ let cocktailMaker = createSlice({
       state.state = CocktailMakerState.BUSY;
     },
     makeCocktail(state, action) {
-      if(!isConnected()){
-        throw new Error("술 디스펜서와의 통신에 실패했습니다.");
-      }
+      // if(!isConnected()){
+      //   throw new Error("술 디스펜서와의 통신에 실패했습니다.");
+      // }
       const ratio = action.payload;
       console.log(ratio)
-      if (state === CocktailMakerState.IDLE) {
+      if (state.state === CocktailMakerState.IDLE) {
         requestMakeCocktail(ratio, (responseData) => {
           if (responseData.statusCode === StatusCode.SUCCESS) {
             store.dispatch(setStateIdle());
           }
         });
-        return state = CocktailMakerState.BUSY;
+        state.state = CocktailMakerState.BUSY;
       }
     },
     stopMakeCocktail(state) {
-      if(!isConnected()){
-        throw new Error("술 디스펜서와의 통신에 실패했습니다.");
-      }
-      console.log(state)
-      if (state === CocktailMakerState.BUSY) {
+      // if(!isConnected()){
+      //   throw new Error("술 디스펜서와의 통신에 실패했습니다.");
+      // }
+      if (state.state === CocktailMakerState.BUSY) {
         requestForceStopMakingCocktail((responseData) => {
+          console.log("stop")
           if (responseData.statusCode === StatusCode.SUCCESS) {
             store.dispatch(setStateIdle());
           }
@@ -65,7 +66,7 @@ let cocktailMaker = createSlice({
       if(!isConnected()){
         throw new Error("술 디스펜서와의 통신에 실패했습니다.");
       }
-      if(state === CocktailMakerState.BUSY){
+      if(state.state === CocktailMakerState.BUSY){
         throw new Error("현재 음료 제조 중입니다.");
       }
       const beverageIdsInPort = action.payload;
@@ -219,7 +220,7 @@ export const getPreservedGameDataHandler = () => {
 
 let game = createSlice({
   name: 'game',
-  initialState: { gameState: GameState.IDLE, gameData: undefined, playerStatus: [{id: 1, connection:1}, {id: 2, connection:1}, {id: 3, connection:1}], playerCount: 3, playerViewPos: [] },
+  initialState: { gameState: GameState.IDLE, gameData: undefined, playerStatus: [{id: 1, connection:1}, {id: 2, connection:1}, {id: 3, connection:1}, {id: 4, connection:1}], playerCount: 4, playerViewPos: [] },
   reducers: {
 
     // 여기서 플레이어 : 화면 map을 세팅한다. 임의배치한다.
@@ -378,11 +379,20 @@ let game = createSlice({
       // 게임 파기 요청을 라즈베리파이 서버에 요청한다.
       // 해당 통신은 bloking/동기 통신이 보장되어야 한다.
       requestDestoryGame(false);
+    },
+
+    changeGameViaEventName(state, action){
+      const requestData = action.payload.data;
+      const eventName = action.payload.eventName;
+      if(state.gameState !== GameState.PLAY){
+        throw new Error("게임 중이 아닙니다.");
+      }
+      requestChangeGameViaEventName(eventName, requestData);
     }
   },
 });
 
-export let { setPlayer, removePlayer, addPlayer, initializePlayerViewPos, setGameDataHandler, updateGameData, setGameStateIdle, setGameStateReady, setGameStatePlay, createGame, destroyGame } = game.actions;
+export let { setPlayer, removePlayer, addPlayer, initializePlayerViewPos, setGameDataHandler, updateGameData, setGameStateIdle, setGameStateReady, setGameStatePlay, createGame, destroyGame, changeGameViaEventName } = game.actions;
 
 const store = configureStore({
   reducer: {

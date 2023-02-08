@@ -2,7 +2,7 @@ import { io } from "socket.io-client"
 import { addPlayer, removePlayer, getPreservedGameDataHandler, updateGameData, initializePlayerViewPos, setGameStatePlay, setGameStateIdle } from "./store";
 import store from "./store";
 
-export const socket = io("localhost:9000", { transports: ["websocket"] });
+export const socket = io("70.12.226.153:3000", { transports: ["websocket"] });
 
 export let StatusCode = {
   SUCCESS: 0,
@@ -15,7 +15,7 @@ export let StatusCode = {
 export const listenOnPlayerParticipate = (notifyCallback) => {
   socket.on("server:playerParticipate", (requestData) => {
     // const game = store.getState().game;
-    // console.log(requestData)
+    console.log(requestData)
     if (requestData.playerStatus.connection === 1) {
       store.dispatch(addPlayer(requestData.playerStatus.id))
     } else {
@@ -43,7 +43,15 @@ listenOnPlayerParticipate((requestData)=>{});
 
 // 서버-> 클라이언트 라즈베리파이 서버가 화면 변경을 요청할 때
 export const listenOnChangeGame = (notifyCallback) => {
-  socket.on("server:changeGame", (requestData) => {
+  listenOnChangeGameViaEventName('server:changeGame', notifyCallback);
+}
+
+export const listenOffChangeGame = () => {
+  listenOffChangeGameViaEventName('server:changeGame');
+}
+
+export const listenOnChangeGameViaEventName = (eventName, notifyCallback) => {
+  socket.on(eventName, (requestData) => {
     const game = store.getState().game;
     console.log(game);
     console.log(store)
@@ -53,8 +61,8 @@ export const listenOnChangeGame = (notifyCallback) => {
   })
 }
 
-export const listenOffChangeGame = () => {
-  socket.off("server:changeGame");
+export const listenOffChangeGameViaEventName = (eventName) => {
+  socket.off(eventName);
 }
 
 // 서버-> 클라이언트 라즈베리파이 서버가 게임이 완료되었음을 요청할 때
@@ -89,7 +97,7 @@ export const listenOffDestroyGame = () => {
 
 // 클라이언트 -> 서버 화면 변경시 요청
 export const requestConnectServer = () => {
-  send("client:connectServer");
+  send("client:connectServer", {});
 }
 
 // 클라이언트 -> 서버 칵테일 제조 요청
@@ -133,6 +141,15 @@ export const requestDestoryGame = () => {
     getPreservedGameDataHandler().onDestroyed(game, response.statusCode, response.data);
     store.dispatch(setGameStateIdle());
   });
+}
+
+// 클라이언트 -> 서버 데이터 요청
+export const requestChangeGame = (requestData) => {
+  requestChangeGameViaEventName('client:changeGame', requestData);
+}
+
+export const requestChangeGameViaEventName = (eventName, requestData) => {
+  requestChangeGameViaEventName(eventName, requestData);
 }
 
 export const isConnected = () => {

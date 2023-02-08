@@ -21,6 +21,7 @@ function SideNav() {
 
     const cancel = ()=>{
       dispatch(stopMakeCocktail())
+      handleClose()
     }
 
     const make = () => {
