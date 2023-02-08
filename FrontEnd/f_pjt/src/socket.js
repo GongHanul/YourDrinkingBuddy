@@ -13,23 +13,19 @@ export let StatusCode = {
 
 // 서버-> 클라이언트  게임 시작전 플레이어 참가 의사를 밝힐 때
 export const listenOnPlayerParticipate = (notifyCallback) => {
-  socket.on("server:playerParticipate", (requestData, requestCallback) => {
-    const game = store.getState().game;
-    if (game.player.indexOf(requestData.id) !== -1) {
-      if (requestData.connect === 1) {
-        store.dispatch(addPlayer(requestData.id))
-      } else {
-        store.dispatch(removePlayer(requestData.id))
-      }
-      notifyCallback(requestData);
-      requestCallback({ statusCode: StatusCode.SUCCESS, data: "participate" });
+  socket.on("server:playerParticipate", (requestData) => {
+    // const game = store.getState().game;
+    // console.log(requestData)
+    if (requestData.playerStatus.connection === 1) {
+      store.dispatch(addPlayer(requestData.playerStatus.id))
     } else {
-      requestCallback({ statusCode: StatusCode.FAILURE, data: "alreadyParticipate" })
+      store.dispatch(removePlayer(requestData.playerStatus.id))
     }
+    notifyCallback(requestData);
   })
 }
 
-listenOnPlayerParticipate();
+listenOnPlayerParticipate((requestData)=>{});
 
 // // 서버-> 클라이언트  게임 시작전 플레이어 참가 의사를 밝힐 때
 // export const listenOnPlayerStatus = (notifyCallback) => {
@@ -91,6 +87,11 @@ export const listenOffDestroyGame = () => {
 
 // 송신부
 
+// 클라이언트 -> 서버 화면 변경시 요청
+export const requestConnectServer = () => {
+  send("client:connectServer");
+}
+
 // 클라이언트 -> 서버 칵테일 제조 요청
 export const requestMakeCocktail = (ports, requestCallback) => {
   console.log(`ports : ${ports}`)
@@ -100,6 +101,11 @@ export const requestMakeCocktail = (ports, requestCallback) => {
 // 클라이언트 -> 서버 칵테일 제조 강제 중지 요청
 export const requestForceStopMakingCocktail = (requestCallback) => {
   send("client:forceStopMakingCocktail", null, requestCallback);
+}
+
+// 클라이언트 -> 서버 음료 변경시 초기화 요청
+export const requestChangeBeverage = (ports, requestCallback) => {
+  send("client:changeBeverage", ports, requestCallback);
 }
 
 // // 클라이언트 -> 서버 게임 시작 요청
@@ -121,8 +127,8 @@ export const requestCreateGame = (gameId, playerCount) => {
 }
 
 // 클라이언트 -> 서버 게임 파기 요청
-export const requestDestoryGame = (isGameResultNeeded) => {
-  send("client:destoryGame", { isGameResultNeeded: isGameResultNeeded }, (response) => {
+export const requestDestoryGame = () => {
+  send("client:destoryGame", null, (response) => {
     const game = store.getState().game;
     getPreservedGameDataHandler().onDestroyed(game, response.statusCode, response.data);
     store.dispatch(setGameStateIdle());

@@ -10,7 +10,10 @@ import {
   listenOffCompleteGame,
   requestCreateGame,
   requestDestoryGame,
-  StatusCode
+  StatusCode,
+  isConnected,
+  requestChangeBeverage,
+  requestConnectServer
 } from './socket';
 
 export const CocktailMakerState = {
@@ -20,43 +23,60 @@ export const CocktailMakerState = {
 
 let cocktailMaker = createSlice({
   name: 'cocktailMaker',
-  initialState: CocktailMakerState.IDLE,
+  initialState: {state: CocktailMakerState.IDLE, before: [-1,-1,-1,-1]},
   reducers: {
     setStateIdle(state) {
       console.log("set state idle")
-      return state = CocktailMakerState.IDLE;
+      state.state = CocktailMakerState.IDLE;
 
     },
     setStateBusy(state) {
-      return state = CocktailMakerState.BUSY;
+      state.state = CocktailMakerState.BUSY;
     },
     makeCocktail(state, action) {
+      if(!isConnected()){
+        throw new Error("술 디스펜서와의 통신에 실패했습니다.");
+      }
       const ratio = action.payload;
       console.log(ratio)
       if (state === CocktailMakerState.IDLE) {
         requestMakeCocktail(ratio, (responseData) => {
-          console.log("wait")
           if (responseData.statusCode === StatusCode.SUCCESS) {
-            console.log("make request good")
             store.dispatch(setStateIdle());
           }
         });
-        console.log("abc")
         return state = CocktailMakerState.BUSY;
       }
     },
     stopMakeCocktail(state) {
+      if(!isConnected()){
+        throw new Error("술 디스펜서와의 통신에 실패했습니다.");
+      }
       console.log(state)
       if (state === CocktailMakerState.BUSY) {
         requestForceStopMakingCocktail((responseData) => {
           if (responseData.statusCode === StatusCode.SUCCESS) {
-            console.log("stop request good")
             store.dispatch(setStateIdle());
           }
         });
       }
-      return state
     },
+    changeBeverage(state, action) {
+      if(!isConnected()){
+        throw new Error("술 디스펜서와의 통신에 실패했습니다.");
+      }
+      if(state === CocktailMakerState.BUSY){
+        throw new Error("현재 음료 제조 중입니다.");
+      }
+      const beverageIdsInPort = action.payload;
+      let ports = [];
+      for(let i=0; i<beverageIdsInPort.length; i++){
+        ports.push(beverageIdsInPort[i] === state.before[i]);
+      }
+      requestChangeBeverage(ports,()=>{});
+      state.before = beverageIdsInPort;
+    }
+
   }
 })
 
@@ -199,7 +219,7 @@ export const getPreservedGameDataHandler = () => {
 
 let game = createSlice({
   name: 'game',
-  initialState: { gameState: GameState.IDLE, gameData: undefined, playerStatus: [{ id: 1, connection: 1 }, { id: 2, connection: 1 }], playerCount: 2, playerViewPos: [] },
+  initialState: { gameState: GameState.IDLE, gameData: undefined, playerStatus: [], playerCount: 0, playerViewPos: [] },
   reducers: {
 
     // 여기서 플레이어 : 화면 map을 세팅한다. 임의배치한다.
@@ -217,6 +237,7 @@ let game = createSlice({
           break;
         }
       }
+      result.sort();
       state.playerViewPos = result;
     },
 
@@ -230,15 +251,19 @@ let game = createSlice({
 
     removePlayer(state, action) {
       const playerId = action.payload;
-      const idx = state.player.indexOf(playerId)
-      if (idx > -1) {
-        state.player = state.player.splice(idx, 1)
-      }
+      state.playerStatus = state.playerStatus.filter((elem)=>elem.id !== playerId)
+      state.playerCount = state.playerStatus.length;
     },
 
     addPlayer(state, action) {
       const playerId = action.payload;
-      state.player = [...(new Set([...state.player, playerId]))]
+      const idx = state.playerStatus.findIndex((elem)=> elem.id === playerId)
+      if(idx === -1){
+        state.playerStatus = [...state.playerStatus, {id: playerId, connection:1}]
+      } else{
+        state.playerStatus[idx].connection = 1;
+      }
+      state.playerCount = state.playerStatus.length;
     },
 
     // 게임을 설정한다.
@@ -282,6 +307,7 @@ let game = createSlice({
       listenOnDestroyGame(destroyGameCallback);
       listenOffChangeGame();
       listenOffCompleteGame();
+      requestConnectServer();
 
       // READY상태가 되며 이제부터 플레이어 참여를 기다린다.
       state.gameState = GameState.READY;

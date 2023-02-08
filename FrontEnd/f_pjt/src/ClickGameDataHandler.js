@@ -16,7 +16,16 @@ class ClickGameDataHandler extends AbstractGameDataHandler {
   }
 
   onChanged(gameState, requestData) {
-    return requestData.playerData;
+    console.log(requestData)
+    const idx = gameState.gameData.findIndex((elem) => elem.playerId === requestData.gameData.id);
+    console.log(idx);
+    if(idx > -1){
+      let result = Object.assign([],gameState.gameData);
+      console.log(result);
+      result[idx] = {playerId: requestData.gameData.id, cnt: requestData.gameData.cnt};
+      return result;
+    }
+    return gameState.gameData;
   }
 }
 
