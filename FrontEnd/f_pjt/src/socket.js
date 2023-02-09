@@ -3,6 +3,7 @@ import { addPlayer, removePlayer, getPreservedGameDataHandler, updateGameData, i
 import store from "./store";
 
 export const socket = io("70.12.226.153:3000", { transports: ["websocket"] });
+// export const socket = io("localhost:9000", { transports: ["websocket"] });
 
 export let StatusCode = {
   SUCCESS: 0,
@@ -133,7 +134,8 @@ export const requestCreateGame = (gameId, playerCount) => {
   send("client:createGame", { gameId: gameId, playerCount: playerCount }, (response) => {
     const game = store.getState().game;
     store.dispatch(initializePlayerViewPos(playerCount));
-    getPreservedGameDataHandler().onCreated(game, response.statusCode, response.data);
+    const createGameResult = getPreservedGameDataHandler().onCreated(game, response.statusCode, response.data);
+    store.dispatch(updateGameData(createGameResult))
     store.dispatch(setGameStatePlay());
   });
 }
@@ -143,18 +145,16 @@ export const requestDestoryGame = () => {
   send("client:destoryGame", null, (response) => {
     const game = store.getState().game;
     getPreservedGameDataHandler().onDestroyed(game, response.statusCode, response.data);
+    
     store.dispatch(setGameStateIdle());
   });
 }
 
 // 클라이언트 -> 서버 데이터 요청
-export const requestChangeGame = (requestData) => {
-  requestChangeGameViaEventName('client:changeGame', requestData);
-}
+// export const requestChangeGame = (requestData, requestCallback) => {
+//   send('client:changeGame', requestData, requestCallback);
+// }
 
-export const requestChangeGameViaEventName = (eventName, requestData) => {
-  requestChangeGameViaEventName(eventName, requestData);
-}
 
 export const isConnected = () => {
   return !socket || socket.connected === false;
@@ -166,7 +166,7 @@ const trySocketConnection = () => {
   socket.connect();
 };
 
-const send = (event, data, callback) => {
+export const send = (event, data, callback) => {
   if (isConnected()) {
     trySocketConnection();
   }

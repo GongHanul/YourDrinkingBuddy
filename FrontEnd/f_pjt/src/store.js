@@ -13,14 +13,16 @@ import {
   StatusCode,
   requestChangeBeverage,
   requestConnectServer,
-  requestChangeGameViaEventName,
-  requestClearBeverage
+  requestClearBeverage,
+  send
 } from './socket';
 
 export const CocktailMakerState = {
   IDLE: 0,
   BUSY: 1
 }
+
+const defaultCallback = (data) => {};
 
 let cocktailMaker = createSlice({
   name: 'cocktailMaker',
@@ -56,7 +58,7 @@ let cocktailMaker = createSlice({
         });
       }
     },
-    clearBeverage(state, action){
+    clearPorts(state, action){
       if(state.state === CocktailMakerState.BUSY){
         alert("술 디스펜서가 작동중입니다. 기달려주세요.");
         return
@@ -64,7 +66,7 @@ let cocktailMaker = createSlice({
       const beverageIdsInPort = action.payload;
         let ports = [];
         for(let i=0; i<beverageIdsInPort.length; i++){
-          ports.push(beverageIdsInPort[i] === state.before[i]);
+          ports.push(beverageIdsInPort[i] !== state.before[i]);
         }
         requestClearBeverage(ports,(responseData)=>{
           if (responseData.statusCode === StatusCode.FAILURE) {
@@ -74,7 +76,7 @@ let cocktailMaker = createSlice({
         });
       state.state = CocktailMakerState.BUSY;
     },
-    changeBeverage(state, action) {
+    changePorts(state, action) {
       if(state.state === CocktailMakerState.BUSY){
         alert("술 디스펜서가 작동중입니다. 기달려주세요.");
         return
@@ -82,7 +84,7 @@ let cocktailMaker = createSlice({
       const beverageIdsInPort = action.payload;
         let ports = [];
         for(let i=0; i<beverageIdsInPort.length; i++){
-          ports.push(beverageIdsInPort[i] === state.before[i]);
+          ports.push(beverageIdsInPort[i] !== state.before[i]);
         }
         requestChangeBeverage(ports,(responseData)=>{
           if (responseData.statusCode === StatusCode.FAILURE) {
@@ -96,7 +98,7 @@ let cocktailMaker = createSlice({
   }
 })
 
-export let { setStateIdle, setStateBusy, makeCocktail, stopMakeCocktail } = cocktailMaker.actions
+export let { setStateIdle, setStateBusy, makeCocktail, stopMakeCocktail, clearPorts, changePorts } = cocktailMaker.actions
 
 
 let ratio = createSlice({
@@ -318,7 +320,7 @@ let game = createSlice({
       const param = action.payload;
 
       // const playerParticipateCallback = param && param.playerParticipateCallback ? param.playerParticipateCallback : (data) => { };
-      const destroyGameCallback = param && param.destroyGameCallback ? param.destroyGameCallback : (data) => { };
+      const destroyGameCallback = param && param.destroyGameCallback ? param.destroyGameCallback : defaultCallback;
 
       // listenOnPlayerParticipate(playerParticipateCallback);
       listenOnDestroyGame(destroyGameCallback);
@@ -341,9 +343,9 @@ let game = createSlice({
     setGameStatePlay(state, action) {
       const param = action.payload;
 
-      const changeGameCallback = param && param.changeGameCallback ? param.changeGameCallback : (data) => { };
-      const destroyGameCallback = param && param.destroyGameCallback ? param.destroyGameCallback : (data) => { };
-      const completeGameCallback = param && param.completeGameCallback ? param.completeGameCallback : (data) => { };
+      const changeGameCallback = param && param.changeGameCallback ? param.changeGameCallback : defaultCallback;
+      const destroyGameCallback = param && param.destroyGameCallback ? param.destroyGameCallback : defaultCallback;
+      const completeGameCallback = param && param.completeGameCallback ? param.completeGameCallback : defaultCallback;
 
       // listenOffPlayerParticipate();
       listenOnChangeGame(changeGameCallback);
@@ -401,12 +403,15 @@ let game = createSlice({
     // 해당 통신은 게임 형태에 따라 동기 통신이 보장 되어야 할 수도 있다.
     // 현재 존재하는 6개 게임 기준으로는 동기화가 필요없다.
     changeGameViaEventName(state, action){
-      const requestData = action.payload.data;
-      const eventName = action.payload.eventName;
+      const param = action.payload;
+
+      const requestData = param.data;
+      const eventName = param.eventName;
+      const chanvgeGameCallback = param.chanvgeGameCallback ? param.chanvgeGameCallback : defaultCallback;
       if(state.gameState !== GameState.PLAY){
         throw new Error("게임 중이 아닙니다.");
       }
-      requestChangeGameViaEventName(eventName, requestData);
+      send(eventName, requestData, chanvgeGameCallback);
     }
   },
 });

@@ -1,30 +1,76 @@
 import styled from "styled-components";
-import { React, useEffect } from 'react';
+import { React } from 'react';
 import Box from '@mui/material/Box';
+import { useDispatch } from 'react-redux';
+import { changePorts, clearPorts } from "../store";
 import { useSelector } from 'react-redux';
+import { useState } from 'react';
+import { CocktailMakerState } from './../store';
 
 function ChangeModal(props) {
   const handleClose = props.handleClose2
-  return (
-  <>
-  <Box sx={style}>
-    <Change1>교 체 중 🍺</Change1>
-    <Change1>1. 술을 교체하는 과정입니다.</Change1>
-    <Change1>2. 술병에 꽂힌 호스를 뽑고 Clear를 눌러주세요</Change1>
-    <Change1>feat. 호스를 비우는 단계입니다.</Change1>
-    <br />
-    <ClearBtn onClick={()=>{
-    }} >CLEAR</ClearBtn>
+  const cocktailMaker = useSelector((state) => state.cocktailMaker);
+  
+  const port = useSelector((state) => state.port)
+  const ports = []
+  for(let i=0; i<port.length; i++){
+    ports.push(port[i].beverage_id);
+  }
+  const dispatch = useDispatch();
+  const [state, setState] = useState(0);
 
-    <Change1>교 체 완 료 🍺</Change1>
-    <Change1>1. 비운 호스를 새 술병에 꽂아주세요.</Change1>
-    <Change1>2. Done을 눌러주세요.</Change1>
-    <br />
-    <ClearBtn onClick={()=>{
-      handleClose()
-    }} >DONE</ClearBtn>
+  const afterClear = () =>{
+    setState(1);
+  }
+
+  const afterChange = () =>{
+    setState(2);
+  }
+  console.log(ports)
+  return (
+  <Box sx={style}>
+    {(() => {
+      console.log(state)
+      if(state === 0){
+        return (<>
+          <Change1>1. 술을 교체하는 과정입니다.</Change1>
+          <Change1>2. 술병에 꽂힌 호스를 뽑고 Clear를 눌러주세요</Change1>
+          <Change1>feat. 호스를 비우는 단계입니다.</Change1>
+          <br />
+          {(() => {
+            if(cocktailMaker.state === CocktailMakerState.BUSY){
+              return (<ClearBtn disabled> 주 조 중 🍺</ClearBtn>)
+            }else{
+              return (<ClearBtn onClick={()=>{
+                dispatch(clearPorts(ports))
+                afterClear()
+              }} >CLEAR</ClearBtn>);
+            }
+          })()}
+          
+        </>)
+      }else if(state === 1){
+        if(cocktailMaker.state === CocktailMakerState.BUSY){
+          return (<Change1>교 체 중 🍺</Change1>) ;
+        }else{
+          return (<>
+            <Change1>교 체 완 료 🍺</Change1>
+            <Change1>1. 비운 호스를 새 술병에 꽂아주세요.</Change1>
+            <Change1>2. Done을 눌러주세요.</Change1>
+            <br />
+            <ClearBtn onClick={()=>{
+              dispatch(changePorts(ports))
+              afterChange()
+            }} >DONE</ClearBtn>
+          </>
+          );
+        }
+      }else{
+        console.log("bye")
+        return (<>{handleClose()}</>);
+      }
+    })()}
   </Box>
-  </>
   )
 }
 
@@ -64,6 +110,8 @@ const ClearBtn = styled.button`
     color: red;
   }
 `
+
+
 const State = styled.div`
   display: none;
 `
