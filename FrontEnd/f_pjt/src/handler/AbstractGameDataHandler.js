@@ -1,5 +1,5 @@
 import GameDataHandler from './GameDataHandler'
-import { StatusCode } from './socket'
+import { StatusCode } from '../socket'
 
 class AbstractGameDataHandler extends GameDataHandler {
 

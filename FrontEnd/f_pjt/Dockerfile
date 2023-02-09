@@ -2,7 +2,8 @@ FROM node:alpine as builder
 
 WORKDIR /frontend
 COPY package*.json ./
-RUN npm install
+COPY package-lock.json ./
+RUN npm ci
 RUN npm install react-scripts@latest -g
 
 COPY . .

@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { React } from 'react';
 import { useDispatch, useSelector } from "react-redux"
 import { preserveGameDataHandler, setGameDataHandler, setGameStatePlay } from "../store";
-import DummyGameDataHandler from '../DummyGameDataHandler'
+import DummyGameDataHandler from '../handler/DummyGameDataHandler'
 
 function MessageComponent(){
   const game = useSelector((state) => state.game);
