@@ -7,6 +7,7 @@ import axios from 'axios'
 import Modal from '@mui/material/Modal';
 import ShotModal from "../components/ShotModal";
 import ChangeModal from "../components/ChangeModal";
+import { makeCocktail, stopMakeCocktail } from '../store';
 
 function Drink() {
   const dispatch = useDispatch()
@@ -18,6 +19,15 @@ function Drink() {
   const [open2, setOpen2] = useState(false);
   const handleOpen2 = () => setOpen2(true);
   const handleClose2 = () => setOpen2(false);
+
+  const ratio = useSelector((state)=>state.ratio)
+  const cancel = ()=>{
+    dispatch(stopMakeCocktail())
+  }
+
+  const make = () => {
+    dispatch(makeCocktail([ratio[0].rate,ratio[1].rate,ratio[2].rate,ratio[3].rate]))
+  }
 
   const setLengthIfLessFills = (array, length, fills) => {
     let newArray = [];
@@ -103,12 +113,14 @@ const getRecipes = () => {
             onClose2={handleClose2}>
             <ChangeModal handleClose2 = {handleClose2}/>
             </Modal>
-          <Btn onClick={()=>{
-            handleOpen()}}>
+          <Btn  onClick={async ()=>{
+            make()
+            handleOpen()
+            }}>
             SHOT!</Btn>
             <Modal
             open={open}>
-            <ShotModal handleClose = {handleClose}/>
+            <ShotModal handleClose = {handleClose} cancel = { cancel }/>
             </Modal>
         </BtnDiv>
       </Topdiv>

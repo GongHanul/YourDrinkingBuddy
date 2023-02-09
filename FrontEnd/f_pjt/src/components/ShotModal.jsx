@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { React, useEffect } from 'react';
+import { React, useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import { CocktailMakerState } from './../store';
 import { useSelector } from 'react-redux';
@@ -8,6 +8,7 @@ function ShotModal(props) {
   const cancel = props.cancel
   const handleClose = props.handleClose
   const cocktailMakerState = useSelector((state) => state.cocktailMaker);
+  const [page, setPage] = useState(1)
 
   useEffect(()=>{
     if( cocktailMakerState.state === CocktailMakerState.IDLE ){
@@ -18,13 +19,22 @@ function ShotModal(props) {
   return (
   <>
   <Box sx={style}>
-    <State> 상태 : {cocktailMakerState.state}</State>
+    {/* shot 눌렀을때 (page1) */}
+ {page === 1  && <><State> 상태 : {cocktailMakerState.state}</State>
     <Loading>제 조 중 🍺</Loading>
     <Loading>가 마 니 이 써</Loading>
     <br />
     <StopBtn onClick={()=>{
+      setPage(2)
       cancel()
     }} >SSSSSTOP</StopBtn>
+    </>}
+    {/* stop 눌렀을떄 (page2)*/}
+    {page === 2 && <>
+    <Loading>잔을 비워주세요</Loading>
+    <br />
+    <StopBtn onClick={handleClose} >CLOSE</StopBtn>   
+    </>}
   </Box>
   </>
   )
