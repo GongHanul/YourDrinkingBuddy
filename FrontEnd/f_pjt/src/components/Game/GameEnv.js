@@ -2,6 +2,7 @@
 import HeartRateGameDataHandler from './../../handler/HeartRateGameDataHandler'
 import ClickGameDataHandler from './../../handler/ClickGameDataHandler';
 
+
 const gameEnv = {
   1: { handler: HeartRateGameDataHandler },
   2: { handler: ClickGameDataHandler },
