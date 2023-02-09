@@ -6,7 +6,6 @@ import LinearProgress from '@mui/material/LinearProgress';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useDispatch, useSelector } from "react-redux";
 import { /*changeGame3Data,*/ preserveGameDataHandler, createGame, setGameStatePlay, setGameDataHandler, GameState } from "../../store.js";
-import ClickGameDataHandler from './../../ClickGameDataHandler';
 
 function Game3() {
   const location = useLocation();
