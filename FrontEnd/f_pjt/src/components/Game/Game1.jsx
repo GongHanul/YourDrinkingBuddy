@@ -2,8 +2,14 @@ import styled from "styled-components";
 import { React, useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
+import Modal from '@mui/material/Modal';
+import Game1Modael from "./Game1Modal";
 
 function Game1() {
+  const [open, setOpen] = useState(true);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   const location = useLocation();
   const Playercnt = location.state.cnt
   const img = ['img/game1/game1_1.png', 'img/game1/game1_2.png']
@@ -18,6 +24,13 @@ function Game1() {
   return (
   <>
   <Full>
+  <Modal
+    open={open}
+    // onClose={handleClose}
+  >
+    <Game1Modael handleClose = {handleClose} />
+  </Modal>    
+
   <Display>
       {players.map(function (e, i) {
         return (
