@@ -1,27 +1,34 @@
 import styled from "styled-components";
-import { React} from 'react';
+import { React, useState, useEffect } from 'react';
+
 import Box from '@mui/material/Box';
 
 function Game1Modal(props) {
   const handleClose = props.handleClose
+  const [timeLeft, setTimeLeft] = useState(10);
+
+  useEffect(() => {
+    let intervalId = setInterval(() => {
+    setTimeLeft((prevTime) => {
+    if (prevTime === 0) {
+      handleClose();
+    } else {
+      return prevTime - 1;
+    }});}, 1000);
+    return () => clearInterval(intervalId);}, []);
+
   return (
   <>
   <Box sx={style}>
-    <Change1>교 체 중 🍺</Change1>
-    <Change1>1. 술을 교체하는 과정입니다.</Change1>
-    <Change1>2. 술병에 꽂힌 호스를 뽑고 Clear를 눌러주세요</Change1>
-    <Change1>feat. 호스를 비우는 단계입니다.</Change1>
-    <br />
-    <ClearBtn onClick={()=>{
-    }} >CLEAR</ClearBtn>
-
-    <Change1>교 체 완 료 🍺</Change1>
-    <Change1>1. 비운 호스를 새 술병에 꽂아주세요.</Change1>
-    <Change1>2. Done을 눌러주세요.</Change1>
-    <br />
-    <ClearBtn onClick={()=>{
-      handleClose()
-    }} >DONE</ClearBtn>
+    <Change1>심전도 게임💖</Change1>
+    <Change1>10초 후 게임이 시작됩니다.. {timeLeft}</Change1>
+    <br/>
+    <Change1>주의사항💢</Change1>
+    <Change1>1. 손가락을 그림과 같이 센서에 붙여주세요.</Change1>
+    <Change1>[너무 약한 힘이거나 센 힘으로 누르면 </Change1>
+    <Change1>측정이 잘 안될 수 있습니다.]</Change1>
+    <Change1>2. 게임을 진행하는 동안 한 자세를 유지해주시면</Change1>
+    <Change1>더 정확한 심박수를 알 수 있습니다.</Change1>
   </Box>
   </>
   )
