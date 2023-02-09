@@ -46,7 +46,7 @@ function Game1() {
       src={img1[i]}></IMG>
       {/* <IMG 
       src={img2[i%3]}></IMG> */}
-      <CNT>{game1[i].cnt}</CNT>
+      <CNT>{game1[i].heartRate}</CNT>
       </STATE>
       {/* } */}
       </PlayerDisplay>
