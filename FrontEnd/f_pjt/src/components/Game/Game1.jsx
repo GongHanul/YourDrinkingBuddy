@@ -13,6 +13,8 @@ function Game1() {
   const location = useLocation();
   const Playercnt = location.state.cnt
   const img = ['img/game1/game1_1.png', 'img/game1/game1_2.png']
+  const img1 = ['img/game1/heart1.gif', 'img/game1/heart2.gif', 'img/game1/heart3.gif', 'img/game1/heart4.gif']
+  const img2 = ['img/game1/dance.gif', 'img/game1/dance_cute.gif', 'img/game1/monkey.gif']
 
   const game = useSelector((state)=>state.game);
   const game1 = game.gameData
@@ -37,9 +39,15 @@ function Game1() {
       <PlayerDisplay index={i}>
       <Player>Player : {game1[i].playerId}</Player>
       {/* { game1[i].cnt >= 45 &&  */}
+      {/* <IMG 
+      src={img[game1[i].cnt%2]}></IMG> */}
+      <STATE>
       <IMG 
-      src={img[game1[i].cnt%2]}></IMG>
-      <p>{game1[i].cnt}</p>
+      src={img1[i]}></IMG>
+      {/* <IMG 
+      src={img2[i%3]}></IMG> */}
+      <CNT>{game1[i].cnt}</CNT>
+      </STATE>
       {/* } */}
       </PlayerDisplay>
     )
@@ -53,6 +61,15 @@ function Game1() {
     )
   // }
 }
+const CNT = styled.div`
+  font-family: 'Silkscreen', cursive;
+  font-size: 20vh;
+`
+
+const STATE = styled.div`
+  display : flex;
+`
+
 const Player = styled.div`
   display : flex;
 `
@@ -101,6 +118,7 @@ const PlayerDisplay = styled.div`
   flex-direction: column;
   box-shadow: 0 1px 2px #063C69, 0 1px 2px #063C69 inset;
   box-sizing: border-box;
-  background-image: url(${'img/game1/whale.gif'});
+  /* background-image: url(${'img/game1/whale.gif'}); */
+  background-color: grey;
 `
 export default Game1
