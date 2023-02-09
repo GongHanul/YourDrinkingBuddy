@@ -14,7 +14,8 @@ import {
   requestChangeBeverage,
   requestConnectServer,
   requestClearBeverage,
-  send
+  send,
+  requestCompleteGame
 } from './socket';
 
 export const CocktailMakerState = {
@@ -237,7 +238,7 @@ export const getPreservedGameDataHandler = () => {
 
 let game = createSlice({
   name: 'game',
-  initialState: { gameState: GameState.IDLE, gameData: undefined, playerStatus: [{id: 1, connection:1}, {id: 2, connection:1}, {id: 3, connection:1}, {id: 4, connection:1}], playerCount: 4, playerViewPos: [] },
+  initialState: { gameState: GameState.IDLE, gameData: undefined, gameResult: undefined, playerStatus: [{id: 1, connection:1}, {id: 2, connection:1}, {id: 3, connection:1}, {id: 4, connection:1}], playerCount: 4, playerViewPos: [] },
   reducers: {
 
     // 여기서 플레이어 : 화면 map을 세팅한다. 임의배치한다.
@@ -293,12 +294,19 @@ let game = createSlice({
       // gameData는 GameData Interface를 따라야 한다.
       // DI (Dependency Injection) 패턴을 사용하였기 때문에, 반드시 외부에서 생성하여 주입해야 한다.
       const gameDataInstance = getPreservedGameDataHandler().createGameData(state);
+      const gameResultInstance = getPreservedGameDataHandler().createGameResult(state);
       state.gameData = gameDataInstance;
+      state.gameResult = gameResultInstance;
     },
 
     updateGameData(state, action) {
       const gameData = action.payload;
       state.gameData = gameData;
+    },
+
+    updateGameResult(state, action){
+      const gameResult = action.payload;
+      state.gameResult = gameResult;
     },
 
     // 게임 상태를 Idle로 바꾼다.
@@ -399,12 +407,25 @@ let game = createSlice({
       requestDestoryGame(false);
     },
 
+
+    // 게임 완료 요청을 날린다.
+    // payload 예시 : {data:{...}}
+    // 컨트롤러 입력을 통해 게임을 중단하는 게임에 경우 해당 메세지를 통해 게임 완료 요청을 한다.
+    // PLAY 상황에서만 요청 가능하다.
+    completeGame(state, action) {
+      if(state.gameState !== GameState.PLAY){
+        throw new Error("게임 시작중이 아닙니다.");
+      }
+      // 게임 완료 요청을 라즈베리파이 서버에 요청한다.
+      const data = action.payload.data;
+      requestCompleteGame(data);
+    },
+
     // 이벤트 이름을 기준으로 라즈베리파이 서버에 요청한다.
     // 해당 통신은 게임 형태에 따라 동기 통신이 보장 되어야 할 수도 있다.
     // 현재 존재하는 6개 게임 기준으로는 동기화가 필요없다.
     changeGameViaEventName(state, action){
       const param = action.payload;
-
       const requestData = param.data;
       const eventName = param.eventName;
       const chanvgeGameCallback = param.chanvgeGameCallback ? param.chanvgeGameCallback : defaultCallback;
@@ -416,7 +437,7 @@ let game = createSlice({
   },
 });
 
-export let { setPlayer, removePlayer, addPlayer, initializePlayerViewPos, setGameDataHandler, updateGameData, setGameStateIdle, setGameStateReady, setGameStatePlay, createGame, destroyGame, changeGameViaEventName } = game.actions;
+export let { setPlayer, removePlayer, addPlayer, initializePlayerViewPos, setGameDataHandler, updateGameData, updateGameResult, setGameStateIdle, setGameStateReady, setGameStatePlay, createGame, destroyGame, completeGame, changeGameViaEventName } = game.actions;
 
 const store = configureStore({
   reducer: {

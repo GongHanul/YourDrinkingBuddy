@@ -1,9 +1,9 @@
 import { io } from "socket.io-client"
-import { addPlayer, removePlayer, getPreservedGameDataHandler, updateGameData, initializePlayerViewPos, setGameStatePlay, setGameStateIdle } from "./store";
+import { addPlayer, removePlayer, getPreservedGameDataHandler, updateGameData, initializePlayerViewPos, setGameStatePlay, setGameStateIdle, updateGameResult } from "./store";
 import store from "./store";
 
-export const socket = io("70.12.226.153:3000", { transports: ["websocket"] });
-// export const socket = io("localhost:9000", { transports: ["websocket"] });
+// export const socket = io("70.12.226.153:3000", { transports: ["websocket"] });
+export const socket = io("localhost:9000", { transports: ["websocket"] });
 
 export let StatusCode = {
   SUCCESS: 0,
@@ -71,7 +71,7 @@ export const listenOnCompleteGame = (notifyCallback) => {
   socket.on("server:completeGame", (requestData) => {
     const game = store.getState().game;
     const completeGameResult = getPreservedGameDataHandler().onCompleted(game, requestData);
-    store.dispatch(updateGameData(completeGameResult));
+    store.dispatch(updateGameResult(completeGameResult));
     notifyCallback(requestData);
   })
 }
@@ -85,7 +85,9 @@ export const listenOnDestroyGame = (notifyCallback) => {
   socket.on("server:destroyGame", (requestData) => {
     const game = store.getState().game;
     const destroyGameResult = getPreservedGameDataHandler().onDestroyed(game, StatusCode.SUCCESS, requestData);
-    store.dispatch(updateGameData(destroyGameResult));
+    if(destroyGameResult){
+      store.dispatch(updateGameResult(destroyGameResult));
+    }
     notifyCallback(requestData);
   })
 }
@@ -148,6 +150,10 @@ export const requestDestoryGame = () => {
     
     store.dispatch(setGameStateIdle());
   });
+}
+
+export const requestCompleteGame = (requestData) => {
+  send("client:completeGame", requestData);
 }
 
 // 클라이언트 -> 서버 데이터 요청

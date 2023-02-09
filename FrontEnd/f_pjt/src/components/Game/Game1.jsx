@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import Modal from '@mui/material/Modal';
 import Game1Modael from "./Game1Modal";
+import { GameState, completeGame } from "../../store";
 
 function Game1() {
   const [open, setOpen] = useState(true);
@@ -11,18 +12,21 @@ function Game1() {
   const handleClose = () => setOpen(false);
 
   const location = useLocation();
-  const Playercnt = location.state.cnt
+  const Playercnt = location.state.cnt;
   const img = ['img/game1/game1_1.png', 'img/game1/game1_2.png']
   const img1 = ['img/game1/heart1.gif', 'img/game1/heart2.gif', 'img/game1/heart3.gif', 'img/game1/heart4.gif']
   const img2 = ['img/game1/dance.gif', 'img/game1/dance_cute.gif', 'img/game1/monkey.gif']
 
   const game = useSelector((state)=>state.game);
-  const game1 = game.gameData
+  const dispatch = useDispatch();
+  const game1 = game.gameData;
   const players = game.playerViewPos;
 
-  // if (game.gameState !== GameState.PLAY) {
-  //   return (<><TopDiv> 게임 생성 중입니다. 기다려주세요... </TopDiv></>)
-  // } else {
+  
+
+  if (game.gameState !== GameState.PLAY) {
+    return (<>게임 생성 중입니다. 기다려주세요...</>)
+  } else {
   return (
   <>
   <Full>
@@ -46,7 +50,7 @@ function Game1() {
       src={img1[i]}></IMG>
       {/* <IMG 
       src={img2[i%3]}></IMG> */}
-      <CNT>{game1[i].heartRate}</CNT>
+      <CNT>{game1[i].bpm}</CNT>
       </STATE>
       {/* } */}
       </PlayerDisplay>
@@ -54,12 +58,12 @@ function Game1() {
     })}
   </Display>
   <Side>
-    <Quit>QUIT</Quit>
+    <Quit onClick={() => {dispatch(completeGame({}))} /* 비동기 통신이므로 여기에 navigate 를 달면 큰일난다. 방법1. complete callback을 달기 방법2. hook으로 game.gameState == 0 감지하기, 방법 3. hook으로 game.gameResult가 변경됨을 감지하기,  */     }>QUIT</Quit>
   </Side>
   </Full>
     </>
     )
-  // }
+  }
 }
 const CNT = styled.div`
   font-family: 'Silkscreen', cursive;

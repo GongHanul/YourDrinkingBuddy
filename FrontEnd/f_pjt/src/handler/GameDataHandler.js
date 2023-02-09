@@ -23,6 +23,12 @@ class GameDataHandler {
     return {};
   }
 
+  // 빈 게임 결과 데이터(gameResult)를 생성한다.
+  // 반드시 리턴값이 존재해야 하고, gameResult와 같은 게임타입이여야 한다.
+  createGameResult(gameState) {
+    return {};
+  }
+
   // 게임 생성 결과를 처리한다.
   // 게임 생성에 성공하면 View 에 해당 내용을 갱신한다.
   // 게임 생성에 실패하면 예외를 내놓고, 예외 처리는 View에서 진행하고 여기서 하지 않는다.

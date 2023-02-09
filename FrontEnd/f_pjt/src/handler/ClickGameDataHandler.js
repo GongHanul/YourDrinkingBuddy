@@ -15,6 +15,10 @@ class ClickGameDataHandler extends AbstractGameDataHandler {
     return result
   }
 
+  createGameResult(gameState){
+    return gameState.gameData;
+  }
+
   onChanged(gameState, requestData) {
     console.log(requestData)
     const idx = gameState.gameData.findIndex((elem) => elem.playerId === requestData.gameData.id);
