@@ -13,10 +13,7 @@ function Game1() {
 
   const location = useLocation();
   const Playercnt = location.state.cnt;
-  const img = ['img/game1/game1_1.png', 'img/game1/game1_2.png']
   const img1 = ['img/game1/heart1.gif', 'img/game1/heart2.gif', 'img/game1/heart3.gif', 'img/game1/heart4.gif']
-  const img2 = ['img/game1/dance.gif', 'img/game1/dance_cute.gif', 'img/game1/monkey.gif']
-
   const game = useSelector((state)=>state.game);
   const dispatch = useDispatch();
   const game1 = game.gameData;
@@ -42,17 +39,18 @@ function Game1() {
         return (
       <PlayerDisplay index={i}>
       <Player>Player : {game1[i].playerId}</Player>
-      {/* { game1[i].cnt >= 45 &&  */}
-      {/* <IMG 
-      src={img[game1[i].cnt%2]}></IMG> */}
+
       <STATE>
-      <IMG 
-      src={img1[i]}></IMG>
-      {/* <IMG 
-      src={img2[i%3]}></IMG> */}
+      { game1[i].bpm < 70 && <IMG 
+      src={img1[0]}></IMG>}
+      { game1[i].bpm >= 70 && game1[i].bpm < 90 && <IMG 
+      src={img1[1]}></IMG>}
+      { game1[i].bpm >= 90 && game1[i].bpm <110 && <IMG 
+      src={img1[2]}></IMG>}
+      { game1[i].bpm >= 110 && <IMG 
+      src={img1[3]}></IMG>}
       <CNT>{game1[i].bpm}</CNT>
       </STATE>
-      {/* } */}
       </PlayerDisplay>
     )
     })}
