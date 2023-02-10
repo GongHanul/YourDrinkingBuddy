@@ -15,7 +15,7 @@ function Game2() {
   })}
   </Display>
   <Side>
-  <Restart>RESTART<FontAwesomeIcon icon={faArrowRotateRight} /></Restart>
+  <Restart>REPLAY<FontAwesomeIcon icon={faArrowRotateRight} /></Restart>
   </Side>
   </Full>
   </>

@@ -94,6 +94,7 @@ const Full = styled.div`
   display : flex;
   flex-wrap: wrap;
   width : 100vw;
+  background :#ffecec ;
   `
 const Display = styled.div`
   display : flex;
@@ -107,7 +108,6 @@ const Side = styled.div`
   padding : 2vh;
   width : 100%;
   height : 10%;
-
 `
 const Ready = styled.div`
   display : flex;
@@ -125,7 +125,7 @@ const Start = styled.div`
   display : flex;
   justify-content: center;
   align-items : center;
-  color : #1966A5;
+  color : #4b76c0 ;
   font-size: 3vh;
   font-family: 'Jua', sans-serif;
   font-weight : bold;
