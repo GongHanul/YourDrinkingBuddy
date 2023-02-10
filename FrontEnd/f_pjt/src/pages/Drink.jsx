@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { React, useState } from 'react';
+import { React, useState, useEffect } from 'react';
 import BeverageItem from "../components/BeverageItem";
 import { useDispatch, useSelector } from "react-redux"
 import{ changeReco, changeRatio, resetRatio } from "../store.js"
@@ -75,6 +75,10 @@ function Drink() {
         }
       }
     }}
+
+  useEffect(() => {
+    getRecipes()
+  }, [port])
   
   let beverages = []
   for (let i of port) {
@@ -124,12 +128,16 @@ const getRecipes = () => {
       </Topdiv>
       <Bottomdiv>
         { Pump.map(function(e, i){
-          return (<BeverageItem index={i} background ={Background[i]} circleColor = {CircleColor[i]}/>)
+          return (<BeverageItem index={i} background ={Background[i]} circleColor = {CircleColor[i]} getRecipes = {getRecipes}/>)
         })}
       </Bottomdiv>
     </Maindiv>
 )
 }
+const None = styled.span`
+  display: non;
+`
+
 const Maindiv = styled.body`
   width:100vw;
   height:100vh;

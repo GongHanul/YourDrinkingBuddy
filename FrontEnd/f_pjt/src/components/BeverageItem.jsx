@@ -64,6 +64,7 @@ const Num = styled.div`
         onClose={handleClose}
       >
        <BeverageModal
+       getRecipes = { props.getRecipes }
        reco = { props.getRecipes }
        index = { props.index }
        handleClose = {handleClose}/>
