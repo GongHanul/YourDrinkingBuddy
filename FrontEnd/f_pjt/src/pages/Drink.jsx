@@ -65,11 +65,9 @@ function Drink() {
     
       for (const ingredient of ingredients){
         
-        console.log(" 레시피 재료 id ",ingredient.beverage_id)
-        console.log("포트 번호", Port.id)
-        console.log(" 포트 꼽힌 음료 id ", Port.beverage_id)
-        if(Port.beverage_id == ingredient.beverage_id){
-          console.log( "둘이 일치해~~", i,ingredient.recipe_ingredient_ratio )
+
+        if(Port.beverage_id === ingredient.beverage_id){
+        
           dispatch(changeRatio({
             idx : i,
             rate : ingredient.recipe_ingredient_ratio

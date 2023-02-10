@@ -67,25 +67,13 @@ function Game3() {
       <SCORE>{game3[i].cnt}</SCORE>
       <Player>Player : {game3[i].playerId}</Player>
       { game3[i].cnt < 15 &&<IMG 
-      // onClick={()=>{
-      //   dispatch(changeGame3Data({
-      //     idx : i
-      //   }))
-      // }}
+
       src={img1[game3[i].cnt%3]}></IMG>}
       { game3[i].cnt < 30 && game3[i].cnt >= 15 && <IMG 
-      // onClick={()=>{
-      //   dispatch(changeGame3Data({
-      //     idx : i
-      //   }))
-      // }}
+ 
       src={img2[game3[i].cnt%2]}></IMG>}
       { game3[i].cnt >= 30 && game3[i].cnt < 45 && <IMG 
-      // onClick={()=>{
-      //   dispatch(changeGame3Data({
-      //     idx : i
-      //   }))
-      // }}
+  
       src={img3[game3[i].cnt%2]}></IMG>}
       { game3[i].cnt >= 45 && <IMG 
       src={img4[game3[i].cnt%2]}></IMG>}
