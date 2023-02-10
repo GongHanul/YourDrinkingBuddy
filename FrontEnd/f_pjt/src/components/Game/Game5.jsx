@@ -23,7 +23,7 @@ function Game5() {
   <End onClick={handleOpen}>END</End>
   <Modal
     open={open}>
-    <Game5 Rank handleClose = {handleClose}/>
+    <Game5Rank Rank handleClose = {handleClose}/>
     </Modal>
   </Side>
   </Full>

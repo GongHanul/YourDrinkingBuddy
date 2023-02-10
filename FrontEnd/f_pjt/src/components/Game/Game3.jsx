@@ -12,7 +12,7 @@ function Game3() {
   const location = useLocation();
   // const Playercnt = location.state.cnt
   const navigate = useNavigate();
-  const [timeLeft, setTimeLeft] = useState(20);
+  const [timeLeft, setTimeLeft] = useState(40);
   // useEffect( () => {setPlayer([...Array(Playercnt).keys()]) } ,[])
   // let [Player, setPlayer] = useState([])
   
@@ -45,39 +45,26 @@ function Game3() {
   <Full>
   <Side>
   <h1>{timeLeft}</h1>
-  <progress value={timeLeft} max={20} />
+  <progress value={timeLeft} max={40} />
   {/* https://coreui.io/react/docs/components/progress/ */}
   {/* https://mui.com/material-ui/react-progress/ */}
   {/* https://freefrontend.com/react-progress-bars/ */}
-  <Stack sx={{ width: '50%', color: 'grey.500' }} spacing={2}>
-      <LinearProgress color="secondary" />
-      {/* <LinearProgress color="success" />
-      <LinearProgress color="inherit" /> */}
-    </Stack>
-    <Stack sx={{ color: 'grey.500' }} spacing={2} direction="row">
-      <CircularProgress color="secondary" />
-      {/* <CircularProgress color="success" />
-      <CircularProgress color="inherit" /> */}
-    </Stack>
-      {/* https://coreui.io/react/docs/components/progress/ */}
-      {/* https://mui.com/material-ui/react-progress/ */}
-      {/* https://freefrontend.com/react-progress-bars/ */}
   </Side>
   <Display>
   { players.map(function(e, i){
     return (
       <PlayerDisplay index={i}>
-      <SCORE>{game3[i].cnt}</SCORE>
       <Player>Player : {game3[i].playerId}</Player>
+      <SCORE>{game3[i].cnt}</SCORE>
       { game.playerStatus.findIndex((e)=>e.playerId === game3[i].playerId) !== -1 && <IMG src="img/game3/connecting.gif"></IMG>}
       { game3[i].cnt < 15 &&<IMG 
       src={img1[game3[i].cnt%3]}></IMG>}
       { game3[i].cnt < 30 && game3[i].cnt >= 15 && <IMG 
  
-      src={img2[game3[i].cnt%2]}></IMG>}
+ src={img2[game3[i].cnt%2]}></IMG>}
       { game3[i].cnt >= 30 && game3[i].cnt < 45 && <IMG 
   
-      src={img3[game3[i].cnt%2]}></IMG>}
+  src={img3[game3[i].cnt%2]}></IMG>}
       { game3[i].cnt >= 45 && <IMG 
       src={img4[game3[i].cnt%2]}></IMG>}
     </PlayerDisplay>)
@@ -89,7 +76,8 @@ function Game3() {
 }
 const SCORE = styled.div`
   font-family: 'Silkscreen', cursive;
-  font-size: 20vh;
+  font-size: 15vh;
+  margin : -3vh 0 0 0 ;
 `
 const IMG = styled.img`
   justify-content: center;
@@ -102,6 +90,7 @@ const Full = styled.div`
   display : flex;
   flex-wrap: wrap;
   width : 100vw;
+  background : #ffecec;
 `
 const Display = styled.div`
   display : flex;
@@ -127,6 +116,6 @@ const PlayerDisplay = styled.div`
   flex-direction: column;
   box-shadow: 0 1px 2px #1966A5, 0 1px 2px #1966A5 inset;
   box-sizing: border-box;
-  background-image: url(${'img/game3/game3_bg.gif'});
+  /* background-image: url(${'img/game3/game3_bg.gif'}); */
 `
 export default Game3
