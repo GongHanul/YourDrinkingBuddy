@@ -32,13 +32,14 @@ function Game4() {
   useEffect(() => {
     if(game.gameState === GameState.PLAY && isLoading){
       
-      dispatch(changeGame({data:{playerId: game.gameState.turn}}));
-      
+      dispatch(changeGame({data:{playerId: game.gameData.turn}}));
       let intervalId = setInterval(() => {
       setTimeLeft((prevTime) => {
       if (prevTime === 0) {
-        dispatch(updateGameData(getPreservedGameDataHandler().onTurnChange(store.getState().game)));
-        dispatch(changeGame({data:{playerId: game.gameState.turn}}));
+        const game = store.getState().game;
+        const gameData = getPreservedGameDataHandler().onTurnChange(game);
+        dispatch(updateGameData(gameData));
+        dispatch(changeGame({data:{playerId: gameData.turn}}));
         return timePerTurn;
       } else {
         return prevTime - 1;
