@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { React, useState, useEffect } from 'react';
 import Modal from '@mui/material/Modal';
-import Game1Rank from "../Ranking/Game1Rank";
+import Game5Rank from "../Ranking/Game5Rank";
 
 function Game5() {
   let [Player, setPlayer] = useState([1])
@@ -23,7 +23,7 @@ function Game5() {
   <End onClick={handleOpen}>END</End>
   <Modal
     open={open}>
-    <Game1Rank handleClose = {handleClose}/>
+    <Game5 Rank handleClose = {handleClose}/>
     </Modal>
   </Side>
   </Full>
