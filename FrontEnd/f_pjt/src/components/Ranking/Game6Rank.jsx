@@ -6,11 +6,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRotateRight } from "@fortawesome/free-solid-svg-icons"
 
 
-function Game1Rank() {
+function Game6Rank() {
   const navigate = useNavigate();
   const quit = () => {
-    navigate('/game');
-  }
+      navigate('/game');
+    }
   return (
   <>
   <Box sx={style}>
@@ -83,4 +83,4 @@ const Score = styled.div`
   letter-spacing : 0.5vh;
   filter: drop-shadow(0.2vh 0.2vh 0.1vh rgb(0 0 0 / 0.5));
 `
-export default Game1Rank
+export default Game6Rank

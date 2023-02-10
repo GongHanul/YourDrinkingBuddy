@@ -3,7 +3,7 @@ import { React, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import Box from '@mui/material/Box';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMinus, faPlus, faCircleLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons"
+import { faMinus, faPlus, faCircleLeft, faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons"
 
 
 function PlayerModal(props) {
@@ -39,7 +39,7 @@ function PlayerModal(props) {
     </PlusMinus>
     </Mid>
     <Btm>
-    <Back><FontAwesomeIcon onClick={props.handleClose} icon= {faCircleLeft}/></Back>
+    <Back><FontAwesomeIcon onClick={props.handleClose} icon= {faArrowLeft}/></Back>
     <GameStart onClick={move}>START<FontAwesomeIcon icon= {faArrowRight}/></GameStart>
     </Btm>
   </Box>
@@ -62,7 +62,8 @@ const style = {
   alignItems: 'center',
   justifyContent : 'center',
   flexDirection: 'column',
-  background: 'linear-gradient(45deg, #5674BD, #F0F2F0)',
+  background : '#f0eee9',
+  // background: 'linear-gradient(45deg, #5674BD, #F0F2F0)',
   color : '#1b1b1b',
   // background : '#d2dbf3',
 };
@@ -104,8 +105,8 @@ const Back = styled.div`
   left : -5vh;
   bottom : -2vh;
   font-size: 5vh;
-  color : #ffffff;
-  filter: drop-shadow(0.4vh 0.4vh 0.1vh rgb(0 0 0 / 0.5));
+  color : #1966A5;
+  /* filter: drop-shadow(0.4vh 0.4vh 0.1vh rgb(0 0 0 / 0.5)); */
   &:hover {
     color: #FAE59C;
     filter: drop-shadow(0.4vh 0.4vh 0.1vh rgb(0 0 0 / 0.6));
@@ -118,7 +119,7 @@ const GameStart = styled.div`
   font-weight : bold;
   font-size: 4vh;
   letter-spacing: 0.5vh;
-  color : #1b1b1b;
+  color : #1966A5;
   &:hover {
     color: #FAE59C;
     filter: drop-shadow(0.4vh 0.4vh 0.1vh rgb(0 0 0 / 0.6));
