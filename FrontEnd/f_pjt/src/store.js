@@ -14,7 +14,7 @@ import {
   requestChangeBeverage,
   requestConnectServer,
   requestClearBeverage,
-  send,
+  requestRecreateGame,
   requestCompleteGame,
   requestChangeGame
 } from './socket';
@@ -320,7 +320,7 @@ let game = createSlice({
 
       // IDLE상태가 되며 이제부터 게임 구성 이전으로 돌아간다.
       state.gameState = GameState.IDLE;
-      state.playerViewPos = [];
+      // state.playerViewPos = [];
     },
 
     // 게임 상태를 Ready로 바꾼다.
@@ -342,6 +342,8 @@ let game = createSlice({
       state.playerViewPos = [];
     },
 
+
+
     // 게임 상태를 Play로 바꾼다.
     // payload 예시 : 
     //{ 
@@ -361,15 +363,12 @@ let game = createSlice({
       listenOnDestroyGame(destroyGameCallback);
       listenOnCompleteGame(completeGameCallback);
 
-      // READY상태가 되며 이제부터 게임 변경 사항, 완료등을 받는다.
+      // PLAY상태가 되며 이제부터 게임 변경 사항, 완료등을 받는다.
       state.gameState = GameState.PLAY;
     },
 
     // 게임을 생성한다.
     // payload 예시 : {playerCount : 4}
-    // notifyCallback은 player 데이터를 받아 View를 변경시키는 Callback 함수이다.
-    // 단순히 redux와 바인딩 하는 경우 => 생략한다.
-    // 바인딩이 불가능 한 상황인 경우 => playerID를 파라미터로 받아 View를 처리하는 Callback함수를 넣는다.
     createGame(state, action) {
       const param = action.payload;
 
@@ -384,7 +383,7 @@ let game = createSlice({
       const gameId = getPreservedGameDataHandler().getGameId();
       const playerCount = param.playerCount;
 
-      // idle 상태가 아니면 게임 생성을 못하도록 막는다.
+      // ready 상태가 아니면 게임 생성을 못하도록 막는다.
       if (state.gameState !== GameState.READY) {
         throw new Error("게임은 반드시 상태가 READY 인 경우만 생성이 가능합니다. 웹 당 하나의 게임만 생성가능합니다. 기존 게임을 파기해주세요.");
       }
@@ -392,6 +391,21 @@ let game = createSlice({
       // gameId로 playerCount만큼 참여한다고 라즈베리파이 서버에 요청한다.
       // 해당 통신은 bloking/동기 통신이 보장되어야 한다.
       requestCreateGame(gameId, playerCount);
+    },
+
+    // 게임을 재시작한다.
+    // 이전 게임 정보중 playerViewPos를 이용한다.
+    recreateGame(state){
+      // 재시작은 반드시 playerViewPos의 크기가 1 이상이여야 한다.
+      if (state.playerViewPos.length === 0) {
+        throw new Error("재시작시 playerViewPos의 크기가 1 이상이여야 합니다.");
+      }
+
+      const gameId = getPreservedGameDataHandler().getGameId();
+
+      // gameId로 playerCount만큼 다시 참여한다고 라즈베리파이 서버에 요청한다.
+      // 해당 통신은 bloking/동기 통신이 보장되어야 한다.
+      requestRecreateGame(gameId, state.playerViewPos.length);
     },
 
     // 게임을 강제로 파기한다.
@@ -442,6 +456,7 @@ let game = createSlice({
     changeGame(state, action){
       const param = action.payload;
       const requestData = param.data;
+      console.log(requestData);
       const changeGameCallback = param.chanvgeGameCallback ? param.chanvgeGameCallback : defaultCallback;
       if(state.gameState !== GameState.PLAY){
         throw new Error("게임 중이 아닙니다.");
@@ -451,7 +466,7 @@ let game = createSlice({
   },
 });
 
-export let { setPlayer, removePlayer, addPlayer, initializePlayerViewPos, setGameDataHandler, updateGameData, updateGameResult, setGameStateIdle, setGameStateReady, setGameStatePlay, createGame, destroyGame, completeGame, changeGame } = game.actions;
+export let { setPlayer, removePlayer, addPlayer, initializePlayerViewPos, setGameDataHandler, updateGameData, updateGameResult, setGameStateIdle, setGameStateReady, setGameStatePlay, createGame, recreateGame, destroyGame, completeGame, changeGame } = game.actions;
 
 const store = configureStore({
   reducer: {

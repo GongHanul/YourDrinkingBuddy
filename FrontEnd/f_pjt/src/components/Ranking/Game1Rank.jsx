@@ -4,25 +4,34 @@ import { useNavigate } from "react-router-dom";
 import Box from '@mui/material/Box';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRotateRight } from "@fortawesome/free-solid-svg-icons"
+import { useDispatch } from 'react-redux';
+import { recreateGame } from "../../store";
+import { useSelector } from 'react-redux';
 
 
-function Game1Rank() {
+function Game1Rank(props) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const game = useSelector((state) => state.game);
+  const result = props.result;
   const quit = () => {
     navigate('/game');
+  }
+  const restart = () => {
+    dispatch(recreateGame());
+    navigate('/game1', { state: { cnt : game.playerViewPos.length } });
   }
   return (
   <>
   <Box sx={style}>
     <Topdiv>
       <Rank>🏆RANK🏆</Rank><br />
-      <Score>Player1 : cnt</Score>
-      <Score>Player2 : cnt</Score>
-      <Score>Player3 : cnt</Score>
-      <Score>Player4 : cnt</Score>
+      { result.map( (e) => {
+        return <Score>Player{e.playerId} : {e.bpm}</Score>
+      })}
     </Topdiv>
     <Bomdiv>
-    <br /><Quit>REPLAY<FontAwesomeIcon icon={faArrowRotateRight} /></Quit>
+    <br /><Quit onClick={restart}>REPLAY<FontAwesomeIcon icon={faArrowRotateRight} /></Quit>
     <Quit onClick={quit}>QUIT</Quit>
     </Bomdiv>
   </Box>

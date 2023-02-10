@@ -72,6 +72,7 @@ export const listenOnCompleteGame = (notifyCallback) => {
   socket.on("server:completeGame", (requestData) => {
     const game = store.getState().game;
     const completeGameResult = getPreservedGameDataHandler().onCompleted(game, requestData);
+    store.dispatch(setGameStateIdle());
     store.dispatch(updateGameResult(completeGameResult));
     notifyCallback(requestData);
   })
@@ -137,6 +138,16 @@ export const requestCreateGame = (gameId, playerCount) => {
   send("client:createGame", { gameId: gameId, playerCount: playerCount }, (response) => {
     const game = store.getState().game;
     store.dispatch(initializePlayerViewPos(playerCount));
+    const createGameResult = getPreservedGameDataHandler().onCreated(game, response.statusCode, response.data);
+    store.dispatch(updateGameData(createGameResult))
+    store.dispatch(setGameStatePlay());
+  });
+}
+
+// 클라이언트 -> 서버 게임 재시작 요청
+export const requestRecreateGame = (gameId, playerCount) => {
+  send("client:createGame", { gameId: gameId, playerCount: playerCount }, (response) => {
+    const game = store.getState().game;
     const createGameResult = getPreservedGameDataHandler().onCreated(game, response.statusCode, response.data);
     store.dispatch(updateGameData(createGameResult))
     store.dispatch(setGameStatePlay());

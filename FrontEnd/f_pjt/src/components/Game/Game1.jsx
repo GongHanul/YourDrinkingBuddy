@@ -3,13 +3,18 @@ import { React, useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import Modal from '@mui/material/Modal';
-import Game1Modael from "./Game1Modal";
+import Game1Modal from "./Game1Modal";
 import { GameState, completeGame } from "../../store";
+import Game1Rank from './../Ranking/Game1Rank';
 
 function Game1() {
   const [open, setOpen] = useState(true);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const [open2, setOpen2] = useState(true);
+  const handleOpen2 = () => setOpen2(true);
+  const handleClose2 = () => setOpen2(false);
 
   const location = useLocation();
   const Playercnt = location.state.cnt;
@@ -21,48 +26,55 @@ function Game1() {
 
   
 
-  // if (game.gameState !== GameState.PLAY) {
-  //   return (<>게임 생성 중입니다. 기다려주세요...</>)
-  // } else {
-  return (
-  <>
-  <Full>
-  <Modal
-    open={open}
-    // onClose={handleClose}
-  >
-    <Game1Modael handleClose = {handleClose} />
-  </Modal>    
+  if (game.gameState !== GameState.PLAY) {
+    if( game.gameState === GameState.IDLE && game.gameResult){
+      return <Modal open={open2}>
+        <Game1Rank 
+          handleClose = {handleClose2}
+          result = {game.gameResult}
+        ></Game1Rank>
+      </Modal>
+    } else {
+      return (<>게임 생성 중입니다. 기다려주세요...</>)
+    }
+  } else {
+    return (
+      <Full>
+      <Modal
+        open={open}
+        // onClose={handleClose}
+      >
+        <Game1Modal handleClose = {handleClose} />
+      </Modal>    
 
-  <Display>
-      {players.map(function (e, i) {
-        return (
-      <PlayerDisplay index={i}>
-      <Player>Player : {game1[i].playerId}</Player>
+      <Display>
+          {players.map(function (e, i) {
+            return (
+          <PlayerDisplay index={i}>
+          <Player>Player : {game1[i].playerId}</Player>
 
-      <STATE>
-      { game1[i].bpm < 70 && <IMG 
-      src={img1[0]}></IMG>}
-      { game1[i].bpm >= 70 && game1[i].bpm < 90 && <IMG 
-      src={img1[1]}></IMG>}
-      { game1[i].bpm >= 90 && game1[i].bpm <110 && <IMG 
-      src={img1[2]}></IMG>}
-      { game1[i].bpm >= 110 && <IMG 
-      src={img1[3]}></IMG>}
-      <CNT>{game1[i].bpm}</CNT>
-      </STATE>
-      </PlayerDisplay>
-    )
-    })}
-  </Display>
-  <Side>
-    <Quit onClick={() => {dispatch(completeGame({}))} /* 비동기 통신이므로 여기에 navigate 를 달면 큰일난다. 방법1. complete callback을 달기 방법2. hook으로 game.gameState == 0 감지하기, 방법 3. hook으로 game.gameResult가 변경됨을 감지하기,  */     }>QUIT</Quit>
-  </Side>
-  </Full>
-    </>
-    )
+          <STATE>
+          { game1[i].bpm < 70 && <IMG 
+          src={img1[0]}></IMG>}
+          { game1[i].bpm >= 70 && game1[i].bpm < 90 && <IMG 
+          src={img1[1]}></IMG>}
+          { game1[i].bpm >= 90 && game1[i].bpm <110 && <IMG 
+          src={img1[2]}></IMG>}
+          { game1[i].bpm >= 110 && <IMG 
+          src={img1[3]}></IMG>}
+          <CNT>{game1[i].bpm}</CNT>
+          </STATE>
+          </PlayerDisplay>
+        )
+        })}
+      </Display>
+      <Side>
+        <Quit onClick={() => {dispatch(completeGame({}))} /* 비동기 통신이므로 여기에 navigate 를 달면 큰일난다. 방법1. complete callback을 달기 방법2. hook으로 game.gameState == 0 감지하기, 방법 3. hook으로 game.gameResult가 변경됨을 감지하기,  */     }>QUIT</Quit>
+      </Side>
+      </Full>
+      )
   }
-// }
+}
 const CNT = styled.div`
   font-family: 'Silkscreen', cursive;
   font-size: 20vh;
