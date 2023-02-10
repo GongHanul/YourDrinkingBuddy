@@ -15,7 +15,8 @@ import {
   requestConnectServer,
   requestClearBeverage,
   send,
-  requestCompleteGame
+  requestCompleteGame,
+  requestChangeGame
 } from './socket';
 
 export const CocktailMakerState = {
@@ -238,7 +239,7 @@ export const getPreservedGameDataHandler = () => {
 
 let game = createSlice({
   name: 'game',
-  initialState: { gameState: GameState.IDLE, gameData: undefined, gameResult: undefined, playerStatus: [{id: 1, connection:1}, {id: 2, connection:1}, {id: 3, connection:1}, {id: 4, connection:1}], playerCount: 4, playerViewPos: [] },
+  initialState: { gameState: GameState.IDLE, gameData: undefined, gameResult: undefined, playerStatus: [/*{id: 1, connection:1}, {id: 2, connection:1}, {id: 3, connection:1}, {id: 4, connection:1}*/], playerCount: 4, playerViewPos: [] },
   reducers: {
 
     // 여기서 플레이어 : 화면 map을 세팅한다. 임의배치한다.
@@ -421,23 +422,36 @@ let game = createSlice({
       requestCompleteGame(data);
     },
 
+    // // 이벤트 이름을 기준으로 라즈베리파이 서버에 요청한다.
+    // // 해당 통신은 게임 형태에 따라 동기 통신이 보장 되어야 할 수도 있다.
+    // // 현재 존재하는 6개 게임 기준으로는 동기화가 필요없다.
+    // changeGameViaEventName(state, action){
+    //   const param = action.payload;
+    //   const requestData = param.data;
+    //   const eventName = param.eventName;
+    //   const changeGameCallback = param.chanvgeGameCallback ? param.chanvgeGameCallback : defaultCallback;
+    //   if(state.gameState !== GameState.PLAY){
+    //     throw new Error("게임 중이 아닙니다.");
+    //   }
+    //   send(eventName, requestData, changeGameCallback);
+    // }
+
     // 이벤트 이름을 기준으로 라즈베리파이 서버에 요청한다.
     // 해당 통신은 게임 형태에 따라 동기 통신이 보장 되어야 할 수도 있다.
     // 현재 존재하는 6개 게임 기준으로는 동기화가 필요없다.
-    changeGameViaEventName(state, action){
+    changeGame(state, action){
       const param = action.payload;
       const requestData = param.data;
-      const eventName = param.eventName;
-      const chanvgeGameCallback = param.chanvgeGameCallback ? param.chanvgeGameCallback : defaultCallback;
+      const changeGameCallback = param.chanvgeGameCallback ? param.chanvgeGameCallback : defaultCallback;
       if(state.gameState !== GameState.PLAY){
         throw new Error("게임 중이 아닙니다.");
       }
-      send(eventName, requestData, chanvgeGameCallback);
+      requestChangeGame(requestData, changeGameCallback);
     }
   },
 });
 
-export let { setPlayer, removePlayer, addPlayer, initializePlayerViewPos, setGameDataHandler, updateGameData, updateGameResult, setGameStateIdle, setGameStateReady, setGameStatePlay, createGame, destroyGame, completeGame, changeGameViaEventName } = game.actions;
+export let { setPlayer, removePlayer, addPlayer, initializePlayerViewPos, setGameDataHandler, updateGameData, updateGameResult, setGameStateIdle, setGameStateReady, setGameStatePlay, createGame, destroyGame, completeGame, changeGame } = game.actions;
 
 const store = configureStore({
   reducer: {

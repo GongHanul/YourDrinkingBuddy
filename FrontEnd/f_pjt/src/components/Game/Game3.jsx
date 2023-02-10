@@ -7,6 +7,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { useDispatch, useSelector } from "react-redux";
 import { /*changeGame3Data,*/ preserveGameDataHandler, createGame, setGameStatePlay, setGameDataHandler, GameState } from "../../store.js";
 
+
 function Game3() {
   const location = useLocation();
   // const Playercnt = location.state.cnt
@@ -22,6 +23,8 @@ function Game3() {
   const img2 = ['img/game3/2-1.png', 'img/game3/2-2.png']
   const img3 = ['img/game3/3-1.png', 'img/game3/3-2.png']
   const img4 = ['img/game3/4-1.png', 'img/game3/4-2.png']
+
+  
 
   // if (game.gameState !== GameState.PLAY) {
   //   return (<><TopDiv> 게임 생성 중입니다. 기다려주세요... </TopDiv></>)
@@ -48,13 +51,13 @@ function Game3() {
   {/* https://freefrontend.com/react-progress-bars/ */}
   <Stack sx={{ width: '50%', color: 'grey.500' }} spacing={2}>
       <LinearProgress color="secondary" />
-      <LinearProgress color="success" />
-      <LinearProgress color="inherit" />
+      {/* <LinearProgress color="success" />
+      <LinearProgress color="inherit" /> */}
     </Stack>
     <Stack sx={{ color: 'grey.500' }} spacing={2} direction="row">
       <CircularProgress color="secondary" />
-      <CircularProgress color="success" />
-      <CircularProgress color="inherit" />
+      {/* <CircularProgress color="success" />
+      <CircularProgress color="inherit" /> */}
     </Stack>
       {/* https://coreui.io/react/docs/components/progress/ */}
       {/* https://mui.com/material-ui/react-progress/ */}
@@ -66,8 +69,8 @@ function Game3() {
       <PlayerDisplay index={i}>
       <SCORE>{game3[i].cnt}</SCORE>
       <Player>Player : {game3[i].playerId}</Player>
+      { game.playerStatus.findIndex((e)=>e.playerId === game3[i].playerId) !== -1 && <IMG src="img/game3/connecting.gif"></IMG>}
       { game3[i].cnt < 15 &&<IMG 
-
       src={img1[game3[i].cnt%3]}></IMG>}
       { game3[i].cnt < 30 && game3[i].cnt >= 15 && <IMG 
  
