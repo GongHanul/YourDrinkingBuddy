@@ -15,8 +15,27 @@ function GamePlay() {
   const Playercnt = location.state.cnt
   const GameId = `/game${id}`
   const game = useSelector((state) => state.game)
-
+  const img = ['img/gameplay/덜루기.gif','img/gameplay/뮤.gif','img/gameplay/이상해씨.gif','img/gameplay/리자몽.gif']
+  const bgcolor = [' #F7CAC9', '#878586', ' #f0eee9', '#d0e1ff']
   const dispatch = useDispatch();
+
+  // 피셔-예이츠 셔플 (편향적이지 않은 무작위 값을 뽑기위해 사용)
+  const shuffle = (array) => {
+    for(let index = array.length -1 ; index > 0; index--){
+      // 무작위 index 값을 만든다. (0 이상의 배열 길이 값)
+      const randomPosition = Math.floor(Math.random() * (index +1));
+
+      // 임시로 원본 값을 저장하고, randomPosition을 사용해 배열 요소를 섞는다.
+      const temporary = array[index];
+      array[index] = array[randomPosition];
+      array[randomPosition] =temporary;
+    }
+    return array
+  }
+  shuffle(img)
+  shuffle(bgcolor)
+
+
 
   const start = () => {
     console.log(game.playerCount)
@@ -50,8 +69,9 @@ function GamePlay() {
   <Display>
   { game.playerViewPos.map(function(e, i){
     return (
-    <Ready index={i}>
+    <Ready index={i} style={{backgroundColor : `${bgcolor[i]}`}}>
       Player: {e} is Ready.
+      <Img src={img[i]}></Img>
     </Ready>)
   })}
   </Display>
@@ -63,6 +83,13 @@ function GamePlay() {
   </>
   )
 }
+
+const Img = styled.img`
+  justify-content: center;
+  align-items: center ;
+  height : 20vh;
+`
+
 const Full = styled.div`
   display : flex;
   flex-wrap: wrap;
@@ -91,9 +118,9 @@ const Ready = styled.div`
   justify-content: center;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 1px 2px #474747, 0 1px 2px #474747 inset;
   box-sizing: border-box;
 `
+
 const Start = styled.div`
   display : flex;
   justify-content: center;

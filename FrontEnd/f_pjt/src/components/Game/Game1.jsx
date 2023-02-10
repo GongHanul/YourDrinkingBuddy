@@ -24,9 +24,9 @@ function Game1() {
 
   
 
-  if (game.gameState !== GameState.PLAY) {
-    return (<>게임 생성 중입니다. 기다려주세요...</>)
-  } else {
+  // if (game.gameState !== GameState.PLAY) {
+  //   return (<>게임 생성 중입니다. 기다려주세요...</>)
+  // } else {
   return (
   <>
   <Full>
@@ -64,7 +64,7 @@ function Game1() {
     </>
     )
   }
-}
+// }
 const CNT = styled.div`
   font-family: 'Silkscreen', cursive;
   font-size: 20vh;
