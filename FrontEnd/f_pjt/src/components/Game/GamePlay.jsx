@@ -119,6 +119,7 @@ const Ready = styled.div`
   flex-direction: column;
   font-size: 6vh;
   font-family: 'Jua', sans-serif;
+  font-weight: bold;
 `
 
 const Start = styled.div`

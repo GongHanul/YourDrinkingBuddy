@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 
 function Game3Modal(props) {
   const handleClose = props.handleClose2
-  const [timeLeft, setTimeLeft] = useState(5);
+  const [timeLeft, setTimeLeft] = useState(3);
 
   useEffect(() => {
     let intervalId = setInterval(() => {
@@ -21,8 +21,7 @@ function Game3Modal(props) {
   <>
   <Box sx={style}>
   <Change1>컨트롤러 게임 🎮</Change1>
-  <Change1>5초 후 게임이 시작됩니다🎉</Change1><br />
-  <Cnt>{timeLeft}</Cnt>
+  <Change1>{timeLeft}5초 후 게임이 시작됩니다🎉</Change1><br />
   </Box>
   </>
   )
@@ -48,11 +47,5 @@ const style = {
 const Change1 = styled.div`
   font-size: 5vh;
   font-family: 'Jua', sans-serif;
-  filter: drop-shadow(0.2vh 0.2vh 0.1vh rgb(0 0 0 / 0.5));
-`
-const Cnt = styled.div`
-  font-size: 6vh;
-  font-family: 'Jua', sans-serif;
-  color : red;
   filter: drop-shadow(0.2vh 0.2vh 0.1vh rgb(0 0 0 / 0.5));
 `

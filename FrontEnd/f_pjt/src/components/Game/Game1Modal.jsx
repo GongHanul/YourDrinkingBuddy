@@ -21,8 +21,7 @@ function Game1Modal(props) {
   <>
   <Box sx={style}>
     <Change1>심전도 게임💖</Change1>
-    <Change1>10초 후 게임이 시작됩니다🎉</Change1>
-    <Cnt>{timeLeft}</Cnt>
+    <Change1>{timeLeft}초 후 게임이 시작됩니다🎉</Change1>
     <br/>
     <Change1>주의사항💢</Change1>
     <Change2>1. 손가락을 그림과 같이 센서에 붙여주세요.</Change2>
@@ -60,11 +59,5 @@ const Change1 = styled.div`
 const Change2 = styled.div`
   font-size: 4vh;
   font-family: 'Jua', sans-serif;
-  filter: drop-shadow(0.2vh 0.2vh 0.1vh rgb(0 0 0 / 0.5));
-`
-const Cnt = styled.div`
-  font-size: 5vh;
-  font-family: 'Jua', sans-serif;
-  color : red;
   filter: drop-shadow(0.2vh 0.2vh 0.1vh rgb(0 0 0 / 0.5));
 `

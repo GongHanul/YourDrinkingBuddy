@@ -89,8 +89,14 @@ function Game1() {
   }
 }
 const CNT = styled.div`
-  font-family: 'Silkscreen', cursive;
-  font-size: 18vh;
+  /* font-family: 'Silkscreen', cursive; */
+  /* font-family: 'Changa', sans-serif; */
+  /* font-family: 'Hanalei Fill', cursive; */
+  /* font-family: 'Nabla', cursive; */
+  font-family: 'Orbitron', sans-serif;
+  /* font-family: 'Shojumaru', cursive; */
+  /* font-family: 'Silkscreen', cursive; */
+  font-size: 12vh;
 `
 const STATE = styled.div`
   display : flex;
@@ -98,9 +104,11 @@ const STATE = styled.div`
   align-items: center ;
 `
 const Player = styled.div`
-  display : flex;
-  font-size: 7vh;
+  position: relative;
+  top : -6vh;
+  font-size: 5vh;
   font-family: 'Jua', sans-serif;
+  font-weight: bold;
 `
 const IMG = styled.img`
   display : flex;

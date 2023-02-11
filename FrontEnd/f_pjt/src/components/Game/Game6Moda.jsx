@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 
 function Game6Modal(props) {
   const handleClose = props.handleClose2
-  const [timeLeft, setTimeLeft] = useState(5);
+  const [timeLeft, setTimeLeft] = useState(3);
 
   useEffect(() => {
     let intervalId = setInterval(() => {
@@ -21,8 +21,7 @@ function Game6Modal(props) {
   <>
   <Box sx={style}>
   <Change1>컨트롤러 게임 🎮</Change1>
-  <Change1>5초 후 게임이 시작됩니다🎉</Change1><br />
-  <Cnt>{timeLeft}</Cnt>
+  <Change1>{timeLeft}초 후 게임이 시작됩니다🎉</Change1><br />
   </Box>
   </>
   )
