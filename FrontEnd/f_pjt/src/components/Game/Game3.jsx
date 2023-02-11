@@ -65,18 +65,18 @@ function Game3() {
     return (
       <PlayerDisplay index={i} style={{backgroundColor : `${bgcolor[i]}`}}>
       <Player>PLAYER {game3[i].playerId}</Player>
-      <SCORE>{game3[i].cnt}</SCORE>
       { game.playerStatus.findIndex((e)=>e.playerId === game3[i].playerId) !== -1 && <IMG src="img/game3/connecting.gif"></IMG>}
-      { game3[i].cnt < 15 &&<IMG 
+      { game3[i].cnt < 16 &&<IMG 
       src={img1[game3[i].cnt%3]}></IMG>}
-      { game3[i].cnt < 30 && game3[i].cnt >= 15 && <IMG 
+      { game3[i].cnt < 32 && game3[i].cnt >= 16 && <IMG 
  
- src={img2[game3[i].cnt%2]}></IMG>}
-      { game3[i].cnt >= 30 && game3[i].cnt < 45 && <IMG 
+      src={img2[game3[i].cnt%2]}></IMG>}
+      { game3[i].cnt >= 32 && game3[i].cnt < 50 && <IMG 
   
-  src={img3[game3[i].cnt%2]}></IMG>}
-      { game3[i].cnt >= 45 && <IMG 
+      src={img3[game3[i].cnt%2]}></IMG>}
+      { game3[i].cnt >= 50 && <IMG 
       src={img4[game3[i].cnt%2]}></IMG>}
+      <SCORE>{game3[i].cnt}</SCORE>
     </PlayerDisplay>)
   })}
   </Display>
@@ -87,20 +87,26 @@ function Game3() {
 const TimeLeft = styled.div`
   padding : 0 5vh;
   font-weight: bold;
+  font-family: 'Jua', sans-serif;
+  filter: drop-shadow(0.2vh 0.2vh 0.1vh rgb(0 0 0 / 0.5));
 `
 const SCORE = styled.div`
-  font-family: 'Silkscreen', cursive;
-  font-size: 15vh;
+  /* font-family: 'Silkscreen', cursive; */
+  font-family: 'Shojumaru', cursive;
+  /* font-family: 'Nabla', cursive; */
+  font-size: 13vh;
   margin : -3vh 0 0 0 ;
 `
 const IMG = styled.img`
   justify-content: center;
   align-items: center ;
+  height : 15vh;
 `
 const Player = styled.div`
-  display : flex;
-  font-size: 6vh;
+  position: relative;
+  font-size: 5vh;
   font-family: 'Jua', sans-serif;
+  font-weight: bold;
 `
 const Full = styled.div`
   display : flex;
