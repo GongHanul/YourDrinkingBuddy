@@ -70,7 +70,7 @@ function GamePlay() {
   { game.playerViewPos.map(function(e, i){
     return (
     <Ready index={i} style={{backgroundColor : `${bgcolor[i]}`}}>
-      Player: {e} is Ready.
+      Player {e} is Ready
       <Img src={img[i]}></Img>
     </Ready>)
   })}
@@ -105,9 +105,8 @@ const Display = styled.div`
 const Side = styled.div`
   display : flex;
   justify-content: space-evenly;
-  padding : 2vh;
   width : 100%;
-  height : 10%;
+  height : 15%;
 `
 const Ready = styled.div`
   display : flex;
@@ -118,7 +117,8 @@ const Ready = styled.div`
   justify-content: center;
   display: flex;
   flex-direction: column;
-  box-sizing: border-box;
+  font-size: 6vh;
+  font-family: 'Jua', sans-serif;
 `
 
 const Start = styled.div`
@@ -126,7 +126,7 @@ const Start = styled.div`
   justify-content: center;
   align-items : center;
   color : #4b76c0 ;
-  font-size: 3vh;
+  font-size: 5vh;
   font-family: 'Jua', sans-serif;
   font-weight : bold;
   letter-spacing: 0.3vh;

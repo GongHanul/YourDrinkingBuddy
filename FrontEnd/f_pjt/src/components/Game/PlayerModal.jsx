@@ -105,7 +105,7 @@ const Back = styled.div`
   left : -5vh;
   bottom : -2vh;
   font-size: 5vh;
-  color : #1966A5;
+  color : #4b76c0;
   /* filter: drop-shadow(0.4vh 0.4vh 0.1vh rgb(0 0 0 / 0.5)); */
   &:hover {
     color: #FAE59C;
@@ -119,7 +119,7 @@ const GameStart = styled.div`
   font-weight : bold;
   font-size: 4vh;
   letter-spacing: 0.5vh;
-  color : #1966A5;
+  color : #4b76c0;
   &:hover {
     color: #FAE59C;
     filter: drop-shadow(0.4vh 0.4vh 0.1vh rgb(0 0 0 / 0.6));

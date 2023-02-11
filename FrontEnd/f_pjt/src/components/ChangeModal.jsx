@@ -34,7 +34,8 @@ function ChangeModal(props) {
       if(state === 0){
         return (<>
           <Change1>1. 술을 교체하는 과정입니다.</Change1>
-          <Change1>2. 술병에 꽂힌 호스를 뽑고 Clear를 눌러주세요</Change1>
+          <Change1>2. 술병에 꽂힌 호스를 뽑고</Change1>
+          <Change1>Clear를 눌러주세요.</Change1>
           <Change1>feat. 호스를 비우는 단계입니다.</Change1>
           <br />
           {(() => {
@@ -90,6 +91,7 @@ const style = {
   alignItems: 'center',
   justifyContent : 'center',
   flexDirection: 'column',
+  overflowY : 'auto',
 };
 const Change1 = styled.div`
   font-size: 5vh;

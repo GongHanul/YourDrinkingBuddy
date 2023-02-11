@@ -2,9 +2,9 @@ import styled from "styled-components";
 import { React, useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
+import { GameState, completeGame } from "../../store";
 import Modal from '@mui/material/Modal';
 import Game1Modal from "./Game1Modal";
-import { GameState, completeGame } from "../../store";
 import Game1Rank from './../Ranking/Game1Rank';
 
 function Game1() {
@@ -24,7 +24,20 @@ function Game1() {
   const game1 = game.gameData;
   const players = game.playerViewPos;
 
-  
+  const bgcolor = [' #c3ddd6', '#a8b0ae', ' #bfc7d6', '#d0e1ff']
+  const shuffle = (array) => {
+    for(let index = array.length -1 ; index > 0; index--){
+      // 무작위 index 값을 만든다. (0 이상의 배열 길이 값)
+      const randomPosition = Math.floor(Math.random() * (index +1));
+
+      // 임시로 원본 값을 저장하고, randomPosition을 사용해 배열 요소를 섞는다.
+      const temporary = array[index];
+      array[index] = array[randomPosition];
+      array[randomPosition] =temporary;
+    }
+    return array
+  }
+  shuffle(bgcolor)
 
   if (game.gameState !== GameState.PLAY) {
     if( game.gameState === GameState.IDLE && game.gameResult){
@@ -50,8 +63,8 @@ function Game1() {
       <Display>
           {players.map(function (e, i) {
             return (
-          <PlayerDisplay index={i}>
-          <Player>Player : {game1[i].playerId}</Player>
+          <PlayerDisplay index={i} style={{backgroundColor : `${bgcolor[i]}`}}>
+          <Player>PLAYER {game1[i].playerId}</Player>
 
           <STATE>
           { game1[i].bpm < 70 && <IMG 
@@ -77,25 +90,29 @@ function Game1() {
 }
 const CNT = styled.div`
   font-family: 'Silkscreen', cursive;
-  font-size: 20vh;
+  font-size: 18vh;
 `
-
 const STATE = styled.div`
   display : flex;
-`
-
-const Player = styled.div`
-  display : flex;
-`
-const IMG = styled.img`
   justify-content: center;
   align-items: center ;
+`
+const Player = styled.div`
+  display : flex;
+  font-size: 7vh;
+  font-family: 'Jua', sans-serif;
+`
+const IMG = styled.img`
+  display : flex;
+  height : 15vh;
+  padding : 2vh 5vh;
 `
 
 const Full = styled.div`
   display : flex;
   flex-wrap: wrap;
   width : 100vw;
+  background :#e9f3f0 ;
 `
 const Display = styled.div`
   display : flex;
@@ -105,17 +122,17 @@ const Display = styled.div`
 `
 const Side = styled.div`
   display : flex;
-  justify-content: space-evenly;
-  padding : 2vh;
   width : 100%;
-  height : 10%;
+  height : 15%;
+  justify-content: center;
+  align-items: center ;
 `
 const Quit = styled.div`
   display : flex;
   justify-content: center;
   align-items : center;
   color : #1966A5;
-  font-size: 3vh;
+  font-size: 5vh;
   font-family: 'Jua', sans-serif;
   font-weight : bold;
   letter-spacing: 0.3vh;
@@ -130,7 +147,7 @@ const PlayerDisplay = styled.div`
   flex: 1 1 50%;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 1px 2px #063C69, 0 1px 2px #063C69 inset;
+  /* box-shadow: 0 1px 2px #063C69, 0 1px 2px #063C69 inset; */
   box-sizing: border-box;
   /* background-image: url(${'img/game1/whale.gif'}); */
   background-color: grey;

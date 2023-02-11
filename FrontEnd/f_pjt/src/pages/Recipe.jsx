@@ -13,7 +13,6 @@ function Recipe() {
     const size = recipe.ingredients.length
     return (
       <ListCard>
-      {/* <Tape></Tape> */}
       <RecipeName>{ recipe.recipe_name }🍸</RecipeName>
       <BeverageName>
         { recipe.ingredients.map(function(ingredient, j){
@@ -48,80 +47,6 @@ function Recipe() {
   </>
   )
 }
-const Tape = styled.div`
-  position: relative;
-  margin: -3.8vh;
-  height: 7.5vh;
-  width: 1.7vw;
-  transform : rotate(70deg);
-  background: repeating-linear-gradient(
-      90deg,
-      transparent,
-      transparent 50px,
-      rgba(255, 127, 0, 0.25) 50px,
-      rgba(255, 127, 0, 0.25) 56px,
-      transparent 56px,
-      transparent 63px,
-      rgba(255, 127, 0, 0.25) 63px,
-      rgba(255, 127, 0, 0.25) 69px,
-      transparent 69px,
-      transparent 116px,
-      rgba(255, 206, 0, 0.25) 116px,
-      rgba(255, 206, 0, 0.25) 166px
-    ), repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 50px,
-      rgba(255, 127, 0, 0.25) 50px,
-      rgba(255, 127, 0, 0.25) 56px,
-      transparent 56px,
-      transparent 63px,
-      rgba(255, 127, 0, 0.25) 63px,
-      rgba(255, 127, 0, 0.25) 69px,
-      transparent 69px,
-      transparent 116px,
-      rgba(255, 206, 0, 0.25) 116px,
-      rgba(255, 206, 0, 0.25) 166px
-    ), repeating-linear-gradient(
-      -45deg,
-      transparent,
-      transparent 5px,
-      rgba(143, 77, 63, 0.25) 5px,
-      rgba(143, 77, 63, 0.25) 10px
-    ), repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(
-          143,
-          77,
-          63,
-          0.25
-        ) 5px, rgba(143, 77, 63, 0.25) 10px);
-
-  background: repeating-linear-gradient(
-      90deg,
-      transparent 0 50px,
-      rgba(255, 127, 0, 0.25) 50px 56px,
-      transparent 56px 63px,
-      rgba(255, 127, 0, 0.25) 63px 69px,
-      transparent 69px 116px,
-      rgba(255, 206, 0, 0.25) 116px 166px
-    ), repeating-linear-gradient(
-      0deg,
-      transparent 0 50px,
-      rgba(255, 127, 0, 0.25) 50px 56px,
-      transparent 56px 63px,
-      rgba(255, 127, 0, 0.25) 63px 69px,
-      transparent 69px 116px,
-      rgba(255, 206, 0, 0.25) 116px 166px
-    ), repeating-linear-gradient(
-      -45deg,
-      transparent 0 5px,
-      rgba(143, 77, 63, 0.25) 5px 10px
-    ), repeating-linear-gradient(45deg, transparent 0 5px, rgba(
-          143,
-          77,
-          63,
-          0.25
-        ) 5px 10px);
-`
 
 const ListCard = styled.div`
 margin : 5vh 3vh 3vh;

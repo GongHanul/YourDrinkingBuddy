@@ -3,9 +3,9 @@ import { React, useState, useEffect } from 'react';
 
 import Box from '@mui/material/Box';
 
-function Game1Modal(props) {
-  const handleClose = props.handleClose
-  const [timeLeft, setTimeLeft] = useState(10);
+function Game6Modal(props) {
+  const handleClose = props.handleClose2
+  const [timeLeft, setTimeLeft] = useState(5);
 
   useEffect(() => {
     let intervalId = setInterval(() => {
@@ -20,22 +20,15 @@ function Game1Modal(props) {
   return (
   <>
   <Box sx={style}>
-    <Change1>심전도 게임💖</Change1>
-    <Change1>10초 후 게임이 시작됩니다🎉</Change1>
-    <Cnt>{timeLeft}</Cnt>
-    <br/>
-    <Change1>주의사항💢</Change1>
-    <Change2>1. 손가락을 그림과 같이 센서에 붙여주세요.</Change2>
-    <Change2>[너무 약한 힘이거나 센 힘으로 누르면 </Change2>
-    <Change2>측정이 잘 안될 수 있습니다.]</Change2>
-    <Change2>2. 게임을 진행하는 동안 한 자세를 유지해주시면</Change2>
-    <Change2>더 정확한 심박수를 알 수 있습니다.</Change2>
+  <Change1>컨트롤러 게임 🎮</Change1>
+  <Change1>5초 후 게임이 시작됩니다🎉</Change1><br />
+  <Cnt>{timeLeft}</Cnt>
   </Box>
   </>
   )
 }
 
-export default Game1Modal
+export default Game6Modal
 
 const style = {
   position: 'absolute',
@@ -57,13 +50,8 @@ const Change1 = styled.div`
   font-family: 'Jua', sans-serif;
   filter: drop-shadow(0.2vh 0.2vh 0.1vh rgb(0 0 0 / 0.5));
 `
-const Change2 = styled.div`
-  font-size: 4vh;
-  font-family: 'Jua', sans-serif;
-  filter: drop-shadow(0.2vh 0.2vh 0.1vh rgb(0 0 0 / 0.5));
-`
 const Cnt = styled.div`
-  font-size: 5vh;
+  font-size: 6vh;
   font-family: 'Jua', sans-serif;
   color : red;
   filter: drop-shadow(0.2vh 0.2vh 0.1vh rgb(0 0 0 / 0.5));
