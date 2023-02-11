@@ -137,7 +137,6 @@ const getRecipes = () => {
 const None = styled.span`
   display: non;
 `
-
 const Maindiv = styled.body`
   width:100vw;
   height:100vh;

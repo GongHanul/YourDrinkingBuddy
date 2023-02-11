@@ -22,6 +22,21 @@ function Game4() {
   const img1 = ['img/game1/heart1.gif', 'img/game1/heart2.gif', 'img/game1/heart3.gif', 'img/game1/heart4.gif']
   const img2 = ['img/game1/dance.gif', 'img/game1/dance_cute.gif', 'img/game1/monkey.gif']
 
+  const bgcolor = [' #B3CEE5   ', '#f1f5d2', ' #bfc7d6', '#c3ddd6  ']
+  const shuffle = (array) => {
+    for(let index = array.length -1 ; index > 0; index--){
+      // 무작위 index 값을 만든다. (0 이상의 배열 길이 값)
+      const randomPosition = Math.floor(Math.random() * (index +1));
+
+      // 임시로 원본 값을 저장하고, randomPosition을 사용해 배열 요소를 섞는다.
+      const temporary = array[index];
+      array[index] = array[randomPosition];
+      array[randomPosition] =temporary;
+    }
+    return array
+  }
+  shuffle(bgcolor)
+
   const game = useSelector((state)=>state.game);
   const dispatch = useDispatch();
   const game1 = game.gameData.playerData;
@@ -52,7 +67,6 @@ function Game4() {
     return (<>게임 생성 중입니다. 기다려주세요...</>)
   } else {
 
-
   return (
   <>
   <Full>
@@ -63,76 +77,80 @@ function Game4() {
     <Game4Modael handleClose = {()=>{setIsLoading(true);handleClose()}} />
   </Modal>    
   <Side>
-  <h1>{timeLeft}</h1>
-  <progress value={timeLeft} max={timePerTurn} />
-  {/* https://coreui.io/react/docs/components/progress/ */}
-  {/* https://mui.com/material-ui/react-progress/ */}
-  {/* https://freefrontend.com/react-progress-bars/ */}
-  <Stack sx={{ width: '50%', color: 'grey.500' }} spacing={2}>
-      <LinearProgress color="secondary" />
-      <LinearProgress color="success" />
-      <LinearProgress color="inherit" />
-    </Stack>
-    <Stack sx={{ color: 'grey.500' }} spacing={2} direction="row">
-      <CircularProgress color="secondary" />
-      <CircularProgress color="success" />
-      <CircularProgress color="inherit" />
-    </Stack>
-      {/* https://coreui.io/react/docs/components/progress/ */}
-      {/* https://mui.com/material-ui/react-progress/ */}
-      {/* https://freefrontend.com/react-progress-bars/ */}
+  <TimeLeft>{timeLeft}</TimeLeft>
+  <Progress value={timeLeft} max={timePerTurn} />
   </Side>
   <Display>
-      {players.map(function (e, i) {
-        return (
-      
-      <PlayerDisplay index={i}>
-          {(i === game.gameData.turnIndex)?<>Turn</>:<></>}
-      <Player>Player : {game1[i].playerId}</Player>
-      {/* { game1[i].cnt >= 45 &&  */}
-      {/* <IMG 
-      src={img[game1[i].cnt%2]}></IMG> */}
-      <STATE>
-      <IMG 
-      src={img1[i]}></IMG>
-      {/* <IMG 
-      src={img2[i%3]}></IMG> */}
-      <CNT>{game1[i].db}</CNT>
-      </STATE>
-      {/* } */}
-      </PlayerDisplay>
+    {players.map(function (e, i) {
+      return (
+    <PlayerDisplay index={i} style={{backgroundColor : `${bgcolor[i]}`}}>
+    <Player>PLAYER {game1[i].playerId}</Player>
+    <STATE>
+    <IMG 
+    src={img1[i]}></IMG>
+    <CNT>{game1[i].db}</CNT>
+    </STATE>
+    {(i === game.gameData.turnIndex)?<Turn>TURN</Turn>:<></>}
+    </PlayerDisplay>
     )
     })}
   </Display>
-  <Side>
-    <Quit onClick={() => {dispatch(completeGame({}))} /* 비동기 통신이므로 여기에 navigate 를 달면 큰일난다. 방법1. complete callback을 달기 방법2. hook으로 game.gameState == 0 감지하기, 방법 3. hook으로 game.gameResult가 변경됨을 감지하기,  */     }>QUIT</Quit>
-  </Side>
   </Full>
     </>
     )
   }
 }
+
+const Progress = styled.progress`
+  /* appearance: none;  */
+ &:-webkit-progress-bar {
+  background:#f0f0f0;
+  border-radius:10px;
+  box-shadow: inset 3px 3px 10px #ccc;
+ }
+ &:-webkit-progress-value {
+    border-radius:10px;
+    background: #1D976C;
+    background: -webkit-linear-gradient(to right, #93F9B9, #1D976C);
+    background: linear-gradient(to right, #93F9B9, #1D976C);
+}
+`
+const TimeLeft = styled.div`
+  padding : 0 5vh;
+  font-weight: bold;
+`
 const CNT = styled.div`
   font-family: 'Silkscreen', cursive;
-  font-size: 20vh;
+  font-size: 18vh;
 `
-
+const Turn = styled.div`
+  display : flex;
+  font-size: 5vh;
+  font-family: 'Jua', sans-serif;
+  font-weight: bold;
+  color : #da341f;
+`
 const STATE = styled.div`
   display : flex;
-`
-
-const Player = styled.div`
-  display : flex;
-`
-const IMG = styled.img`
   justify-content: center;
   align-items: center ;
+`
+const Player = styled.div`
+  display : flex;
+  font-size: 7vh;
+  font-family: 'Jua', sans-serif;
+`
+const IMG = styled.img`
+  display : flex;
+  height : 15vh;
+  padding : 2vh 5vh;
 `
 
 const Full = styled.div`
   display : flex;
   flex-wrap: wrap;
   width : 100vw;
+  background : #deeeea;
 `
 const Display = styled.div`
   display : flex;
@@ -142,10 +160,11 @@ const Display = styled.div`
 `
 const Side = styled.div`
   display : flex;
-  justify-content: space-evenly;
-  padding : 2vh;
   width : 100%;
-  height : 10%;
+  height : 15%;
+  justify-content: center;
+  align-items: center ;
+  font-size: 8vh;
 `
 const Quit = styled.div`
   display : flex;
@@ -167,9 +186,7 @@ const PlayerDisplay = styled.div`
   flex: 1 1 50%;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 1px 2px #063C69, 0 1px 2px #063C69 inset;
-  box-sizing: border-box;
+  /* box-shadow: 0 1px 2px #063C69, 0 1px 2px #063C69 inset; */
   /* background-image: url(${'img/game1/whale.gif'}); */
-  background-color: grey;
 `
 export default Game4

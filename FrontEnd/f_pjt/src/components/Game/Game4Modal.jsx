@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 
 function Game4Modal(props) {
   const handleClose = props.handleClose
-  const [timeLeft, setTimeLeft] = useState(10);
+  const [timeLeft, setTimeLeft] = useState(5);
 
   useEffect(() => {
     let intervalId = setInterval(() => {
@@ -20,10 +20,9 @@ function Game4Modal(props) {
   return (
   <>
   <Box sx={style}>
-    <Change1>소리 게임♬</Change1>
-    <Change1>10초 후 게임이 시작됩니다.. {timeLeft}</Change1>
-    <br/>
-    <Change1>....</Change1>
+    <Change1>소리 게임 🎤</Change1>
+    <Change1>5초 후 게임이 시작됩니다🎉</Change1><br />
+    <Cnt>{timeLeft}</Cnt>
   </Box>
   </>
   )
@@ -51,20 +50,9 @@ const Change1 = styled.div`
   font-family: 'Jua', sans-serif;
   filter: drop-shadow(0.2vh 0.2vh 0.1vh rgb(0 0 0 / 0.5));
 `
-const ClearBtn = styled.button`
-  display: flex;
-  background: #ffffff;
+const Cnt = styled.div`
+  font-size: 6vh;
   font-family: 'Jua', sans-serif;
-  border : none;
-  border-radius : 1vh;
-  color : #004680;
-  font-weight : bold;
-  font-style: normal;
-  font-size: 4vh;
-  &:hover {
-    color: red;
-  }
-`
-const State = styled.div`
-  display: none;
+  color : red;
+  filter: drop-shadow(0.2vh 0.2vh 0.1vh rgb(0 0 0 / 0.5));
 `

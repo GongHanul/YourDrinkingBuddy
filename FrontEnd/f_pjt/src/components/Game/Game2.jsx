@@ -2,13 +2,25 @@ import styled from "styled-components";
 import { React, useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRotateRight } from "@fortawesome/free-solid-svg-icons"
+import Modal from '@mui/material/Modal';
+import Game2Modal from "./Game2Modal";
 
 
 function Game2() {
   let [Player, setPlayer] = useState([1])
+  const [open, setOpen] = useState(true);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   return (
   <>
   <Full>
+  <Modal
+    open={open}
+    // onClose={handleClose}
+  >
+    <Game2Modal handleClose = {handleClose} />
+  </Modal>
   <Display>
   { Player.map(function(e, i){
     return (<PlayerDisplay index={i}>{i}</PlayerDisplay>)
@@ -25,19 +37,20 @@ const Full = styled.div`
   display : flex;
   flex-wrap: wrap;
   width : 100vw;
+  background :#edf0d0 ;
 `
 const Display = styled.div`
   display : flex;
   flex-wrap: wrap;
   width : 100%;
   height : 85%;
+  background :#eaf0b4 ;
 `
 const Side = styled.div`
   display : flex;
   justify-content: space-evenly;
-  padding : 2vh;
   width : 100%;
-  height : 10%;
+  height : 15%;
 `
 const PlayerDisplay = styled.div`
   display : flex;
@@ -48,8 +61,7 @@ const PlayerDisplay = styled.div`
   justify-content: center;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 1px 2px #0E538B, 0 1px 2px #0E538B inset;
-  box-sizing: border-box;
+  /* box-shadow: 0 1px 2px #0E538B, 0 1px 2px #0E538B inset; */
 `
   const Restart = styled.div`
   display : flex;

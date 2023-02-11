@@ -31,7 +31,8 @@ function ShotModal(props) {
     </>}
     {/* stop 눌렀을떄 (page2)*/}
     {page === 2 && <>
-    <Loading>잔을 비워주세요</Loading>
+    <Loading>잔을</Loading>
+    <Loading>비워주세요🥂</Loading>
     <br />
     <StopBtn onClick={handleClose} >CLOSE</StopBtn>   
     </>}
@@ -47,7 +48,7 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: '20vw',
+  width: '22vw',
   height: '30vh',
   bgcolor: 'background.paper',
   border: 'none',
@@ -58,9 +59,12 @@ const style = {
   alignItems: 'center',
   justifyContent : 'center',
   flexDirection: 'column',
+  overflowY : 'auto',
+
 };
 const Loading = styled.div`
   font-size: 5vh;
+  padding : 0 2vh;
   font-family: 'Jua', sans-serif;
   filter: drop-shadow(0.2vh 0.2vh 0.1vh rgb(0 0 0 / 0.5));
 `

@@ -28,10 +28,10 @@ function Game() {
       font = {'#ffffff'}
       src = {'img/gram.png'}
       title = {'# 술 넘기지마!'}
-      rule1 = {'# 임의의 랜덤값이 주어진다'}
+      rule1 = {'# 랜덤값이 주어진다'}
       rule2 = {'돌아가면서 술을 따르며'}
       rule3 = {'랜덤값을 넘으면 벌칙!'}
-      rule4 = {'게임 전 잔을 무게 센서에 올리기'}
+      rule4 = {'잔을 무게 센서에 올리기'}
       nav = {'/game2'}
       ></Gamecard2></Flexdiv>
       
@@ -43,7 +43,7 @@ function Game() {
       src = {'img/joystick.png'}
       title = {'# 누가 더 빨리! 많이!'}
       rule1 = {'# 조이패드에 있는'}
-      rule2 = {'4개의 버튼을 마구마구 눌러라!'}
+      rule2 = {'버튼을 마구마구 눌러라!'}
       rule3 = {'적게 나온 사람이 벌칙!'}
       rule4 = {'화면에 나오는 숫자 확인'}
       nav = {'/game3'}
@@ -55,11 +55,11 @@ function Game() {
       background= {'#F4E5B2'}
       font = {'#000000'}
       src = {'img/sound_black2.png'}
-      title = {'# 누가 더 시끄럽나!'}
+      title = {'# 누가 소리를 내었는가!'}
       rule1 = {'# 각 순서에 따라서'}
       rule2 = {'평균, 갭 차이'}
       rule3 = {'나온사람이 벌칙!'}
-      rule4 = {'눈치껏 조용한 타이밍 시작'}
+      rule4 = {'시간에 따라 차례대로'}
       nav = {'/game4'}
       ></Gamecard></Flexdiv>
       
@@ -73,7 +73,7 @@ function Game() {
       rule1 = {'# 한명씩 돌아가면서'}
       rule2 = {'물건을 올려 랜덤값에서'}
       rule3 = {'제일 먼 사람이 벌칙!'}
-      rule4 = {'돌아가면서 무게 측정!'}
+      rule4 = {'돌아가면서 무게 측정'}
       nav = {'/game5'}
       ></Gamecard2></Flexdiv>
       
@@ -83,11 +83,11 @@ function Game() {
       background= {'#D0BB70'}
       font = {'#000000'}
       src = {'img/joystick_black.png'}
-      title = {'# 10초는 언제?!'}
+      title = {'# 지금 몇초?!'}
       rule1 = {'# START 누른 후'}
       rule2 = {'10초 후 버튼 클릭!'}
       rule3 = {'차이가 젤 큰 사람 벌칙!'}
-      rule4 = {'10초를 맞춰라!'}
+      rule4 = {'시간을 맞춰라'}
       nav = {'/game6'}
       ></Gamecard></Flexdiv>      
   
@@ -101,10 +101,12 @@ const Gamee = styled.div`
   font-family: 'Noto Sans KR', sans-serif;
   font-weight: bold;
   overflow-y : auto;
+  height : 100vh;
   `
   // font-family: 'Do Hyeon', sans-serif;
 const Flexdiv = styled.div`
   flex: 1 1 30%;
+  
 `
 // font-family: 'Changa', sans-serif;
 // font-family: 'Hanalei Fill', cursive;
