@@ -1,5 +1,5 @@
 import { io } from "socket.io-client"
-import { addPlayer, removePlayer, getPreservedGameDataHandler, updateGameData, initializePlayerViewPos, setGameStatePlay, setGameStateIdle, updateGameResult } from "./store";
+import { addPlayer, removePlayer, getPreservedGameDataHandler, updateGameData, initializePlayerViewPos, setGameStatePlay, setGameStateIdle, updateGameResult, GameState } from "./store";
 import store from "./store";
 
 // export const socket = io("70.12.226.153:3000", { transports: ["websocket"] });
@@ -27,8 +27,6 @@ export const listenOnPlayerParticipate = (notifyCallback) => {
   })
 }
 
-listenOnPlayerParticipate((requestData)=>{});
-
 // // 서버-> 클라이언트  게임 시작전 플레이어 참가 의사를 밝힐 때
 // export const listenOnPlayerStatus = (notifyCallback) => {
 //   socket.on("server:playerParticipate", (requestData) => {
@@ -55,8 +53,10 @@ export const listenOffChangeGame = () => {
 export const listenOnChangeGameViaEventName = (eventName, notifyCallback) => {
   socket.on(eventName, (requestData) => {
     const game = store.getState().game;
-    console.log(game);
-    console.log(store)
+    // 플레이중이 아니면 폭파시킨다.
+    if (game.gameState !== GameState.PLAY) {
+      requestNoGamesPlayed();
+    }
     const changeGameResult = getPreservedGameDataHandler().onChanged(game, requestData);
     store.dispatch(updateGameData(changeGameResult));
     notifyCallback(requestData);
@@ -66,6 +66,8 @@ export const listenOnChangeGameViaEventName = (eventName, notifyCallback) => {
 export const listenOffChangeGameViaEventName = (eventName) => {
   socket.off(eventName);
 }
+
+
 
 // 서버-> 클라이언트 라즈베리파이 서버가 게임이 완료되었음을 요청할 때
 export const listenOnCompleteGame = (notifyCallback) => {
@@ -87,7 +89,7 @@ export const listenOnDestroyGame = (notifyCallback) => {
   socket.on("server:destroyGame", (requestData) => {
     const game = store.getState().game;
     const destroyGameResult = getPreservedGameDataHandler().onDestroyed(game, StatusCode.SUCCESS, requestData);
-    if(destroyGameResult){
+    if (destroyGameResult) {
       store.dispatch(updateGameResult(destroyGameResult));
     }
     notifyCallback(requestData);
@@ -155,18 +157,26 @@ export const requestRecreateGame = (gameId, playerCount) => {
 }
 
 // 클라이언트 -> 서버 게임 파기 요청
-export const requestDestoryGame = () => {
-  send("client:destoryGame", null, (response) => {
+export const requestDestroyGame = () => {
+  send("client:destroyGame", null, (response) => {
     const game = store.getState().game;
-    getPreservedGameDataHandler().onDestroyed(game, response.statusCode, response.data);
-    
+    if (game.gameState === GameState.PLAY) {
+      getPreservedGameDataHandler().onDestroyed(game, response.statusCode, response.data);
+    }
     store.dispatch(setGameStateIdle());
   });
 }
 
+// 클라이언트 -> 서버 게임 완료 요청
 export const requestCompleteGame = (requestData) => {
   send("client:completeGame", requestData);
 }
+
+// 클라이언트 -> 서버 게임이 진행중이지 않음을 알림
+export const requestNoGamesPlayed = (requestData) => {
+  send("client:destroyGame", requestData);
+}
+
 
 // 클라이언트 -> 서버 데이터 요청
 export const requestChangeGame = (requestData, requestCallback) => {
@@ -190,3 +200,8 @@ export const send = (event, data, callback) => {
   }
   socket.emit(event, data, callback);
 };
+
+
+// global listening socket
+listenOnChangeGame();
+listenOnPlayerParticipate((requestData) => { });

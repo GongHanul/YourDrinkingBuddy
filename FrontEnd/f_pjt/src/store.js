@@ -9,7 +9,7 @@ import {
   listenOnCompleteGame,
   listenOffCompleteGame,
   requestCreateGame,
-  requestDestoryGame,
+  requestDestroyGame,
   StatusCode,
   requestChangeBeverage,
   requestConnectServer,
@@ -24,11 +24,11 @@ export const CocktailMakerState = {
   BUSY: 1
 }
 
-const defaultCallback = (data) => {};
+const defaultCallback = (data) => { };
 
 let cocktailMaker = createSlice({
   name: 'cocktailMaker',
-  initialState: {state: CocktailMakerState.IDLE, before: [-1,-1,-1,-1]},
+  initialState: { state: CocktailMakerState.IDLE, before: [-1, -1, -1, -1] },
   reducers: {
     setStateIdle(state) {
       console.log("set state idle")
@@ -60,41 +60,41 @@ let cocktailMaker = createSlice({
         });
       }
     },
-    clearPorts(state, action){
-      if(state.state === CocktailMakerState.BUSY){
+    clearPorts(state, action) {
+      if (state.state === CocktailMakerState.BUSY) {
         alert("술 디스펜서가 작동중입니다. 기달려주세요.");
         return
       }
       const beverageIdsInPort = action.payload;
-        let ports = [];
-        for(let i=0; i<beverageIdsInPort.length; i++){
-          ports.push(beverageIdsInPort[i] !== state.before[i]);
+      let ports = [];
+      for (let i = 0; i < beverageIdsInPort.length; i++) {
+        ports.push(beverageIdsInPort[i] !== state.before[i]);
+      }
+      requestClearBeverage(ports, (responseData) => {
+        if (responseData.statusCode === StatusCode.FAILURE) {
+          alert("술 디스펜서로 부터 예외가 발생했습니다. 술 디스펜서를 확인해주세요.")
         }
-        requestClearBeverage(ports,(responseData)=>{
-          if (responseData.statusCode === StatusCode.FAILURE) {
-            alert("술 디스펜서로 부터 예외가 발생했습니다. 술 디스펜서를 확인해주세요.")
-          }
-          store.dispatch(setStateIdle());
-        });
+        store.dispatch(setStateIdle());
+      });
       state.state = CocktailMakerState.BUSY;
     },
     changePorts(state, action) {
-      if(state.state === CocktailMakerState.BUSY){
+      if (state.state === CocktailMakerState.BUSY) {
         alert("술 디스펜서가 작동중입니다. 기달려주세요.");
         return
       }
       const beverageIdsInPort = action.payload;
-        let ports = [];
-        for(let i=0; i<beverageIdsInPort.length; i++){
-          ports.push(beverageIdsInPort[i] !== state.before[i]);
+      let ports = [];
+      for (let i = 0; i < beverageIdsInPort.length; i++) {
+        ports.push(beverageIdsInPort[i] !== state.before[i]);
+      }
+      requestChangeBeverage(ports, (responseData) => {
+        if (responseData.statusCode === StatusCode.FAILURE) {
+          alert("술 디스펜서로 부터 예외가 발생했습니다. 술 디스펜서를 확인해주세요.")
         }
-        requestChangeBeverage(ports,(responseData)=>{
-          if (responseData.statusCode === StatusCode.FAILURE) {
-            alert("술 디스펜서로 부터 예외가 발생했습니다. 술 디스펜서를 확인해주세요.")
-          }
-          store.dispatch(setStateIdle());
-        });
-        state.before = beverageIdsInPort;
+        store.dispatch(setStateIdle());
+      });
+      state.before = beverageIdsInPort;
       state.state = CocktailMakerState.BUSY;
     }
   }
@@ -272,16 +272,16 @@ let game = createSlice({
 
     removePlayer(state, action) {
       const playerId = action.payload;
-      state.playerStatus = state.playerStatus.filter((elem)=>elem.id !== playerId)
+      state.playerStatus = state.playerStatus.filter((elem) => elem.id !== playerId)
       state.playerCount = state.playerStatus.length;
     },
 
     addPlayer(state, action) {
       const playerId = action.payload;
-      const idx = state.playerStatus.findIndex((elem)=> elem.id === playerId)
-      if(idx === -1){
-        state.playerStatus = [...state.playerStatus, {id: playerId, connection:1}]
-      } else{
+      const idx = state.playerStatus.findIndex((elem) => elem.id === playerId)
+      if (idx === -1) {
+        state.playerStatus = [...state.playerStatus, { id: playerId, connection: 1 }]
+      } else {
         state.playerStatus[idx].connection = 1;
       }
       state.playerCount = state.playerStatus.length;
@@ -305,7 +305,7 @@ let game = createSlice({
       state.gameData = gameData;
     },
 
-    updateGameResult(state, action){
+    updateGameResult(state, action) {
       const gameResult = action.payload;
       state.gameResult = gameResult;
     },
@@ -315,7 +315,7 @@ let game = createSlice({
 
       // listenOffPlayerParticipate();
       listenOffChangeGame();
-      listenOffCompleteGame();
+      // listenOffCompleteGame();
       listenOffDestroyGame();
 
       // IDLE상태가 되며 이제부터 게임 구성 이전으로 돌아간다.
@@ -333,7 +333,7 @@ let game = createSlice({
 
       // listenOnPlayerParticipate(playerParticipateCallback);
       listenOnDestroyGame(destroyGameCallback);
-      listenOffChangeGame();
+      // listenOffChangeGame();
       listenOffCompleteGame();
       requestConnectServer();
 
@@ -395,7 +395,7 @@ let game = createSlice({
 
     // 게임을 재시작한다.
     // 이전 게임 정보중 playerViewPos를 이용한다.
-    recreateGame(state){
+    recreateGame(state) {
       // 재시작은 반드시 playerViewPos의 크기가 1 이상이여야 한다.
       if (state.playerViewPos.length === 0) {
         throw new Error("재시작시 playerViewPos의 크기가 1 이상이여야 합니다.");
@@ -419,7 +419,7 @@ let game = createSlice({
 
       // 게임 파기 요청을 라즈베리파이 서버에 요청한다.
       // 해당 통신은 bloking/동기 통신이 보장되어야 한다.
-      requestDestoryGame(false);
+      requestDestroyGame();
     },
 
 
@@ -428,7 +428,7 @@ let game = createSlice({
     // 컨트롤러 입력을 통해 게임을 중단하는 게임에 경우 해당 메세지를 통해 게임 완료 요청을 한다.
     // PLAY 상황에서만 요청 가능하다.
     completeGame(state, action) {
-      if(state.gameState !== GameState.PLAY){
+      if (state.gameState !== GameState.PLAY) {
         throw new Error("게임 시작중이 아닙니다.");
       }
       // 게임 완료 요청을 라즈베리파이 서버에 요청한다.
@@ -453,15 +453,28 @@ let game = createSlice({
     // 이벤트 이름을 기준으로 라즈베리파이 서버에 요청한다.
     // 해당 통신은 게임 형태에 따라 동기 통신이 보장 되어야 할 수도 있다.
     // 현재 존재하는 6개 게임 기준으로는 동기화가 필요없다.
-    changeGame(state, action){
+    changeGame(state, action) {
       const param = action.payload;
       const requestData = param.data;
       console.log(requestData);
       const changeGameCallback = param.chanvgeGameCallback ? param.chanvgeGameCallback : defaultCallback;
-      if(state.gameState !== GameState.PLAY){
+      if (state.gameState !== GameState.PLAY) {
         throw new Error("게임 중이 아닙니다.");
       }
       requestChangeGame(requestData, changeGameCallback);
+    },
+
+    // 화면 변경시 게임을 안전하게 종료한다.
+    safeTerminateIfGamePlayed(state) {
+      if (state.gameState === GameState.PLAY) {
+        requestDestroyGame();
+      }
+      // listenOffPlayerParticipate();
+      listenOffChangeGame();
+      // listenOffCompleteGame();
+      listenOffDestroyGame();
+
+      state.gameState = GameState.IDLE;
     }
   },
 });
