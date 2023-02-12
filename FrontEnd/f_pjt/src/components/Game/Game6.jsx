@@ -1,6 +1,7 @@
 import styled from "styled-components";
-import { React, useState, useEffect } from 'react';
+import { React, useState, useEffect, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
+import confetti from "https://cdn.skypack.dev/canvas-confetti@1";
 
 function Game6() {
   const bgcolor = [' #c3ddd6', '#bfc7d6', ' #f0eee9', '#b8c0be']
@@ -23,6 +24,12 @@ function Game6() {
   useEffect( () => {setPlayer([...Array(Playercnt).keys()]) } ,[])
   let [Player, setPlayer] = useState([])
 
+  const Effect = useCallback(() => {
+    confetti({
+      particleCount: 500,
+      spread: 100
+    });
+  }, []);
 
   return (
   <>
@@ -30,7 +37,7 @@ function Game6() {
   <Display>
   { Player.map(function(e, i){
     return (<PlayerDisplay index={i} style={{backgroundColor : `${bgcolor[i]}`}}>
-      {i}
+      <Click className="button" onClick={Effect}>🎉</Click>
     </PlayerDisplay>)
   })}
   </Display>
@@ -41,6 +48,26 @@ function Game6() {
   </>
   )
 }
+
+const Click = styled.button`
+  background-color: #f0e9e9;
+  color: #fff;
+  border: none;
+  font-size: 5ch;
+  font-weight: 400;
+  padding: 3vh 6vh;
+  border-radius: 3vh;
+  z-index: 999;
+  display: flex;
+  gap: 0.5em;
+  box-shadow:
+    0px 1.7px 2.2px rgba(0, 0, 0, 0.02),
+    0px 4px 5.3px rgba(0, 0, 0, 0.028),
+    0px 7.5px 10px rgba(0, 0, 0, 0.035),
+    0px 13.4px 17.9px rgba(0, 0, 0, 0.042),
+    0px 25.1px 33.4px rgba(0, 0, 0, 0.05),
+    0px 60px 80px rgba(0, 0, 0, 0.07);
+`
 const Full = styled.div`
   display : flex;
   flex-wrap: wrap;
