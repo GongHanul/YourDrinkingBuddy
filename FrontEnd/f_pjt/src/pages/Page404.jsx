@@ -7,6 +7,9 @@ function Page404() {
   const Gohome = (() =>{
     navigate("/")
   })
+  const GoAboutus = (() =>{
+    navigate("/aboutus")
+  })
   return(
   <>
   <Background>
@@ -34,7 +37,7 @@ function Page404() {
     <P>Boo, looks like a ghost stole this page!</P>
     <Buttons>
       <Btn onClick={Gohome}>Home</Btn>
-      <Btn onClick={Gohome}>About Us</Btn>
+      <Btn onClick={GoAboutus}>About Us</Btn>
     </Buttons>
   </Bottom>
   </Background>

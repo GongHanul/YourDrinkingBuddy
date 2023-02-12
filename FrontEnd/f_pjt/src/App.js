@@ -8,6 +8,7 @@ import Drink from "./pages/Drink";
 import Sidebar from "./SideNav";
 import Recipe from "./pages/Recipe";
 import Splash from "./pages/Splash";
+import AboutUs from "./pages/AboutUs";
 import GamePlay from "./components/Game/GamePlay";
 import Game1 from "./components/Game/Game1";
 import Game2 from "./components/Game/Game2";
@@ -44,6 +45,7 @@ function App() {
         <Route path="/drink" element={<Drink />} />
         <Route path="/recipe" element={<Recipe />} />
         <Route path="/splash" element={<Splash />} />
+        <Route path="/aboutus" element={<AboutUs />} />
         <Route path="/gameplay" element={<GamePlay />} />
         <Route path="/game1" element={<Game1 />} />
         <Route path="/game2" element={<Game2 />} />
