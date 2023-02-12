@@ -159,7 +159,7 @@ const Full = styled.div`
   display : flex;
   flex-wrap: wrap;
   width : 100vw;
-  background : #deeeea;
+  background : #d1e1f0;
 `
 const Display = styled.div`
   display : flex;
