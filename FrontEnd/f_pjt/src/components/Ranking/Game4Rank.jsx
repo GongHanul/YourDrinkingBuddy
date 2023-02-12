@@ -16,10 +16,10 @@ function Game4Rank() {
   <Box sx={style}>
     <Topdiv>
       <Rank>🏆RANK🏆</Rank><br />
-      <Score>Player1 : cnt</Score>
-      <Score>Player2 : cnt</Score>
-      <Score>Player3 : cnt</Score>
-      <Score>Player4 : cnt</Score>
+      <Score>PLAYER1 : cnt</Score>
+      <Score>PLAYER2 : cnt</Score>
+      <Score>PLAYER3 : cnt</Score>
+      <Score>PLAYER4 : cnt</Score>
     </Topdiv>
     <Bomdiv>
     <br /><Quit>REPLAY<FontAwesomeIcon icon={faArrowRotateRight} /></Quit>
@@ -73,14 +73,14 @@ const Quit = styled.div`
 `
 const Rank = styled.div`
   font-size: 7vh;
-  font-family: 'Jua', sans-serif;
   letter-spacing : 1vh;
+  font-weight: bold;
+  font-family: 'Jua', sans-serif;
   filter: drop-shadow(0.2vh 0.2vh 0.1vh rgb(0 0 0 / 0.5));
 `
 const Score = styled.div`
   font-size: 5vh;
   font-family: 'Jua', sans-serif;
-  letter-spacing : 0.5vh;
   filter: drop-shadow(0.2vh 0.2vh 0.1vh rgb(0 0 0 / 0.5));
 `
 export default Game4Rank

@@ -27,7 +27,7 @@ function Game1Rank(props) {
     <Topdiv>
       <Rank>🏆RANK🏆</Rank><br />
       { result.map( (e) => {
-        return <Score>Player{e.playerId} : {e.bpm}</Score>
+        return <Score>PLAYER {e.playerId} : {e.bpm}</Score>
       })}
     </Topdiv>
     <Bomdiv>
@@ -82,14 +82,14 @@ const Quit = styled.div`
 `
 const Rank = styled.div`
   font-size: 7vh;
-  font-family: 'Jua', sans-serif;
   letter-spacing : 1vh;
+  font-weight: bold;
+  font-family: 'Jua', sans-serif;
   filter: drop-shadow(0.2vh 0.2vh 0.1vh rgb(0 0 0 / 0.5));
 `
 const Score = styled.div`
   font-size: 5vh;
   font-family: 'Jua', sans-serif;
-  letter-spacing : 0.5vh;
   filter: drop-shadow(0.2vh 0.2vh 0.1vh rgb(0 0 0 / 0.5));
 `
 export default Game1Rank
