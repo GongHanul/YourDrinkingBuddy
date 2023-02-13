@@ -12,6 +12,8 @@ export default function AboutUs() {
   const CSB = "https://github.com/Bin-Choi"
   const JJH = "https://github.com/jaehyeon-git"
   const GHU = "https://github.com/GongHanul"
+  const KSH = "https://github.com/s5hyeonkim"
+  const KSK = "https://github.com/user188245"
 
   const Main = styled.div`
     display: flex;
@@ -22,7 +24,7 @@ export default function AboutUs() {
     height : 100vh;
     width : 100vw;
     padding : 0 4vh;
-    background: #f0eee9;
+    background: #D3DEEA;
   `
   const Flexdiv = styled.div`
     flex: 1 1 30%;
@@ -57,7 +59,7 @@ export default function AboutUs() {
       <CardMedia
         component="img"
         height="200"
-        image="img/profile/곰.png"
+        image="img/profile/쥐.png"
       />
       <CardContent>
         <Name>
@@ -66,12 +68,9 @@ export default function AboutUs() {
         <Content>
           백엔드
         </Content>
-        <Content>
-          희망트랙 : 
-        </Content>
       </CardContent>
       <CardActions>
-        <Btn>GITHUB <FontAwesomeIcon icon={ faSquareGithub }/></Btn>
+        <Btn onClick={()=>{window.open(KSK)}}>GITHUB <FontAwesomeIcon icon={ faSquareGithub }/></Btn>
       </CardActions>
     </Card>
   </Flexdiv>
@@ -89,9 +88,6 @@ export default function AboutUs() {
         <Content>
           임베디드
         </Content>
-        <Content>
-          희망트랙 : 
-        </Content>
       </CardContent>
       <CardActions>
         <Btn onClick={()=>{window.open(GHU)}}>GITHUB <FontAwesomeIcon icon={ faSquareGithub }/></Btn>
@@ -103,7 +99,7 @@ export default function AboutUs() {
       <CardMedia
         component="img"
         height="200"
-        image="img/profile/다람쥐.png"
+        image="img/profile/돼지.png"
       />
       <CardContent>
         <Name>
@@ -112,12 +108,9 @@ export default function AboutUs() {
         <Content>
           임베디드
         </Content>
-        <Content>
-          희망트랙 : 
-        </Content>
       </CardContent>
       <CardActions>
-        <Btn>GITHUB <FontAwesomeIcon icon={ faSquareGithub }/></Btn>
+        <Btn onClick={()=>{window.open(KSH)}}>GITHUB <FontAwesomeIcon icon={ faSquareGithub }/></Btn>
       </CardActions>
     </Card>
   </Flexdiv>
@@ -134,9 +127,6 @@ export default function AboutUs() {
         </Name>
         <Content>
           프론트엔드
-        </Content>
-        <Content>
-          희망트랙 : 
         </Content>
       </CardContent>
       <CardActions>
@@ -158,9 +148,6 @@ export default function AboutUs() {
         <Content>
           임베디드
         </Content>
-        <Content>
-          희망트랙 : 
-        </Content>
       </CardContent>
       <CardActions>
         <Btn  onClick={()=>{window.open(JJH)}}>GITHUB <FontAwesomeIcon icon={ faSquareGithub }/></Btn>
@@ -172,7 +159,7 @@ export default function AboutUs() {
       <CardMedia
         component="img"
         height="200"
-        image="img/profile/돼지.png"
+        image="img/profile/곰.png"
       />
       <CardContent>
         <Name>
@@ -180,9 +167,6 @@ export default function AboutUs() {
         </Name>
         <Content>
           프론트엔드
-        </Content>
-        <Content>
-          희망트랙 : 
         </Content>
       </CardContent>
       <CardActions>
