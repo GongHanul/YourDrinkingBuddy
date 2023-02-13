@@ -1,6 +1,6 @@
 import AbstractGameDataHandler from './AbstractGameDataHandler'
 
-const wait = 10.0;
+const wait = 3.0;
 
 class TimeEstimateGameDataHandler extends AbstractGameDataHandler {
 
@@ -30,7 +30,7 @@ class TimeEstimateGameDataHandler extends AbstractGameDataHandler {
       let gameState_gameData_playerData = Object.assign([],gameState_gameData.playerData);
       let gameState_gameData_playerData_idx = Object.assign({},gameState_gameData_playerData[idx]);
 
-      gameState_gameData_playerData_idx.time = requestData.gameData.cnt;
+      gameState_gameData_playerData_idx.time = requestData.gameData.cnt - wait;
       gameState_gameData_playerData[idx] = gameState_gameData_playerData_idx;
       gameState_gameData.playerData = gameState_gameData_playerData;
       return gameState_gameData;
