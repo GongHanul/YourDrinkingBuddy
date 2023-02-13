@@ -7,6 +7,7 @@ import { GameState, completeGame } from "../../store";
 import Game6Rank from './../Ranking/Game6Rank';
 import { Modal } from "@mui/material";
 import Game6Modal from './Game6Modal';
+import { timeout } from './../../handler/TimeEstimateGameDataHander';
 
 function Game6() {
 
@@ -114,7 +115,8 @@ function Game6() {
     <Display>
     { Player.map(function(e, i){
       return (<PlayerDisplay index={i} style={{backgroundColor : `${bgcolor[i]}`}}>
-        <Click onClick={Effect}>🎉</Click>
+        {game1.playerData[i].time === timeout && <Click onClick={Effect}>🎉</Click>}
+        {game1.playerData[i].time !== timeout && <Click1>🎉</Click1>}
       </PlayerDisplay>)
     })}
     </Display>
@@ -123,6 +125,25 @@ function Game6() {
     )
   } 
 }
+
+const Click1 = styled.div`
+  background-color: gray;
+  border: none;
+  font-size: 5ch;
+  font-weight: 400;
+  padding: 3vh 6vh;
+  border-radius: 3vh;
+  z-index: 999;
+  display: flex;
+  gap: 0.5em;
+  box-shadow:
+    0px 1.7px 2.2px rgba(0, 0, 0, 0.02),
+    0px 4px 5.3px rgba(0, 0, 0, 0.028),
+    0px 7.5px 10px rgba(0, 0, 0, 0.035),
+    0px 13.4px 17.9px rgba(0, 0, 0, 0.042),
+    0px 25.1px 33.4px rgba(0, 0, 0, 0.05),
+    0px 60px 80px rgba(0, 0, 0, 0.07);
+`
 
 const Click = styled.div`
   background-color: none;
