@@ -1,12 +1,11 @@
 import styled from "styled-components";
-import { React, useState } from 'react';
+import { React } from 'react';
 import { useNavigate } from "react-router-dom";
 import Box from '@mui/material/Box';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRotateRight } from "@fortawesome/free-solid-svg-icons"
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { recreateGame, setGameDataHandler } from "../../store";
-import { useSelector } from 'react-redux';
 
 
 function Game1Rank(props) {
