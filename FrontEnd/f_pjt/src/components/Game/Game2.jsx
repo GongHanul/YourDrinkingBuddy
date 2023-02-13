@@ -4,6 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRotateRight } from "@fortawesome/free-solid-svg-icons"
 import Modal from '@mui/material/Modal';
 import Game2Modal from "./Game2Modal";
+import { useSelector } from 'react-redux';
+import { GameState } from "../../store";
 
 
 function Game2() {
@@ -12,8 +14,15 @@ function Game2() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const game = useSelector((state)=> state.game);
+
+  const game1 = game.gameData;
+
+  const restart = () => {
+    
+  }
+
   return (
-  <>
   <Full>
   <Modal
     open={open}
@@ -22,15 +31,30 @@ function Game2() {
     <Game2Modal handleClose = {handleClose} />
   </Modal>
   <Display>
-  { Player.map(function(e, i){
-    return (<PlayerDisplay index={i}>{i}</PlayerDisplay>)
-  })}
+    {
+      game1.weight > game1.limit && game.gameState === GameState.PLAY?
+        <>
+          DOOOOM
+
+          limit 값은 {game1.limit} 이였습니다. 
+
+          죄인은 사약을 들라.
+        
+        </>
+      :
+        <>
+
+          weight : {game1.weight}
+        
+        </>
+    }
+
+
   </Display>
   <Side>
-  <Restart>REPLAY<FontAwesomeIcon icon={faArrowRotateRight} /></Restart>
+  <Restart onClick={restart}>REPLAY<FontAwesomeIcon icon={faArrowRotateRight} /></Restart>
   </Side>
   </Full>
-  </>
   )
 }
 const Full = styled.div`
