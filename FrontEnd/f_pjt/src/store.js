@@ -250,6 +250,10 @@ let game = createSlice({
       }
       const NeededplayerCount = action.payload;
       let result = [];
+      if(NeededplayerCount === 0){
+        state.playerViewPos = result;
+        return state;
+      }
       for (let i = 0; i < state.playerStatus.length; i++) {
         if (state.playerStatus[i].connection === 1) {
           result.push(state.playerStatus[i].id);

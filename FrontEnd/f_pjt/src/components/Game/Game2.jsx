@@ -5,7 +5,7 @@ import { faArrowRotateRight } from "@fortawesome/free-solid-svg-icons"
 import Modal from '@mui/material/Modal';
 import Game2Modal from "./Game2Modal";
 import { useDispatch, useSelector } from 'react-redux';
-import { GameState, createGame, setGameStateReady } from "../../store";
+import { GameState, completeGame, createGame, setGameDataHandler, setGameStateReady } from "../../store";
 import { useNavigate } from 'react-router-dom';
 
 
@@ -23,45 +23,89 @@ function Game2() {
 
   const restart = () => {
     dispatch(setGameStateReady())
+    dispatch(setGameDataHandler())
     dispatch(createGame({playerCount : 0}));
     handleOpen();
     navigate('/game2', { state: { cnt : game.playerViewPos.length } });
   }
 
-  return (
-  <Full>
-  <Modal
-    open={open}
-    // onClose={handleClose}
-  >
-    <Game2Modal handleClose = {handleClose} />
-  </Modal>
-  <Display>
-    {
-      game1.weight > game1.limit && game.gameState === GameState.PLAY?
-        <>
-          DOOOOM
+  const endGame = () => {
+    dispatch(completeGame({}))
+  }
+  const quit = () => {
+    navigate('/game')
+  }
 
-          limit 값은 {game1.limit} 이였습니다. 
+  if(game.gameState === GameState.PLAY){
+    if(game1.weight > game1.limit){
+      return (
+        <Full>
+          <Display>
+            {endGame()}
 
-          죄인은 사약을 들라.
-        
-        </>
-      :
-        <>
-
+            DOOOOOOM ~~~~!@#&@#&@!&*$&!@$&*@^$&*@^$@$2138218392189
+          </Display>
+          <Side>
+          {game.gameState === GameState.IDLE?
+          <>
+          <Restart onClick={restart}>REPLAY<FontAwesomeIcon icon={faArrowRotateRight} /></Restart>
+          <Quit onClick={quit}>Quit</Quit></>
+          :
+          <></>
+          }
+          </Side>
+      </Full>
+      )
+    }else{
+      return (
+        <Full>
+        <Modal
+          open={open}
+          // onClose={handleClose}
+        >
+          <Game2Modal handleClose = {handleClose} />
+        </Modal>
+        <Display>
+      
+      
           weight : {game1.weight}
-        
-        </>
+      
+      
+        </Display>
+        <Side>
+          <Restart onClick={restart}>REPLAY<FontAwesomeIcon icon={faArrowRotateRight}/></Restart>
+        </Side>
+        </Full>
+        )
     }
+  }else{
+    if(game1.weight > game1.limit){
+      return (
+        <Full>
+          <Display>
+                  limit 값은 {game1.limit} 이였습니다. 
+                  죄인은 사약을 들라.
+          </Display>
+          <Side>
+          <Restart onClick={restart}>REPLAY<FontAwesomeIcon icon={faArrowRotateRight} /></Restart>
+          <Quit onClick={quit}>Quit</Quit>
+          </Side>
+      </Full>
+      )
+    } else {
+      return (
+        <Full>
+          <Display>
+                  잠시 대기해주세요.
+          </Display>
+      </Full>
+      )
+    }
+    
+  }
+  
+  
 
-
-  </Display>
-  <Side>
-  <Restart onClick={restart}>REPLAY<FontAwesomeIcon icon={faArrowRotateRight} /></Restart>
-  </Side>
-  </Full>
-  )
 }
 const Full = styled.div`
   display : flex;
@@ -102,6 +146,19 @@ const PlayerDisplay = styled.div`
   font-family: 'Jua', sans-serif;
   font-weight : bold;
   letter-spacing: 0.2vh;
+  &:hover {
+    color: red;
+  }
+`
+const Quit = styled.div`
+  display : flex;
+  justify-content: center;
+  align-items : center;
+  color : #1966A5;
+  font-size: 5vh;
+  font-family: 'Jua', sans-serif;
+  font-weight : bold;
+  letter-spacing: 0.3vh;
   &:hover {
     color: red;
   }
