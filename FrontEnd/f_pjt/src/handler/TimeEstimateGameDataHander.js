@@ -1,6 +1,6 @@
 import AbstractGameDataHandler from './AbstractGameDataHandler'
 
-const wait = 3.0;
+const wait = 0;
 
 class TimeEstimateGameDataHandler extends AbstractGameDataHandler {
 
