@@ -4,9 +4,7 @@ import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import Modal from '@mui/material/Modal';
 import Game4Modal from "./Game4Modal";
-import Stack from '@mui/material/Stack';
-import LinearProgress from '@mui/material/LinearProgress';
-import CircularProgress from '@mui/material/CircularProgress';
+import Game4Rank from './../Ranking/Game4Rank';
 import store, { GameState, changeGame, completeGame, getPreservedGameDataHandler, updateGameData } from "../../store";
 
 function Game4() {
@@ -14,32 +12,34 @@ function Game4() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const [open2, setOpen2] = useState(true);
+  const handleOpen2 = () => setOpen2(true);
+  const handleClose2 = () => setOpen2(false);
+
   const [isLoading, setIsLoading] = useState(false);
 
   const location = useLocation();
   const Playercnt = location.state.cnt;
-  const img = ['img/game1/game1_1.png', 'img/game1/game1_2.png']
-  const img1 = ['img/game1/heart1.gif', 'img/game1/heart2.gif', 'img/game1/heart3.gif', 'img/game1/heart4.gif']
-  const img2 = ['img/game1/dance.gif', 'img/game1/dance_cute.gif', 'img/game1/monkey.gif']
+  const img1 = ['img/game4/sound1.gif', 'img/game4/sound2.gif', 'img/game4/sound3.gif']
 
   const bgcolor = [' #B3CEE5   ', '#f1f5d2', ' #bfc7d6', '#c3ddd6  ']
-  const shuffle = (array) => {
-    for(let index = array.length -1 ; index > 0; index--){
-      // 무작위 index 값을 만든다. (0 이상의 배열 길이 값)
-      const randomPosition = Math.floor(Math.random() * (index +1));
+  // const shuffle = (array) => {
+  //   for(let index = array.length -1 ; index > 0; index--){
+  //     // 무작위 index 값을 만든다. (0 이상의 배열 길이 값)
+  //     const randomPosition = Math.floor(Math.random() * (index +1));
 
-      // 임시로 원본 값을 저장하고, randomPosition을 사용해 배열 요소를 섞는다.
-      const temporary = array[index];
-      array[index] = array[randomPosition];
-      array[randomPosition] =temporary;
-    }
-    return array
-  }
-  shuffle(bgcolor)
+  //     // 임시로 원본 값을 저장하고, randomPosition을 사용해 배열 요소를 섞는다.
+  //     const temporary = array[index];
+  //     array[index] = array[randomPosition];
+  //     array[randomPosition] =temporary;
+  //   }
+  //   return array
+  // }
+  // shuffle(bgcolor)
 
   const game = useSelector((state)=>state.game);
   const dispatch = useDispatch();
-  const game1 = game.gameData.playerData;
+  const game4 = game.gameData.playerData;
   const players = game.playerViewPos;
   const timePerTurn = game.gameData.timePerTurn;
   const [timeLeft, setTimeLeft] = useState(timePerTurn);
@@ -63,9 +63,19 @@ function Game4() {
       // return () => clearInterval(intervalId);
     }
     }, [isLoading]);
-  if (game.gameState !== GameState.PLAY) {
-    return (<>게임 생성 중입니다. 기다려주세요...</>)
-  } else {
+
+    if (game.gameState !== GameState.PLAY) {
+      if( game.gameState === GameState.IDLE && game.gameResult){
+        return <Modal open={open2}>
+          <Game4Rank 
+            handleClose = {handleClose2}
+            result = {game.gameResult}
+          ></Game4Rank>
+        </Modal>
+      } else {
+        return (<>게임 생성 중입니다. 기다려주세요...</>)
+      }
+    } else {
 
   return (
   <>
@@ -79,16 +89,23 @@ function Game4() {
   <Side>
   <TimeLeft>{timeLeft}</TimeLeft>
   <Progress value={timeLeft} max={timePerTurn} />
+  <Quit onClick={() => {dispatch(completeGame({}))} /* 비동기 통신이므로 여기에 navigate 를 달면 큰일난다. 방법1. complete callback을 달기 방법2. hook으로 game.gameState == 0 감지하기, 방법 3. hook으로 game.gameResult가 변경됨을 감지하기,  */     }>QUIT</Quit>
   </Side>
   <Display>
     {players.map(function (e, i) {
       return (
     <PlayerDisplay index={i} style={{backgroundColor : `${bgcolor[i]}`}}>
-    <Player>PLAYER {game1[i].playerId}</Player>
+    <Player>PLAYER {game4[i].playerId}</Player>
     <STATE>
-    <IMG 
-    src={img1[i]}></IMG>
-    <CNT>{game1[i].db}</CNT>
+    {/* <IMG 
+    src={img1[i]}></IMG> */}
+    { game4[i].db < 80 && <IMG 
+    src={img1[0]}></IMG>}
+    { game4[i].db >= 80 && game4[i].db < 100 && <IMG 
+    src={img1[1]}></IMG>}
+    { game4[i].db >= 100 && <IMG 
+    src={img1[2]}></IMG>}
+    <CNT>{game4[i].db}</CNT>
     </STATE>
     {(i === game.gameData.turnIndex)?<Turn>TURN</Turn>:<></>}
     </PlayerDisplay>
@@ -176,18 +193,17 @@ const Side = styled.div`
   font-size: 8vh;
 `
 const Quit = styled.div`
-  display : flex;
-  justify-content: center;
-  align-items : center;
+  position : relative;
+  left : 15vh;
   color : #1966A5;
-  font-size: 3vh;
+  font-size: 5vh;
   font-family: 'Jua', sans-serif;
   font-weight : bold;
   letter-spacing: 0.3vh;
   &:hover {
     color: red;
   }
-`
+` 
 const PlayerDisplay = styled.div`
   display : flex;
   justify-content: center;
@@ -196,6 +212,6 @@ const PlayerDisplay = styled.div`
   display: flex;
   flex-direction: column;
   /* box-shadow: 0 1px 2px #063C69, 0 1px 2px #063C69 inset; */
-  /* background-image: url(${'img/game1/whale.gif'}); */
+  /* background-image: url(${'img/game4/whale.gif'}); */
 `
 export default Game4

@@ -101,8 +101,6 @@ function Game6() {
   return (
     <>
     <Full>
-    <Side>
-    </Side>
     <Modal
         open={open}
         // onClose={handleClose}
@@ -116,16 +114,14 @@ function Game6() {
       </PlayerDisplay>)
     })}
     </Display>
-
     </Full>
     </>
     )
   } 
 }
 
-const Click = styled.button`
-  background-color: #f0e9e9;
-  color: #fff;
+const Click = styled.div`
+  background-color: none;
   border: none;
   font-size: 5ch;
   font-weight: 400;
@@ -152,13 +148,7 @@ const Display = styled.div`
   display : flex;
   flex-wrap: wrap;
   width : 100%;
-  height : 85%;
-`
-const Side = styled.div`
-  display : flex;
-  justify-content: space-evenly;
-  width : 100%;
-  height : 15%;
+  height : 100%;
 `
   const PlayerDisplay = styled.div`
   display : flex;
@@ -171,17 +161,4 @@ const Side = styled.div`
   flex-direction: column;
   /* box-shadow: 0 1px 2px #D0BB70 , 0 1px 2px #D0BB70 inset; */
   `
-const End = styled.div`
-  display : flex;
-  justify-content: center;
-  align-items : center;
-  color : #1966A5;
-  font-size: 5vh;
-  font-family: 'Jua', sans-serif;
-  font-weight : bold;
-  letter-spacing: 0.3vh;
-  &:hover {
-    color: red;
-}
-`
 export default Game6
