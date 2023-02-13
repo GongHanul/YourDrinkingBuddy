@@ -3,7 +3,7 @@ import { React, useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import Modal from '@mui/material/Modal';
-import Game4Modael from "./Game4Modal";
+import Game4Modal from "./Game4Modal";
 import Stack from '@mui/material/Stack';
 import LinearProgress from '@mui/material/LinearProgress';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -74,7 +74,7 @@ function Game4() {
     open={open}
     // onClose={handleClose}
   >
-    <Game4Modael handleClose = {()=>{setIsLoading(true);handleClose()}} />
+    <Game4Modal handleClose = {()=>{setIsLoading(true);handleClose()}} />
   </Modal>    
   <Side>
   <TimeLeft>{timeLeft}</TimeLeft>
