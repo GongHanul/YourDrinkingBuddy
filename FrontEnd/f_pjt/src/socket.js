@@ -201,7 +201,8 @@ export const send = (event, data, callback) => {
   socket.emit(event, data, callback);
 };
 
+const defaultCallback = (data) => { };
 
 // global listening socket
-listenOnChangeGame();
-listenOnPlayerParticipate((requestData) => { });
+listenOnChangeGame(defaultCallback);
+listenOnPlayerParticipate(defaultCallback);
