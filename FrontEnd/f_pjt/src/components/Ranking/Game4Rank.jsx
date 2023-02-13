@@ -1,28 +1,42 @@
 import styled from "styled-components";
-import { React, useState } from 'react';
+import { React } from 'react';
 import { useNavigate } from "react-router-dom";
 import Box from '@mui/material/Box';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRotateRight } from "@fortawesome/free-solid-svg-icons"
+import { useDispatch, useSelector } from 'react-redux';
+import { recreateGame, setGameDataHandler } from "../../store";
 
-
-function Game4Rank() {
+function Game4Rank(props) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const game = useSelector((state) => state.game);
+  const result = props.result;
   const quit = () => {
       navigate('/game');
     }
+  const restart = () => {
+    dispatch(recreateGame());
+    dispatch(setGameDataHandler());
+    props.beforeRestart();
+    navigate('/game1', { state: { cnt : game.playerViewPos.length } });
+  }  
+
   return (
   <>
   <Box sx={style}>
     <Topdiv>
       <Rank>🏆RANK🏆</Rank><br />
+      { result.map( (e) => {
+        return <Score>PLAYER {e.playerId} : {e.db} </Score>
+      })}
       <Score>PLAYER1 : cnt</Score>
       <Score>PLAYER2 : cnt</Score>
       <Score>PLAYER3 : cnt</Score>
       <Score>PLAYER4 : cnt</Score>
     </Topdiv>
     <Bomdiv>
-    <br /><Quit>REPLAY<FontAwesomeIcon icon={faArrowRotateRight} /></Quit>
+    <br /><Quit onClick={restart}>REPLAY<FontAwesomeIcon icon={faArrowRotateRight} /></Quit>
     <Quit onClick={quit}>QUIT</Quit>
     </Bomdiv>
   </Box>
