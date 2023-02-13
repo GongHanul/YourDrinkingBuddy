@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import { React, useState, useEffect, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
-// import confetti from "https://cdn.skypack.dev/canvas-confetti@1";
+import confetti from "canvas-confetti";
+import { useSelector } from "react-redux";
 
 function Game6() {
   const bgcolor = [' #c3ddd6', '#bfc7d6', ' #f0eee9', '#b8c0be']
@@ -13,7 +14,7 @@ function Game6() {
       // 임시로 원본 값을 저장하고, randomPosition을 사용해 배열 요소를 섞는다.
       const temporary = array[index];
       array[index] = array[randomPosition];
-      array[randomPosition] =temporary;
+      array[randomPosition] = temporary;
     }
     return array
   }
@@ -23,13 +24,29 @@ function Game6() {
   const Playercnt = location.state.cnt
   useEffect( () => {setPlayer([...Array(Playercnt).keys()]) } ,[])
   let [Player, setPlayer] = useState([])
+  let [initialRender, setInitialRender] = useState(false);
+
+  
+
+  const game = useSelector((state) => state.game)
+  const game1 = game.gameData;
 
   const Effect = useCallback(() => {
-    // confetti({
-    //   particleCount: 500,
-    //   spread: 100
-    // });
+    confetti({
+      particleCount: 500,
+      spread: 100
+    });
   }, []);
+
+  useEffect(()=>{
+    if(initialRender){
+      Effect();
+    }else{
+      setInitialRender(true)
+    }
+  },[game1.lastClickedPlayerIdx])
+
+  
 
   return (
   <>
@@ -37,7 +54,7 @@ function Game6() {
   <Display>
   { Player.map(function(e, i){
     return (<PlayerDisplay index={i} style={{backgroundColor : `${bgcolor[i]}`}}>
-      <Click className="button" onClick={Effect}>🎉</Click>
+      <Click onClick={Effect}>🎉</Click>
     </PlayerDisplay>)
   })}
   </Display>
