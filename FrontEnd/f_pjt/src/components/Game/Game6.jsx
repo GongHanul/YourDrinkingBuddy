@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { React, useState, useEffect, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
-import confetti from "https://cdn.skypack.dev/canvas-confetti@1";
+// import confetti from "https://cdn.skypack.dev/canvas-confetti@1";
 
 function Game6() {
   const bgcolor = [' #c3ddd6', '#bfc7d6', ' #f0eee9', '#b8c0be']
@@ -25,10 +25,10 @@ function Game6() {
   let [Player, setPlayer] = useState([])
 
   const Effect = useCallback(() => {
-    confetti({
-      particleCount: 500,
-      spread: 100
-    });
+    // confetti({
+    //   particleCount: 500,
+    //   spread: 100
+    // });
   }, []);
 
   return (
