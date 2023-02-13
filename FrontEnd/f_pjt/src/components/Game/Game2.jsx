@@ -4,22 +4,28 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRotateRight } from "@fortawesome/free-solid-svg-icons"
 import Modal from '@mui/material/Modal';
 import Game2Modal from "./Game2Modal";
-import { useSelector } from 'react-redux';
-import { GameState } from "../../store";
+import { useDispatch, useSelector } from 'react-redux';
+import { GameState, createGame, setGameStateReady } from "../../store";
+import { useNavigate } from 'react-router-dom';
 
 
 function Game2() {
-  let [Player, setPlayer] = useState([1])
   const [open, setOpen] = useState(true);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const game = useSelector((state)=> state.game);
 
   const game1 = game.gameData;
 
   const restart = () => {
-    
+    dispatch(setGameStateReady())
+    dispatch(createGame({playerCount : 0}));
+    handleOpen();
+    navigate('/game2', { state: { cnt : game.playerViewPos.length } });
   }
 
   return (

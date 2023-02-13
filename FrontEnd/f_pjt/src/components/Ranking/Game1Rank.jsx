@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRotateRight } from "@fortawesome/free-solid-svg-icons"
 import { useDispatch } from 'react-redux';
-import { recreateGame } from "../../store";
+import { recreateGame, setGameDataHandler } from "../../store";
 import { useSelector } from 'react-redux';
 
 
@@ -19,6 +19,8 @@ function Game1Rank(props) {
   }
   const restart = () => {
     dispatch(recreateGame());
+    dispatch(setGameDataHandler());
+    props.beforeRestart();
     navigate('/game1', { state: { cnt : game.playerViewPos.length } });
   }
   return (
@@ -27,7 +29,7 @@ function Game1Rank(props) {
     <Topdiv>
       <Rank>🏆RANK🏆</Rank><br />
       { result.map( (e) => {
-        return <Score>PLAYER {e.playerId} : {e.bpm}</Score>
+        return <Score>PLAYER {e.playerId} : [bpm : {e.bpm}] [max : {e.max}] [min : {e.min}] [mean : {e.mean}] [gap : {e.gap}] </Score>
       })}
     </Topdiv>
     <Bomdiv>

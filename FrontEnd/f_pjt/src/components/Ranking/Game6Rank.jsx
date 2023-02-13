@@ -1,12 +1,12 @@
 import styled from "styled-components";
-import { React, useState } from 'react';
+import { React } from 'react';
 import { useNavigate } from "react-router-dom";
 import Box from '@mui/material/Box';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRotateRight } from "@fortawesome/free-solid-svg-icons"
 import { goal } from "../../handler/TimeEstimateGameDataHander";
 import { useDispatch, useSelector } from "react-redux";
-import { recreateGame } from "../../store";
+import { recreateGame, setGameDataHandler } from "../../store";
 
 
 function Game6Rank(props) {
@@ -18,6 +18,7 @@ function Game6Rank(props) {
   }
   const restart = () => {
     dispatch(recreateGame());
+    dispatch(setGameDataHandler())
     props.beforeRestart();
     navigate('/game6', { state: { cnt : game.playerViewPos.length } });
   }

@@ -239,14 +239,14 @@ export const getPreservedGameDataHandler = () => {
 
 let game = createSlice({
   name: 'game',
-  initialState: { gameState: GameState.IDLE, gameData: undefined, gameResult: undefined, playerStatus: [/*{id: 1, connection:1}, {id: 2, connection:1}, {id: 3, connection:1}, {id: 4, connection:1}*/], playerCount: 4, playerViewPos: [] },
+  initialState: { gameState: GameState.IDLE, gameData: undefined, gameResult: undefined, playerStatus: [], playerCount: 0, playerViewPos: [] },
   reducers: {
 
     // 여기서 플레이어 : 화면 map을 세팅한다. 임의배치한다.
     initializePlayerViewPos(state, action) {
       if (state.gameState !== GameState.READY) {
         // throw new Error("게임 준비중일때만 화면 당 플레이어 유저를 배치 할 수 있습니다.");
-        return
+        return state
       }
       const NeededplayerCount = action.payload;
       let result = [];

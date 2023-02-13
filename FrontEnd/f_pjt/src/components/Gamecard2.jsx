@@ -2,12 +2,22 @@ import styled from "styled-components";
 import ReactCardFlip from "react-card-flip";
 import { React, useState } from 'react';
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { createGame, preserveGameDataHandler, setGameDataHandler, setGameStateReady } from "../store";
+import gameEnv from "./Game/GameEnv";
 
 function GameList(props) {
   const navigate = useNavigate();
   const [isFlipped, setIsFlipped] = useState(false);
+  const dispatch = useDispatch();
+
   const start = () => {
+    dispatch(setGameStateReady())
+    preserveGameDataHandler(new gameEnv[props.id].handler());
+    dispatch(setGameDataHandler())
+    dispatch(createGame({playerCount : 0}))
     navigate(`/game${props.id}`);}
+
 const Ready = styled.div`
   margin: 4vh 0 0 0 ;
   background: #ffffff;

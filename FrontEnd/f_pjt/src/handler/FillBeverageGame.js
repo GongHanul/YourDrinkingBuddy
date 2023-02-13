@@ -19,7 +19,7 @@ class FillBeverageGame extends AbstractGameDataHandler {
   // == 
   // minUnit + ( 0 ~ maxUnit-1-minUnit) 
   setRandom(minUnit, maxUnit, unit){
-    return ((Math.random() * (maxUnit-minUnit+1)) + minUnit ) * unit;
+    return parseInt(((Math.random() * (maxUnit-minUnit+1)) + minUnit ) * unit);
   }
 
   createGameData(gameState) {

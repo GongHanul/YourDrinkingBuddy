@@ -16,6 +16,11 @@ function Game1() {
   const handleOpen2 = () => setOpen2(true);
   const handleClose2 = () => setOpen2(false);
 
+  const clearUseState = () => {
+    setOpen(true);
+    setOpen2(true);
+  }
+
   const location = useLocation();
   const Playercnt = location.state.cnt;
   const img1 = ['img/game1/heart1.gif', 'img/game1/heart2.gif', 'img/game1/heart3.gif', 'img/game1/heart4.gif']
@@ -45,6 +50,7 @@ function Game1() {
         <Game1Rank 
           handleClose = {handleClose2}
           result = {game.gameResult}
+          beforeRestart = {clearUseState}
         ></Game1Rank>
       </Modal>
     } else {

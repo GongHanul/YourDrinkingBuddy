@@ -18,11 +18,16 @@ function Game6() {
   const handleOpen2 = () => setOpen2(true);
   const handleClose2 = () => setOpen2(false);
 
+  let [Player, setPlayer] = useState([])
+  let [initialRender, setInitialRender] = useState(false);
+
   const clearUseState = () => {
     setOpen(true);
     setOpen2(true);
-  }
+    setInitialRender(false);
 
+  }
+  useEffect( () => {setPlayer([...Array(Playercnt).keys()]) } ,[])
 
 
   const bgcolor = [' #c3ddd6', '#bfc7d6', ' #f0eee9', '#b8c0be']
@@ -42,9 +47,8 @@ function Game6() {
 
   const location = useLocation();
   const Playercnt = location.state.cnt
-  useEffect( () => {setPlayer([...Array(Playercnt).keys()]) } ,[])
-  let [Player, setPlayer] = useState([])
-  let [initialRender, setInitialRender] = useState(false);
+  
+  
 
   
 
