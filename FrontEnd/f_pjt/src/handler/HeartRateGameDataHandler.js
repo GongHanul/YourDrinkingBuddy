@@ -41,6 +41,7 @@ class HeartRateGameDataHandler extends AbstractGameDataHandler {
     console.log(requestData)
     const players = requestData.gameData;
     let result = Object.assign([],gameState.gameResult);
+    console.log(players)
     for(const player of players){
       const idx = gameState.gameResult.findIndex((elem) => elem.playerId === player.id);
       if(idx > -1){
