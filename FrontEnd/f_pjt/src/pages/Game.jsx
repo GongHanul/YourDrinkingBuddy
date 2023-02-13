@@ -64,7 +64,7 @@ function Game() {
       ></Gamecard></Flexdiv>
       
       <Flexdiv>
-      <Gamecard2 id = {'5'}
+      <Gamecard id = {'5'}
       ready = {'#EDD582'}
       background= {'#EDD582'}
       font = {'#000000'}
@@ -75,7 +75,7 @@ function Game() {
       rule3 = {'제일 먼 사람이 벌칙!'}
       rule4 = {'돌아가면서 무게 측정'}
       nav = {'/game5'}
-      ></Gamecard2></Flexdiv>
+      ></Gamecard></Flexdiv>
       
       <Flexdiv>
       <Gamecard id = {'6'}
