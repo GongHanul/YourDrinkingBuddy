@@ -4,25 +4,45 @@ import { useNavigate } from "react-router-dom";
 import Box from '@mui/material/Box';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRotateRight } from "@fortawesome/free-solid-svg-icons"
+import { goal } from "../../handler/TimeEstimateGameDataHander";
+import { useDispatch, useSelector } from "react-redux";
+import { recreateGame } from "../../store";
 
 
-function Game6Rank() {
+function Game6Rank(props) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const game = useSelector((state) => state.game);
   const quit = () => {
-      navigate('/game');
-    }
+    navigate('/game');
+  }
+  const restart = () => {
+    dispatch(recreateGame());
+    props.beforeRestart();
+    navigate('/game6', { state: { cnt : game.playerViewPos.length } });
+  }
   return (
   <>
   <Box sx={style}>
     <Topdiv>
       <Rank>🏆RANK🏆</Rank><br />
-      <Score>PLAYER1 : cnt</Score>
-      <Score>PLAYER2 : cnt</Score>
-      <Score>PLAYER3 : cnt</Score>
-      <Score>PLAYER4 : cnt</Score>
+      {props.result.map((e,i) => {
+        let time = e.time;
+        let gap = (time - goal).toFixed(2)
+        return(
+            
+            (time > 10000) ? 
+              (<Score>PLAYER{e.playerId} : Times Out! </Score>)
+            :
+              (gap >= 0)? 
+                (<Score>PLAYER{e.playerId} : {time}s,  gap : <ScoreTimePlus> +{ gap }s</ScoreTimePlus></Score>)
+              :
+                (<Score>PLAYER{e.playerId} : {time}s,  gap : <ScoreTimeMinus>{ gap }s</ScoreTimeMinus></Score>)
+        )
+      })}
     </Topdiv>
     <Bomdiv>
-    <br /><Quit>REPLAY<FontAwesomeIcon icon={faArrowRotateRight} /></Quit>
+    <br /><Quit onClick={restart}>REPLAY<FontAwesomeIcon icon={faArrowRotateRight} /></Quit>
     <Quit onClick={quit}>QUIT</Quit>
     </Bomdiv>
   </Box>
@@ -82,5 +102,13 @@ const Score = styled.div`
   font-size: 5vh;
   font-family: 'Jua', sans-serif;
   filter: drop-shadow(0.2vh 0.2vh 0.1vh rgb(0 0 0 / 0.5));
+`
+
+const ScoreTimeMinus = styled.span`
+  color: red;
+`
+
+const ScoreTimePlus = styled.span`
+  color: green;
 `
 export default Game6Rank

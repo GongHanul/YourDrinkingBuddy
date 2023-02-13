@@ -4,7 +4,7 @@ import { React, useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 
 function Game6Modal(props) {
-  const handleClose = props.handleClose2
+  const handleClose = props.handleClose
   const [timeLeft, setTimeLeft] = useState(3);
 
   useEffect(() => {

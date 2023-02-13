@@ -2,9 +2,29 @@ import styled from "styled-components";
 import { React, useState, useEffect, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import confetti from "canvas-confetti";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { GameState, completeGame } from "../../store";
+import Game6Rank from './../Ranking/Game6Rank';
+import { Modal } from "@mui/material";
+import Game6Modal from './Game6Modal';
 
 function Game6() {
+
+  const [open, setOpen] = useState(true);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const [open2, setOpen2] = useState(true);
+  const handleOpen2 = () => setOpen2(true);
+  const handleClose2 = () => setOpen2(false);
+
+  const clearUseState = () => {
+    setOpen(true);
+    setOpen2(true);
+  }
+
+
+
   const bgcolor = [' #c3ddd6', '#bfc7d6', ' #f0eee9', '#b8c0be']
   const shuffle = (array) => {
     for(let index = array.length -1 ; index > 0; index--){
@@ -31,12 +51,30 @@ function Game6() {
   const game = useSelector((state) => state.game)
   const game1 = game.gameData;
 
+  const limitWaitTime = 23000 // 20초 기달려도 안 누르면 강제 종료
+
+  const dispatch = useDispatch();
+
   const Effect = useCallback(() => {
     confetti({
       particleCount: 500,
       spread: 100
     });
   }, []);
+
+  useEffect(() => {
+    setTimeout(() => {
+      if(game.gameState === GameState.PLAY){
+        dispatch(completeGame({}))
+      }
+    }, limitWaitTime)
+  }, [])
+
+  useEffect(() => {
+    if(game.gameState === GameState.PLAY && game1.clickedPlayerCnt === game1.playerData.length){
+      dispatch(completeGame({}))
+    }
+  }, [game1.clickedPlayerCnt])
 
   useEffect(()=>{
     if(initialRender){
@@ -47,23 +85,42 @@ function Game6() {
   },[game1.lastClickedPlayerIdx])
 
   
-
+  if (game.gameState !== GameState.PLAY) {
+    if( game.gameState === GameState.IDLE && game.gameResult){
+      return <Modal open={open2}>
+        <Game6Rank
+          handleClose = {handleClose2}
+          result = {game.gameResult}
+          beforeRestart = {clearUseState}
+        ></Game6Rank>
+      </Modal>
+    } else {
+      return (<>게임 생성 중입니다. 기다려주세요...</>)
+    }
+  } else {
   return (
-  <>
-  <Full>
-  <Display>
-  { Player.map(function(e, i){
-    return (<PlayerDisplay index={i} style={{backgroundColor : `${bgcolor[i]}`}}>
-      <Click onClick={Effect}>🎉</Click>
-    </PlayerDisplay>)
-  })}
-  </Display>
-  <Side>
-  <End>END</End>
-  </Side>
-  </Full>
-  </>
-  )
+    <>
+    <Full>
+    <Side>
+    </Side>
+    <Modal
+        open={open}
+        // onClose={handleClose}
+      >
+        <Game6Modal handleClose = {handleClose} />
+      </Modal>    
+    <Display>
+    { Player.map(function(e, i){
+      return (<PlayerDisplay index={i} style={{backgroundColor : `${bgcolor[i]}`}}>
+        <Click onClick={Effect}>🎉</Click>
+      </PlayerDisplay>)
+    })}
+    </Display>
+
+    </Full>
+    </>
+    )
+  } 
 }
 
 const Click = styled.button`
