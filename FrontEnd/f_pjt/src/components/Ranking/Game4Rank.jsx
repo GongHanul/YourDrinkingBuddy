@@ -19,7 +19,7 @@ function Game4Rank(props) {
     dispatch(recreateGame());
     dispatch(setGameDataHandler());
     props.beforeRestart();
-    navigate('/game1', { state: { cnt : game.playerViewPos.length } });
+    navigate('/game4', { state: { cnt : game.playerViewPos.length } });
   }  
 
   return (
@@ -28,12 +28,8 @@ function Game4Rank(props) {
     <Topdiv>
       <Rank>🏆RANK🏆</Rank><br />
       { result.map( (e) => {
-        return <Score>PLAYER {e.playerId} : {e.db} </Score>
+        return <Score>PLAYER {e.playerId} : {e.max} </Score>
       })}
-      <Score>PLAYER1 : cnt</Score>
-      <Score>PLAYER2 : cnt</Score>
-      <Score>PLAYER3 : cnt</Score>
-      <Score>PLAYER4 : cnt</Score>
     </Topdiv>
     <Bomdiv>
     <br /><Quit onClick={restart}>REPLAY<FontAwesomeIcon icon={faArrowRotateRight} /></Quit>

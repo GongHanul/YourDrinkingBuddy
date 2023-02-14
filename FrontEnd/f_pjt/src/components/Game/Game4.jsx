@@ -17,6 +17,7 @@ function Game4() {
   const handleClose2 = () => setOpen2(false);
 
   const [isLoading, setIsLoading] = useState(false);
+  const [intervalId, setIntervalId] = useState(null);
 
   const location = useLocation();
   const Playercnt = location.state.cnt;
@@ -44,25 +45,40 @@ function Game4() {
   const timePerTurn = game.gameData.timePerTurn;
   const [timeLeft, setTimeLeft] = useState(timePerTurn);
 
+  const clearUseState = () => {
+    handleOpen();
+    handleOpen2();
+    setIsLoading(false);
+    if(intervalId !== null){
+      clearInterval(intervalId);
+    }
+    setIntervalId(null);
+    setTimeLeft(timePerTurn);
+  }
+
   useEffect(() => {
     if(game.gameState === GameState.PLAY && isLoading){
       
       dispatch(changeGame({data:{playerId: game.gameData.turn}}));
-      let intervalId = setInterval(() => {
-      setTimeLeft((prevTime) => {
-      if (prevTime === 0) {
-        const game = store.getState().game;
-        const gameData = getPreservedGameDataHandler().onTurnChange(game);
-        dispatch(updateGameData(gameData));
-        dispatch(changeGame({data:{playerId: gameData.turn}}));
-        return timePerTurn;
-      } else {
-        return prevTime - 1;
-      }});}, 1000);
+      setIntervalId(
+        setInterval(() => {
+          setTimeLeft((prevTime) => {
+          if (prevTime === 0) {
+            const game = store.getState().game;
+            if(game.gameState !== GameState.PLAY){
+              return 0;
+            }
+            const gameData = getPreservedGameDataHandler().onTurnChange(game);
+            dispatch(updateGameData(gameData));
+            dispatch(changeGame({data:{playerId: gameData.turn}}));
+            return timePerTurn;
+          } else {
+            return prevTime - 1;
+          }});}, 1000)
+      );
       setIsLoading(false);
-      // return () => clearInterval(intervalId);
     }
-    }, [isLoading]);
+  }, [isLoading]);
 
     if (game.gameState !== GameState.PLAY) {
       if( game.gameState === GameState.IDLE && game.gameResult){
@@ -70,6 +86,7 @@ function Game4() {
           <Game4Rank 
             handleClose = {handleClose2}
             result = {game.gameResult}
+            beforeRestart = {clearUseState}
           ></Game4Rank>
         </Modal>
       } else {
@@ -89,7 +106,7 @@ function Game4() {
   <Side>
   <TimeLeft>{timeLeft}</TimeLeft>
   <Progress value={timeLeft} max={timePerTurn} />
-  <Quit onClick={() => {dispatch(completeGame({}))} /* 비동기 통신이므로 여기에 navigate 를 달면 큰일난다. 방법1. complete callback을 달기 방법2. hook으로 game.gameState == 0 감지하기, 방법 3. hook으로 game.gameResult가 변경됨을 감지하기,  */     }>QUIT</Quit>
+  <Quit onClick={() => {if(intervalId!==null)clearInterval(intervalId);setIntervalId(null);dispatch(completeGame({}))} /* 비동기 통신이므로 여기에 navigate 를 달면 큰일난다. 방법1. complete callback을 달기 방법2. hook으로 game.gameState == 0 감지하기, 방법 3. hook으로 game.gameResult가 변경됨을 감지하기,  */     }>QUIT</Quit>
   </Side>
   <Display>
     {players.map(function (e, i) {
