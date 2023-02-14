@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { React, useState, useEffect } from 'react';
 import BeverageItem from "../components/BeverageItem";
 import { useDispatch, useSelector } from "react-redux"
-import{ changeReco, changeRatio, resetRatio } from "../store.js"
+import{ changeReco, changeRatio, resetRatio, safeTerminateIfGamePlayed } from "../store.js"
 import axios from 'axios'
 import Modal from '@mui/material/Modal';
 import ShotModal from "../components/ShotModal";
@@ -21,6 +21,8 @@ function Drink() {
   const [open2, setOpen2] = useState(false);
   const handleOpen2 = () => setOpen2(true);
   const handleClose2 = () => setOpen2(false);
+
+  dispatch(safeTerminateIfGamePlayed())
 
   const ratio = useSelector((state)=>state.ratio)
   const cancel = ()=>{
