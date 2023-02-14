@@ -14,11 +14,11 @@ export class RecipesController {
   async getAll(
     @Query('pageno') pageno?: number,
     @Query('pagesize') pagesize?: number,
-    @Query('filter', new ParseArrayPipe({ items: Number, separator: ',' })) filter?: number[],
-    @Query('sort') sort?: string,
+    @Query('filter', new ParseArrayPipe({ items: Number, separator: ',', optional: true })) filter?: number[],
     @Query('query') query?: string,
+    @Query('sort') sort?: string,
   ): Promise<Pagination<Recipe>> {
-    return this.recipesService.getRecipes(pageno ? pageno : 1, pagesize ? pagesize : 10, filter, sort, query);
+    return this.recipesService.getRecipes(pageno ? pageno : 1, pagesize ? pagesize : 100000, filter, query, sort);
   }
 
   @Get(':id')

@@ -21,20 +21,21 @@ import { AuthModule } from './auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { LocalAuthGuard } from './auth/local-auth.guard';
+import db from './env/db.json';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'ssafy',
-      password: 'ssafy',
-      database: 'ssafy_project',
+      type: 'mariadb',
+      host: db.host,
+      port: db.port,
+      username: db.username,
+      password: db.password,
+      database: db.database,
       entities: [Beverage, Account, Game, Device, GameStatistic, Recipe, RecipeIngredient],
       synchronize: false,
-      timezone: '+09:00',
-      charset: 'utf8mb4',
+      timezone: db.timezone,
+      charset: db.charset,
     }),
     BeveragesModule,
     AccountsModule,

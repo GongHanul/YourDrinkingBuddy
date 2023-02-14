@@ -12,7 +12,7 @@ export class BeveragesController {
 
   @Get()
   async getAll(@Query('pageno') pageno?: number, @Query('pagesize') pagesize?: number, @Query('sort') sort?: string, @Query('query') query?: string): Promise<Pagination<Beverage>> {
-    return this.beveragesService.getBeverages(pageno ? pageno : 1, pagesize ? pagesize : 10, sort, query);
+    return this.beveragesService.getBeverages(pageno ? pageno : 1, pagesize ? pagesize : 100000, sort, query);
   }
 
   @Get(':id')
