@@ -47,14 +47,13 @@ function Game2() {
         <Full>
           <Display>
             {endGame()}
-
             DOOOOOOM ~~~~!@#&@#&@!&*$&!@$&*@^$&*@^$@$2138218392189
           </Display>
           <Side>
           {game.gameState === GameState.IDLE?
           <>
           <Restart onClick={restart}>REPLAY<FontAwesomeIcon icon={faArrowRotateRight} /></Restart>
-          <Quit onClick={quit}>Quit</Quit></>
+          <Quit onClick={quit}>QUIT</Quit></>
           :
           <></>
           }
@@ -71,11 +70,10 @@ function Game2() {
           <Game2Modal handleClose = {handleClose} />
         </Modal>
         <Display>
-
           {/* 이미지 리터칭 , css */}
+          <Weight>{game2.weight}</Weight>
           { view && <IMG src={img[0]}></IMG>}
           { !view && <IMG src={img[1]}></IMG>}
-          {game2.weight}
         </Display>
         <Side>
           <Restart onClick={restart}>REPLAY<FontAwesomeIcon icon={faArrowRotateRight}/></Restart>
@@ -89,12 +87,13 @@ function Game2() {
         <Full>
           <Display>
             {/* 결과창 */}
-                  limit 값은 {game2.limit} 이였습니다. 
-                  죄인은 사약을 들라.
+            <GameOver>GAME OVER</GameOver>
+            <Result src="img/game2/finish.png"></Result>
+            <Limit>벌칙은 '{game2.limit}mL' !</Limit>
           </Display>
           <Side>
           <Restart onClick={restart}>REPLAY<FontAwesomeIcon icon={faArrowRotateRight} /></Restart>
-          <Quit onClick={quit}>Quit</Quit>
+          <Quit onClick={quit}>QUIT</Quit>
           </Side>
       </Full>
       )
@@ -107,18 +106,46 @@ function Game2() {
       </Full>
       )
     }
-    
   }
   
   
 
 }
-const IMG = styled.img`
-display : flex;
-justify-content: center;
-align-items: center ;
+const GameOver = styled.div`
+  display : flex;
+  /* font-family: 'Silkscreen', cursive; */
+  font-family: 'Hanalei Fill', cursive;
+  /* font-family: 'Nabla', cursive; */
+  font-size: 13vh;
 `
-
+const Limit = styled.div`
+  display : flex;
+  font-family: 'Jua', sans-serif;
+  /* font-family: 'Silkscreen', cursive; */
+  /* font-family: 'Nabla', cursive; */
+  font-size: 8vh;
+`
+const Weight = styled.div`
+  display : flex;
+  /* font-family: 'Silkscreen', cursive; */
+  font-family: 'Hanalei Fill', cursive;
+  /* font-family: 'Nabla', cursive; */
+  font-size: 13vh;
+`
+const IMG = styled.img`
+  display : flex;
+  justify-content: center;
+  align-items: center ;
+  height : 50vh;
+  margin-top : 5vh;
+`
+const Result = styled.img`
+  display : flex;
+  justify-content: center;
+  align-items: center ;
+  height : 40vh;
+  margin : 5vh 0;
+`
 const Full = styled.div`
   display : flex;
   flex-wrap: wrap;
@@ -127,10 +154,13 @@ const Full = styled.div`
 `
 const Display = styled.div`
   display : flex;
-  flex-wrap: wrap;
   width : 100%;
   height : 85%;
   background :#eaf0b4 ;
+  justify-content: center;
+  align-items: center ;
+  flex-direction: column;
+  /* box-shadow: 0 1px 2px #0E538B, 0 1px 2px #0E538B inset; */
 `
 const Side = styled.div`
   display : flex;
@@ -145,7 +175,6 @@ const PlayerDisplay = styled.div`
   flex: 1 1 50%;
   align-items: center ;
   justify-content: center;
-  display: flex;
   flex-direction: column;
   /* box-shadow: 0 1px 2px #0E538B, 0 1px 2px #0E538B inset; */
 `
@@ -154,10 +183,10 @@ const PlayerDisplay = styled.div`
   justify-content: center;
   align-items : center;
   color : #1966A5;
-  font-size: 3vh;
+  font-size: 5vh;
   font-family: 'Jua', sans-serif;
   font-weight : bold;
-  letter-spacing: 0.2vh;
+  letter-spacing: 0.3vh;
   &:hover {
     color: red;
   }

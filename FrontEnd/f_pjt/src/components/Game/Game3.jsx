@@ -7,7 +7,7 @@ import { Modal } from "@mui/material";
 import Game3Rank from "../Ranking/Game3Rank";
 import Game3Modal from './Game3Modal';
 
-const timeWait = 25;
+const timeWait = 20;
 
 function Game3() {
   const location = useLocation();

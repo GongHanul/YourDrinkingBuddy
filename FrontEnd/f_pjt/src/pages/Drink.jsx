@@ -8,6 +8,8 @@ import Modal from '@mui/material/Modal';
 import ShotModal from "../components/ShotModal";
 import ChangeModal from "../components/ChangeModal";
 import { makeCocktail, stopMakeCocktail } from '../store';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faRotateRight } from "@fortawesome/free-solid-svg-icons"
 
 function Drink() {
   const dispatch = useDispatch()
@@ -89,7 +91,7 @@ function Drink() {
   const URL = 'http://i8a103.p.ssafy.io:3001'
 const getRecipes = () => {
     axios.get(URL+'/recipes',{params: {filter: beverages.join(",")}}).then((a)=>{
-      dispatch(changeReco(setLengthIfLessFills(a.data.items, 3, {beverages_name: ""})));
+      dispatch(changeReco(setLengthIfLessFills(a.data.items, 3, {recipe_name: "X"})));
     })
     .catch((e)=>{
       console.log("추천레시피 실패")
@@ -106,7 +108,7 @@ const getRecipes = () => {
           }}>{ Recipes[i].recipe_name }</RecipeItem>)
           })}
         <BtnDiv>
-          <Btn onClick={getRecipes}>레시피 추천</Btn>
+          <Btn onClick={getRecipes}><FontAwesomeIcon icon={ faRotateRight }/></Btn>
           <Btn onClick={()=>{
             handleOpen2()}}>
             술교체</Btn>
@@ -163,7 +165,7 @@ const Btn = styled.div`
   display: flex;
   align-items: center ;
   justify-content: center;
-  margin : 1vh 0 ;
+  margin : 1.5vh 4vh;
   color: #004680;
   font-family: 'Jua', sans-serif;
   font-weight : bold;
@@ -193,7 +195,7 @@ const RecipeItem = styled.div`
   box-sizing: border-box;
   border-radius: 2vh;
   width: 25vh;
-  max-height : 13vh;
+  min-height : 14vh;
   padding: 2vh;
   color: #004680;
   font-size: 4vh;

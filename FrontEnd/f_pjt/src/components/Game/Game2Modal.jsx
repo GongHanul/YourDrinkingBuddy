@@ -21,7 +21,9 @@ function Game2Modal(props) {
   <>
   <Box sx={style}>
     <Change1>무게 게임 ⏲</Change1>
-    <Change1>{timeLeft}초 후 게임이 시작됩니다🎉</Change1><br />
+    <Change1>{timeLeft}초 후 게임이 시작됩니다🎉</Change1><br/>
+    <Change1>주의사항💢</Change1>
+    <Change1>!꼭! 컵을 올려 놓고 시작해주세요!</Change1>
   </Box>
   </>
   )
