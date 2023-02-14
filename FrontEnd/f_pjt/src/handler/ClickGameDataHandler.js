@@ -29,6 +29,12 @@ class ClickGameDataHandler extends AbstractGameDataHandler {
     }
     return gameState.gameData;
   }
+
+  onCompleted(gameState, requestData) {
+    let result = Object.assign([],gameState.gameData);
+    result.sort((x,y) => y.cnt-x.cnt)
+    return result;
+  }
 }
 
 export default ClickGameDataHandler
