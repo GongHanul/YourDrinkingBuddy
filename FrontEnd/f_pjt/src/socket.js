@@ -1,9 +1,9 @@
 import { io } from "socket.io-client"
-import { addPlayer, removePlayer, getPreservedGameDataHandler, updateGameData, initializePlayerViewPos, setGameStatePlay, setGameStateIdle, updateGameResult, GameState } from "./store";
+import { addPlayer, removePlayer, getPreservedGameDataHandler, updateGameData, initializePlayerViewPos, setGameStatePlay, setGameStateIdle, updateGameResult, GameState, setStateIdle, CocktailMakerState } from "./store";
 import store from "./store";
 
-// export const socket = io("70.12.226.153:3000", { transports: ["websocket"] });
-export const socket = io("localhost:9000", { transports: ["websocket"] });
+export const socket = io("70.12.226.153:3000", { transports: ["websocket"] });
+// export const socket = io("localhost:9000", { transports: ["websocket"] });
 // export const socket = io("70.12.246.22:3000", { transports: ["websocket"] });
 
 export let StatusCode = {
@@ -100,6 +100,20 @@ export const listenOffDestroyGame = () => {
   socket.off("server:destroyGame");
 }
 
+export const listenOnMakingCocktail = () => {
+  socket.on("server:makeCocktail", (requestData) => {
+    console.log("boop");
+    const cocktailMaker = store.getState().cocktailMaker;
+    if(cocktailMaker.state === CocktailMakerState.BUSY){
+      store.dispatch(setStateIdle())
+    }
+  })
+}
+
+export const listenOffMakingCocktail = () => {
+  socket.off("server:makeCocktail");
+}
+
 // 송신부
 
 // 클라이언트 -> 서버 화면 변경시 요청
@@ -115,7 +129,7 @@ export const requestMakeCocktail = (ports, requestCallback) => {
 
 // 클라이언트 -> 서버 칵테일 제조 강제 중지 요청
 export const requestForceStopMakingCocktail = (requestCallback) => {
-  send("client:forceStopMakingCocktail", null, requestCallback);
+  send("client:forceStopMakingCocktail", "ForceStopMakingCocktail", requestCallback);
 }
 
 // 클라이언트 -> 서버 음료 변경시 초기화 요청
