@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, {keyframes} from "styled-components";
 import ReactCardFlip from "react-card-flip";
 import { React, useState } from 'react';
 import Modal from '@mui/material/Modal';
@@ -51,10 +51,33 @@ const Img = styled.img`
   height: 25vh;
   margin: 5vh;
 `
+const moveleft = keyframes`
+  to {
+    transform: translateX(-100%);
+  }
+`
 const Title = styled.div`
   color : ${props.font};
   font-size: 4vh;
   filter: drop-shadow(0.3vh 0.3vh 0.1vh rgb(0 0 0 / 0.5));
+  overflow: hidden;
+  transition: 0.5s;
+  span {
+    display: block;
+    padding: 0 4vh;
+    animation: ${moveleft} 5s linear infinite;
+    &::after {
+      position: absolute;
+      content: attr(data-text);
+      top: 0;
+      left: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+    }
+  }
 `
 const Rule = styled.div`
   color : ${props.font};
@@ -80,7 +103,7 @@ const Rule1 = styled.div`
   >
     {/* This is the front of the card. */}
     <Img src={props.src} />
-    <Title>{props.title}</Title>
+    <Title><span data-text={props.title}>{props.title}</span></Title>
   </CardFront>
   <CardBack
   > <Rule onClick={() => setIsFlipped((prev) => !prev)}>

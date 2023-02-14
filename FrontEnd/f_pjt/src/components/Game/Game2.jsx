@@ -88,7 +88,7 @@ function Game2() {
           <Display>
             {/* 결과창 */}
             <GameOver>GAME OVER</GameOver>
-            <Result src="img/game2/finish.png"></Result>
+            <Result src="img/game2/crying.png"></Result>
             <Limit>벌칙은 '{game2.limit}mL' !</Limit>
           </Display>
           <Side>
@@ -137,7 +137,7 @@ const IMG = styled.img`
   justify-content: center;
   align-items: center ;
   height : 50vh;
-  margin-top : 5vh;
+  margin-top : 3vh;
 `
 const Result = styled.img`
   display : flex;

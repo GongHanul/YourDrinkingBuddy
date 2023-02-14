@@ -68,7 +68,7 @@ function Game() {
       background= {'#F4E5B2'}
       font = {'#000000'}
       src = {'img/gamelist/sound_black2.png'}
-      title = {'# 누가 소리를 내었는가!'}
+      title = {'# 누가 시끄럽지!'}
       rule1 = {'# 각 순서에 따라서'}
       rule2 = {'큰 소리 낸사람이 승자'}
       rule3 = {'지명하여 벌칙!'}

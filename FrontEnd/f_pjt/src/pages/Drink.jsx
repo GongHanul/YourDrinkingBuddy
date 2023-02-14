@@ -183,9 +183,9 @@ const Shot = styled.div`
   font-weight : bold;
   font-size: 5vh;
   letter-spacing : 2px;
-  animation: ${jittery} 4s infinite;
+  animation: ${jittery} 6s infinite;
   &:hover {
-    color: #ce0808;
+    color: #da341f;
     filter: drop-shadow(0.3vh 0.3vh 0.1vh rgb(0 0 0 / 0.5));
   }
   &.active {
@@ -256,7 +256,7 @@ const Btn = styled.div`
   span {
     display: block;
     padding: 0 20px;
-    animation: ${moveleft} 2s linear infinite;
+    animation: ${moveleft} 8s linear infinite;
     &::after {
       position: absolute;
       content: attr(data-text);
