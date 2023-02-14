@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { createGame, initializePlayerViewPos, preserveGameDataHandler, setGameDataHandler, setGameStatePlay, setGameStateReady } from "../../store";
 import gameEnv from './GameEnv';
+import Swal from 'sweetalert2'
 
 function GamePlay() {
   const navigate = useNavigate();
@@ -40,7 +41,12 @@ function GamePlay() {
   const start = () => {
     console.log(game.playerCount)
     if( game.playerCount < Playercnt ){
-      alert(`플레이어 모자릅니다. 현재 플레이어 수 : ${game.playerCount}, 목표 플레이어 수 : ${Playercnt}`)
+      // alert(`플레이어 모자릅니다. 현재 플레이어 수 : ${game.playerCount}, 목표 플레이어 수 : ${Playercnt}`)
+      Swal.fire(
+        '플레이어 모자릅니다.',
+        `현재 플레이어 수 : ${game.playerCount}, 목표 플레이어 수 : ${Playercnt}`,
+        'question'
+      )
     } else {
       console.log(gameEnv)
       preserveGameDataHandler(new gameEnv[id].handler());
