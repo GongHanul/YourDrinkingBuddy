@@ -5,8 +5,12 @@ import { useSelector, useDispatch } from "react-redux"
 import{ changePort, changeBeverage } from "../store.js"
 
 
-function BeverageModal(props) {
+// Ratio 를 이용한 
 
+      // a===-1?{ 참 } :
+      // {거짓}
+function BeverageModal(props) {
+  const ratio = useSelector((state)=> state.ratio)
   let port = useSelector((state)=> state.port)
 
   let beverages = []
@@ -24,7 +28,20 @@ function BeverageModal(props) {
   <>
   <Box sx={style}>
     { Beverages.map(function(e, i){
+  
+      let a = ratio.findIndex((f)=>f.beverage_id === e.beverage_id)
+
+      if(a!==-1){
+        // props.index 에 있는 음료를 a로 옮기고, props.index는 없애버리기
+        
+        return (<></>);
+      }
+      else{
+        console.log( a)
+
+   
     return (<div onClick={props.handleClose}><SulList onClick={()=>
+      
       {dispatch(changePort({
       beverage_id : Beverages[i].beverage_id,
       beverage_image_url : Beverages[i].beverage_image_url,
@@ -36,7 +53,7 @@ function BeverageModal(props) {
     }))
   }
       }>{ Beverages[i].beverage_name }
-    </SulList></div>)
+    </SulList></div>)}
     })}
     </Box>
   </>
