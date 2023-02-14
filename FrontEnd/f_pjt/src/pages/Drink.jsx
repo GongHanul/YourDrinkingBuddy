@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, {keyframes} from "styled-components";
 import { React, useState, useEffect } from 'react';
 import BeverageItem from "../components/BeverageItem";
 import { useDispatch, useSelector } from "react-redux"
@@ -113,17 +113,17 @@ const getRecipes = () => {
           <Btn onClick={getRecipes}><FontAwesomeIcon icon={ faRotateRight }/></Btn>
           <Btn onClick={()=>{
             handleOpen2()}}>
-            술교체</Btn>
+             <span data-text="술교체">술교체</span></Btn>
             <Modal
             open={open2}
             onClose2={handleClose2}>
             <ChangeModal handleClose2 = {handleClose2}/>
             </Modal>
-          <Btn  onClick={async ()=>{
+          <Shot  onClick={async ()=>{
             make()
             handleOpen()
             }}>
-            SHOT!</Btn>
+            SHOT!</Shot>
             <Modal
             open={open}>
             <ShotModal handleClose = {handleClose} cancel = { cancel }/>
@@ -138,6 +138,65 @@ const getRecipes = () => {
     </Maindiv>
 )
 }
+
+const jittery = keyframes`
+5%,
+  50% {
+    transform: scale(1);
+  }
+
+  10% {
+    transform: scale(0.9);
+  }
+
+  15% {
+    transform: scale(1.15);
+  }
+
+  20% {
+    transform: scale(1.15) rotate(-5deg);
+  }
+
+  25% {
+    transform: scale(1.15) rotate(5deg);
+  }
+
+  30% {
+    transform: scale(1.15) rotate(-3deg);
+  }
+
+  35% {
+    transform: scale(1.15) rotate(2deg);
+  }
+
+  40% {
+    transform: scale(1.15) rotate(0);
+  }
+`
+const Shot = styled.div`
+  display: flex;
+  align-items: center ;
+  justify-content: center;
+  margin : 1.5vh 4vh;
+  color: #004680;
+  font-family: 'Jua', sans-serif;
+  font-weight : bold;
+  font-size: 5vh;
+  letter-spacing : 2px;
+  animation: ${jittery} 4s infinite;
+  &:hover {
+    color: #ce0808;
+    filter: drop-shadow(0.3vh 0.3vh 0.1vh rgb(0 0 0 / 0.5));
+  }
+  &.active {
+    filter: drop-shadow(0.3vh 0.3vh 0.1vh rgb(0 0 0 / 0.5));
+    color: #FAE59C;
+    position: relative;
+    top: 1vh;
+    border-bottom: 1vh solid #FAE59C;
+  }
+`
+
 const None = styled.span`
   display: non;
 `
@@ -163,6 +222,11 @@ const Bottomdiv = styled.div`
 const BtnDiv = styled.div`
   flex-direction : column;
 `
+const moveleft = keyframes`
+  to {
+    transform: translateX(-100%);
+  }
+`
 const Btn = styled.div`
   display: flex;
   align-items: center ;
@@ -173,11 +237,7 @@ const Btn = styled.div`
   font-weight : bold;
   font-size: 5vh;
   letter-spacing:6px;
-  &:link {
-    transition : 0.5s;
-    text-decoration: none;
-  }
-  &:hover {
+  /* &:hover {
     color: #ce0808;
     filter: drop-shadow(0.3vh 0.3vh 0.1vh rgb(0 0 0 / 0.5));
   }
@@ -187,6 +247,27 @@ const Btn = styled.div`
     position: relative;
     top: 1vh;
     border-bottom: 1vh solid #FAE59C;
+  } */
+  overflow: hidden;
+  transition: 0.3s;
+  &:hover {
+    transform: scale(1.1);
+  }
+  span {
+    display: block;
+    padding: 0 20px;
+    animation: ${moveleft} 2s linear infinite;
+    &::after {
+      position: absolute;
+      content: attr(data-text);
+      top: 0;
+      left: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+    }
   }
 `
 const RecipeItem = styled.div`
