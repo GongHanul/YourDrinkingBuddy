@@ -1,6 +1,6 @@
 import { React, useState } from 'react';
 import { NavLink } from "react-router-dom";
-import styled from "styled-components";
+import styled, {keyframes} from "styled-components";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMartiniGlassCitrus, faGamepad, faClipboardList } from "@fortawesome/free-solid-svg-icons"
 import { useSelector, useDispatch } from "react-redux"
@@ -58,7 +58,40 @@ function SideNav() {
   );
 }
 
+const jittery = keyframes`
+5%,
+  50% {
+    transform: scale(1);
+  }
 
+  10% {
+    transform: scale(0.9);
+  }
+
+  15% {
+    transform: scale(1.15);
+  }
+
+  20% {
+    transform: scale(1.15) rotate(-5deg);
+  }
+
+  25% {
+    transform: scale(1.15) rotate(5deg);
+  }
+
+  30% {
+    transform: scale(1.15) rotate(-3deg);
+  }
+
+  35% {
+    transform: scale(1.15) rotate(2deg);
+  }
+
+  40% {
+    transform: scale(1.15) rotate(0);
+  }
+`
 const Bar = styled.div`
   display: flex;
   background: #004680;
@@ -105,6 +138,7 @@ const Shot = styled.div`
   align-items: center ;
   justify-content: center;
   color: white;
+  /* animation: ${jittery} 10s infinite; */
   padding: 2vh;
   &:hover {
     filter: drop-shadow(0.6vh 0.6vh 0.3vh rgb(0 0 0 / 0.6));
