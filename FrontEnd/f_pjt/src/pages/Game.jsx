@@ -4,6 +4,22 @@ import Gamecard from "../components/Gamecard";
 import Gamecard2 from "../components/Gamecard2";
 
 function Game() {
+  const randomNum = ['1', '2', '3', '4', '6']
+  const random = Math.floor(Math.random() * 5 + 1);
+  const shuffle = (array) => {
+    for(let index = array.length -1 ; index > 0; index--){
+      // 무작위 index 값을 만든다. (0 이상의 배열 길이 값)
+      const randomPosition = Math.floor(Math.random() * (index +1));
+
+      // 임시로 원본 값을 저장하고, randomPosition을 사용해 배열 요소를 섞는다.
+      const temporary = array[index];
+      array[index] = array[randomPosition];
+      array[randomPosition] =temporary;
+    }
+    return array
+  }
+  shuffle(randomNum)
+  console.log(randomNum)
   return (
     <>
     <Gamee>
@@ -18,7 +34,6 @@ function Game() {
       rule2 = {'평균, 갭 차이'}
       rule3 = {'선택하여 벌칙'}
       rule4 = {'게임 전 개인 심박수 측정'}
-      nav = {'/game1'}
       ></Gamecard></Flexdiv>
 
       <Flexdiv>
@@ -32,7 +47,6 @@ function Game() {
       rule2 = {'돌아가면서 술을 따르며'}
       rule3 = {'랜덤값을 넘으면 벌칙!'}
       rule4 = {'잔을 무게 센서에 올리기'}
-      nav = {'/game2'}
       ></Gamecard2></Flexdiv>
       
       <Flexdiv>
@@ -46,7 +60,6 @@ function Game() {
       rule2 = {'버튼을 마구마구 눌러라!'}
       rule3 = {'적게 나온 사람이 벌칙!'}
       rule4 = {'화면에 나오는 숫자 확인'}
-      nav = {'/game3'}
       ></Gamecard></Flexdiv>
       
       <Flexdiv>
@@ -57,24 +70,22 @@ function Game() {
       src = {'img/gamelist/sound_black2.png'}
       title = {'# 누가 소리를 내었는가!'}
       rule1 = {'# 각 순서에 따라서'}
-      rule2 = {'평균, 갭 차이'}
-      rule3 = {'나온사람이 벌칙!'}
+      rule2 = {'큰 소리 낸사람이 승자'}
+      rule3 = {'지명하여 벌칙!'}
       rule4 = {'시간에 따라 차례대로'}
-      nav = {'/game4'}
       ></Gamecard></Flexdiv>
       
       <Flexdiv>
-      <Gamecard id = {'5'}
+      <Gamecard id = {randomNum[0]}
       ready = {'#EDD582'}
       background= {'#EDD582'}
       font = {'#000000'}
-      src = {'img/gamelist/gram_black.png'}
-      title = {'# 무게가 어느정도지?'}
-      rule1 = {'# 한명씩 돌아가면서'}
-      rule2 = {'물건을 올려 랜덤값에서'}
-      rule3 = {'제일 먼 사람이 벌칙!'}
-      rule4 = {'돌아가면서 무게 측정'}
-      nav = {'/game5'}
+      src = {'img/gamelist/random.png'}
+      title = {'# RANDOM GAME'}
+      rule1 = {'# 랜덤 게임'}
+      rule2 = {'두근두근'}
+      rule3 = {'무슨 게임일까~'}
+      rule4 = {'센스껏 게임파악'}
       ></Gamecard></Flexdiv>
       
       <Flexdiv>
@@ -88,7 +99,6 @@ function Game() {
       rule2 = {'10초 후 버튼 클릭!'}
       rule3 = {'차이가 젤 큰 사람 벌칙!'}
       rule4 = {'시간을 맞춰라'}
-      nav = {'/game6'}
       ></Gamecard></Flexdiv>      
   
     </Gamee>
