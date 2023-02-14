@@ -23,7 +23,7 @@ class SoundGameDataHandler extends AbstractGameDataHandler {
     const views = gameState.playerViewPos;
     let result = [];
     for (const view of views) {
-      result.push({ playerId: view, max:0 });
+      result.push({ playerId: view, db:0, max:0 });
     }
     return result;
   }
@@ -45,10 +45,11 @@ class SoundGameDataHandler extends AbstractGameDataHandler {
     if(idx > -1){
       let result = Object.assign({},gameState.gameData);
       let dbValue = (requestData.gameData.cnt)?requestData.gameData.cnt: ((requestData.gameData.max)? requestData.gameData.max : 0 );
+      
 
       let updatedPlayerData = Object.assign([],result.playerData);
-
-      updatedPlayerData[idx] = {playerId: requestData.gameData.id, db: dbValue, max: requestData.gameData.max};
+      let max = requestData.gameData.max?requestData.gameData.max:updatedPlayerData[idx].max;
+      updatedPlayerData[idx] = {playerId: requestData.gameData.id, db: dbValue, max: max};
       result.playerData = updatedPlayerData;
       return result;
     }
@@ -57,7 +58,16 @@ class SoundGameDataHandler extends AbstractGameDataHandler {
 
   onCompleted(gameState, requestData) {
     let result = Object.assign([],gameState.gameData.playerData);
-
+    // const players = gameState.gameData.playerData;
+    // let result = Object.assign([],gameState.gameResult);
+    // for(const player of players){
+    //   const idx = gameState.gameResult.findIndex((elem) => elem.playerId === player.id);
+    //   if(idx > -1){
+    //     let resultOfPlayer = Object.assign({},result[idx]);
+    //     resultOfPlayer.max = player.max? player.max : 0;
+    //     result[idx] = resultOfPlayer;
+    //   }
+    // }
     result.sort((x,y) => x.max-y.max);
     return result;
   }

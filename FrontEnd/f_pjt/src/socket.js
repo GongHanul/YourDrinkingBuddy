@@ -2,9 +2,9 @@ import { io } from "socket.io-client"
 import { addPlayer, removePlayer, getPreservedGameDataHandler, updateGameData, initializePlayerViewPos, setGameStatePlay, setGameStateIdle, updateGameResult, GameState, setStateIdle, CocktailMakerState } from "./store";
 import store from "./store";
 
-export const socket = io("70.12.226.153:3000", { transports: ["websocket"] });
+// export const socket = io("70.12.226.153:3000", { transports: ["websocket"] });
 // export const socket = io("localhost:9000", { transports: ["websocket"] });
-// export const socket = io("70.12.246.22:3000", { transports: ["websocket"] });
+export const socket = io("70.12.246.22:3000", { transports: ["websocket"] });
 
 export let StatusCode = {
   SUCCESS: 0,
