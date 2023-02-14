@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, {keyframes} from "styled-components";
 import { React, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import Box from '@mui/material/Box';
@@ -45,7 +45,7 @@ function PlayerModal(props) {
     </Mid>
     <Btm>
     <Back><FontAwesomeIcon onClick={props.handleClose} icon= {faCircleXmark}/></Back>
-    <GameStart onClick={move}>START</GameStart>
+    <GameStart onClick={move}>READY!</GameStart>
     </Btm>
   </Box>
   </>
@@ -117,6 +117,40 @@ const Back = styled.div`
     filter: drop-shadow(0.4vh 0.4vh 0.1vh rgb(0 0 0 / 0.6));
   }
 `
+const jittery = keyframes`
+5%,
+  50% {
+    transform: scale(1);
+  }
+
+  10% {
+    transform: scale(0.9);
+  }
+
+  15% {
+    transform: scale(1.13);
+  }
+
+  20% {
+    transform: scale(1.13) rotate(-5deg);
+  }
+
+  25% {
+    transform: scale(1.13) rotate(5deg);
+  }
+
+  30% {
+    transform: scale(1.13) rotate(-3deg);
+  }
+
+  35% {
+    transform: scale(1.13) rotate(2deg);
+  }
+
+  40% {
+    transform: scale(1.13) rotate(0);
+  }
+`
 const GameStart = styled.div`
   position: relative;
   left : -1vh;
@@ -124,6 +158,7 @@ const GameStart = styled.div`
   font-weight : bold;
   font-size: 4vh;
   letter-spacing: 0.5vh;
+  animation: ${jittery} 5s infinite;
   color : #4b76c0;
   &:hover {
     color: #da341f;
