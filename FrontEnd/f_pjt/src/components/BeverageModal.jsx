@@ -6,7 +6,6 @@ import{ changePort, changeBeverage } from "../store.js"
 
 
 // Ratio 를 이용한 
-
       // a===-1?{ 참 } :
       // {거짓}
 function BeverageModal(props) {
@@ -23,7 +22,6 @@ function BeverageModal(props) {
   let Beverages = useSelector((state)=> state.beverage)
 
   const dispatch = useDispatch();
-
   return (
   <>
   <Box sx={style}>
@@ -52,7 +50,9 @@ function BeverageModal(props) {
       idx : props.index
     }))
   }
-      }>{ Beverages[i].beverage_name }
+      }>{ i < 10 && <B1>{ Beverages[i].beverage_name }</B1>}
+      { i >= 10 && i < 24 && <B2>{ Beverages[i].beverage_name }</B2>}
+      { i === 25 && <B3>{ Beverages[i].beverage_name }</B3>}
     </SulList></div>)}
     })}
     </Box>
@@ -81,6 +81,38 @@ const style = {
 };
 
 const SulList = styled.div`
+  // display: flex;
+  // justify-content: center;
+  // align-items: center ;
+  // margin: 1vh;
+  // padding: 1vh;
+  // border-radius : 1vh;
+  // color: #ffffff;
+  // font-size : 5vh;
+  // /* font-family: 'Jua', sans-serif; */
+  // font-family: 'Noto Sans KR', sans-serif;
+  // font-weight: bold;
+  // filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.7));
+  // letter-spacing: 5px;
+  `
+
+  const B1 = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center ;
+  margin: 1vh;
+  padding: 1vh;
+  border-radius : 1vh;
+  color: #000000;
+  font-size : 5vh;
+  /* font-family: 'Jua', sans-serif; */
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: bold;
+  filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.7));
+  letter-spacing: 5px;
+  `
+
+  const B2 = styled.div`
   display: flex;
   justify-content: center;
   align-items: center ;
@@ -88,6 +120,22 @@ const SulList = styled.div`
   padding: 1vh;
   border-radius : 1vh;
   color: #ffffff;
+  font-size : 5vh;
+  /* font-family: 'Jua', sans-serif; */
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: bold;
+  filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.7));
+  letter-spacing: 5px;
+  `
+
+  const B3 = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center ;
+  margin: 1vh;
+  padding: 1vh;
+  border-radius : 1vh;
+  color: #000000;
   font-size : 5vh;
   /* font-family: 'Jua', sans-serif; */
   font-family: 'Noto Sans KR', sans-serif;
