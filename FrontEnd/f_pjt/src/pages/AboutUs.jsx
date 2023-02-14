@@ -6,8 +6,14 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSquareGithub } from "@fortawesome/free-brands-svg-icons"
+import { safeTerminateIfGamePlayed } from "../store";
+import { useDispatch } from "react-redux";
 
 export default function AboutUs() {
+
+  const dispatch = useDispatch()
+  dispatch(safeTerminateIfGamePlayed())
+
   const LKJ = "https://github.com/2kjin"
   const CSB = "https://github.com/Bin-Choi"
   const JJH = "https://github.com/jaehyeon-git"

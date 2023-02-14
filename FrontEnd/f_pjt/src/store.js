@@ -480,7 +480,19 @@ let game = createSlice({
   },
 });
 
-export let { setPlayer, removePlayer, addPlayer, initializePlayerViewPos, setGameDataHandler, updateGameData, updateGameResult, setGameStateIdle, setGameStateReady, setGameStatePlay, createGame, recreateGame, destroyGame, completeGame, changeGame } = game.actions;
+export let { setPlayer, removePlayer, addPlayer, initializePlayerViewPos, setGameDataHandler, updateGameData, updateGameResult, setGameStateIdle, setGameStateReady, setGameStatePlay, createGame, recreateGame, destroyGame, completeGame, changeGame, safeTerminateIfGamePlayed } = game.actions;
+
+let gamePlayerCount = createSlice({
+  name: 'gamePlayerCount',
+  initialState: 1,
+  reducers: {
+    setGamePlayerCount(state, action) {
+      return action.payload;
+    }
+  },
+});
+
+export let { setGamePlayerCount } = gamePlayerCount.actions
 
 const store = configureStore({
   reducer: {
@@ -492,6 +504,7 @@ const store = configureStore({
     port: port.reducer,
     recoRecipes: recoRecipes.reducer,
     game: game.reducer,
+    gamePlayerCount: gamePlayerCount.reducer,
   },
 });
 

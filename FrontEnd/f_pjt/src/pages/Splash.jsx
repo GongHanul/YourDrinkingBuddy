@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { React, useEffect } from 'react';
-import{ inputBeverage, setBeverages, inputRecipe } from "../store.js"
+import{ inputBeverage, setBeverages, inputRecipe, safeTerminateIfGamePlayed } from "../store.js"
 import { useDispatch, useSelector } from "react-redux"
 import axios from "axios";
 
@@ -8,6 +8,7 @@ function Splash() {
   const URL= 'http://i8a103.p.ssafy.io:3001'
   
   const dispatch = useDispatch();
+  dispatch(safeTerminateIfGamePlayed())
 
   const getBeverage = () => {
     axios.get(URL+'/beverages').then((a)=>{
