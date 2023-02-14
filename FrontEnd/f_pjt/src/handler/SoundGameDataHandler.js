@@ -57,16 +57,7 @@ class SoundGameDataHandler extends AbstractGameDataHandler {
 
   onCompleted(gameState, requestData) {
     let result = Object.assign([],gameState.gameData.playerData);
-    // const players = gameState.gameData.playerData;
-    // let result = Object.assign([],gameState.gameResult);
-    // for(const player of players){
-    //   const idx = gameState.gameResult.findIndex((elem) => elem.playerId === player.id);
-    //   if(idx > -1){
-    //     let resultOfPlayer = Object.assign({},result[idx]);
-    //     resultOfPlayer.max = player.max? player.max : 0;
-    //     result[idx] = resultOfPlayer;
-    //   }
-    // }
+
     result.sort((x,y) => x.max-y.max);
     return result;
   }

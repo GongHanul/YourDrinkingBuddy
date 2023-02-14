@@ -13,13 +13,18 @@ function Game2() {
   const [open, setOpen] = useState(true);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const img = ['img/game2/taleup.png', 'img/game2/taledown.png']
+  const [view, setView] = useState(true)
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const game = useSelector((state)=> state.game);
+  const game2 = game.gameData;
 
-  const game1 = game.gameData;
+  useEffect(() => {
+    setView(!view)
+  }, [game2])
 
   const restart = () => {
     dispatch(setGameStateReady())
@@ -37,7 +42,7 @@ function Game2() {
   }
 
   if(game.gameState === GameState.PLAY){
-    if(game1.weight > game1.limit){
+    if(game2.weight > game2.limit){
       return (
         <Full>
           <Display>
@@ -66,11 +71,11 @@ function Game2() {
           <Game2Modal handleClose = {handleClose} />
         </Modal>
         <Display>
-      
-      
-          weight : {game1.weight}
-      
-      
+
+          {/* 이미지 리터칭 , css */}
+          { view && <IMG src={img[0]}></IMG>}
+          { !view && <IMG src={img[1]}></IMG>}
+          {game2.weight}
         </Display>
         <Side>
           <Restart onClick={restart}>REPLAY<FontAwesomeIcon icon={faArrowRotateRight}/></Restart>
@@ -79,11 +84,12 @@ function Game2() {
         )
     }
   }else{
-    if(game1.weight > game1.limit){
+    if(game2.weight > game2.limit){
       return (
         <Full>
           <Display>
-                  limit 값은 {game1.limit} 이였습니다. 
+            {/* 결과창 */}
+                  limit 값은 {game2.limit} 이였습니다. 
                   죄인은 사약을 들라.
           </Display>
           <Side>
@@ -107,6 +113,12 @@ function Game2() {
   
 
 }
+const IMG = styled.img`
+display : flex;
+justify-content: center;
+align-items: center ;
+`
+
 const Full = styled.div`
   display : flex;
   flex-wrap: wrap;
