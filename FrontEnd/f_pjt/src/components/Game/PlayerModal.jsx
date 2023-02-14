@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Box from '@mui/material/Box';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMinus, faPlus, faCircleLeft, faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons"
+import { faCircleXmark } from "@fortawesome/free-regular-svg-icons"
 
 
 function PlayerModal(props) {
@@ -39,8 +40,8 @@ function PlayerModal(props) {
     </PlusMinus>
     </Mid>
     <Btm>
-    <Back><FontAwesomeIcon onClick={props.handleClose} icon= {faArrowLeft}/></Back>
-    <GameStart onClick={move}>START<FontAwesomeIcon icon= {faArrowRight}/></GameStart>
+    <Back><FontAwesomeIcon onClick={props.handleClose} icon= {faCircleXmark}/></Back>
+    <GameStart onClick={move}>START</GameStart>
     </Btm>
   </Box>
   </>
@@ -102,13 +103,13 @@ const PlayerCnt = styled.div`
 `
 const Back = styled.div`
   position: relative;
-  left : -5vh;
+  left : -7vh;
   bottom : -2vh;
   font-size: 5vh;
-  color : #4b76c0;
+  /* color : #4b76c0; */
   /* filter: drop-shadow(0.4vh 0.4vh 0.1vh rgb(0 0 0 / 0.5)); */
   &:hover {
-    color: #FAE59C;
+    color: #da341f;
     filter: drop-shadow(0.4vh 0.4vh 0.1vh rgb(0 0 0 / 0.6));
   }
 `
@@ -121,7 +122,7 @@ const GameStart = styled.div`
   letter-spacing: 0.5vh;
   color : #4b76c0;
   &:hover {
-    color: #FAE59C;
+    color: #da341f;
     filter: drop-shadow(0.4vh 0.4vh 0.1vh rgb(0 0 0 / 0.6));
   }
 `

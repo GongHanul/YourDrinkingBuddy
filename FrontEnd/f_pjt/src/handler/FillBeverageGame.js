@@ -2,10 +2,10 @@ import AbstractGameDataHandler from './AbstractGameDataHandler'
 
 
 // unit*min 이상   unit*max 이하로 설정한다.
-const min = 10
-const max = 40
+const min = 100
+const max = 250
 
-const unit = 15
+const unit = 1
 
 
 

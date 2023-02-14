@@ -28,7 +28,7 @@ function Game1Rank(props) {
     <Topdiv>
       <Rank>🏆RANK🏆</Rank><br />
       { result.map( (e) => {
-        return <Score>PLAYER {e.playerId} : [bpm : {e.bpm}] [max : {e.max}] [min : {e.min}] [mean : {e.mean}] [gap : {e.gap}] </Score>
+        return <Score>PLAYER {e.playerId} <br />💓MAX'{e.max}' 💖MEAN'{e.mean}' 💕GAP'{e.gap}' <br /><br /></Score>
       })}
     </Topdiv>
     <Bomdiv>
@@ -66,6 +66,7 @@ const Bomdiv = styled.div`
   justify-content: space-evenly;
   align-items: center ;
   justify-content: center;
+  margin-top : -7vh;
 `
 const Quit = styled.div`
   display : flex;
@@ -82,14 +83,14 @@ const Quit = styled.div`
   }
 `
 const Rank = styled.div`
-  font-size: 7vh;
+  font-size: 6.5vh;
   letter-spacing : 1vh;
   font-weight: bold;
   font-family: 'Jua', sans-serif;
   filter: drop-shadow(0.2vh 0.2vh 0.1vh rgb(0 0 0 / 0.5));
 `
 const Score = styled.div`
-  font-size: 5vh;
+  font-size: 4.5vh;
   font-family: 'Jua', sans-serif;
   filter: drop-shadow(0.2vh 0.2vh 0.1vh rgb(0 0 0 / 0.5));
 `

@@ -135,9 +135,9 @@ let port = createSlice({
   name: 'port',
   initialState: [
     { beverage_id: '-1', beverage_image_url: 'img/bottle_pick.png' },
-    { beverage_id: '-1', beverage_image_url: 'img/bottle.png' },
     { beverage_id: '-1', beverage_image_url: 'img/bottle_pick.png' },
-    { beverage_id: '-1', beverage_image_url: 'img/bottle.png' }
+    { beverage_id: '-1', beverage_image_url: 'img/bottle_pick.png' },
+    { beverage_id: '-1', beverage_image_url: 'img/bottle_pick.png' }
   ],
   reducers: {
     changePort(state, action) {
