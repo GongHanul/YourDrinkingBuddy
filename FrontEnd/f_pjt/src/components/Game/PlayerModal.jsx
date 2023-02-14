@@ -5,12 +5,16 @@ import Box from '@mui/material/Box';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMinus, faPlus, faCircleLeft, faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons"
 import { faCircleXmark } from "@fortawesome/free-regular-svg-icons"
+import { useDispatch, useSelector } from 'react-redux';
+import { setGamePlayerCount } from "../../store";
 
 
 function PlayerModal(props) {
   console.log(props)
   const navigate = useNavigate();
-  const [playerCount, setPlayerCount] = useState(1);
+  const playerCount = useSelector((state) => state.gamePlayerCount);
+  const dispatch = useDispatch();
+  // const [playerCount, setPlayerCount] = useState(1);
   console.log(playerCount)
 
   const move = () => {
@@ -18,12 +22,12 @@ function PlayerModal(props) {
   
   const handleIncrement = () => {
     if (playerCount < 4) {
-      setPlayerCount(playerCount + 1);
+      dispatch(setGamePlayerCount(playerCount + 1));
     }
   };
   const handleDecrement = () => {
     if (playerCount > 1) {
-      setPlayerCount(playerCount - 1);
+      dispatch(setGamePlayerCount(playerCount - 1));
     }
   };
   return (
