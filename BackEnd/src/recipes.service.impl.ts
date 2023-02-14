@@ -1,12 +1,12 @@
-import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { RecipesService } from './recipes.service';
 import { RecipesRepository } from './recipes.repository';
 import { Recipe } from './recipe.entity';
 import { Pagination } from 'nestjs-typeorm-paginate';
 import { Like } from 'typeorm';
 
-const nameASC = { order: { name: 'ASC' } };
-const nameDESC = { order: { name: 'DESC' } };
+const nameASC = { order: { recipe_name: 'ASC' } };
+const nameDESC = { order: { recipe_name: 'DESC' } };
 const idASC = { order: { beverage_id: 'ASC' } };
 const idDESC = { order: { beverage_id: 'DESC' } };
 const useCountASC = { order: { recipe_use_count: 'ASC' } };
@@ -34,8 +34,9 @@ export class RecipesServiceImpl implements RecipesService {
 
   async getRecipes(pageno: number, pagesize: number, filter?: number[], query?: string, sort?: string): Promise<Pagination<Recipe>> {
     // 필터 search 옵션을 구성한다.
-    let searchOption = undefined;
+    let searchOption: any = nameASC;
     if (sort) {
+      console.log(sort);
       switch (sort) {
         case 'name':
           searchOption = nameASC;
@@ -60,8 +61,9 @@ export class RecipesServiceImpl implements RecipesService {
     if (query) {
       searchOption['where'] = { recipe_name: Like(`%${query}%`) };
     }
+    console.log(searchOption);
     // filter를 이용하여 필터링 한 결과를 pagination 형태로 내놓는다.
-    return this.recipesRepository.findAllContainsFilter(pageno, pagesize, searchOption, filter);
+    return this.recipesRepository.findAllFilterContains(pageno, pagesize, searchOption, filter);
   }
 
   async getAllRecipe(): Promise<Recipe[]> {
@@ -74,11 +76,7 @@ export class RecipesServiceImpl implements RecipesService {
   }
 
   async updateRecipe(recipe: Recipe): Promise<Recipe> {
-    const result = await this.recipesRepository.update({ recipe_id: recipe.recipe_id }, recipe);
-    if (result.affected == 0) {
-      throw new BadRequestException();
-    }
-    return this.getRecipeByRecipeID(recipe.recipe_id);
+    return this.recipesRepository.save(recipe);
   }
 
   async deleteRecipe(recipe_id: number): Promise<void> {

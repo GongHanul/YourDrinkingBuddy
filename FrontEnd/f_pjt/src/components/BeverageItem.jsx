@@ -1,76 +1,103 @@
 import styled from "styled-components";
+import Modal from '@mui/material/Modal';
 import { React, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronUp,faChevronDown } from "@fortawesome/free-solid-svg-icons"
-import Modal from "../components/TheModal";
+import BeverageModal from "../components/BeverageModal";
+import{ increaseRatio, decreaseRatio } from "../store.js"
+import { useDispatch, useSelector } from "react-redux"
 
-
-function BeverageItem() {  
-  let [count, setCount] = useState(0)
-  // let [modal, setModal] = useState(false);
-  const Decredible = () => {
-    return count > 0 ? setCount(pre => pre - 1) : false
-    }
-  const Incredible = () => {
-      return count < 8 ? setCount(pre => pre + 1) : false
-      }
-  const [isOpen, setIsOpen] = useState(false);
-
-  const [image, setImage] = useState('http://cdn.veluga.kr/files/supplier/228/drinks/%E1%84%90%E1%85%A6%E1%84%85%E1%85%A1%20%E1%84%86%E1%85%A2%E1%86%A8%E1%84%8C%E1%85%AE(TERRA%20BEER)_%E1%84%92%E1%85%A1%E1%84%8B%E1%85%B5%E1%84%90%E1%85%B3%E1%84%8C%E1%85%B5%E1%86%AB%E1%84%85%E1%85%A9(hitejinro).png');
-
-  return(
-  <>
-    <Box>
-      <Beverageimg
-       onClick={()=>{
-        setIsOpen(true)}} 
-        src = {image}></Beverageimg>
-      <UpandDown><FontAwesomeIcon onClick={()=>{
-        Incredible(count);
-      }} icon= {faChevronUp} size="5x"/>
-      </UpandDown>
-      <Num>{count}</Num>
-      <UpandDown><FontAwesomeIcon onClick={()=>{
-        Decredible(count);
-      }} icon= {faChevronDown} size="5x"/>
-      </UpandDown>
-      
-    </Box>
-      {isOpen && (<Modal
-        open={isOpen}
-        onClose={() => {
-          setIsOpen(false);
-        }}
-      />)}
-  </>
-)
-}
-
-
-const Beverageimg = styled.img`
-  height : 30vh;
-`
-const Box = styled.div`
+function BeverageItem(props) { 
+  const Box = styled.div`
   display: flex;
   flex-direction: column;
   border-radius: 2vh;
   border: none;
-  margin: auto 2vh;
-  padding: 3vh;
-  background-image: linear-gradient(to bottom, white 30%, #DCDCDC 30%);
+  background : ${props.background};
   align-items: center ;
   justify-content: space-evenly;
-`
-const UpandDown = styled.div`
-  color: #004680;
-  margin: 3vh auto;
+  box-shadow: 0 2px 4px;
+  padding : 3vh;
+  `
+  const Circle = styled.div`
+  width : 20vh;
+  height : 20vh;
+  border-radius : 50%;
+  background: ${props.circleColor};
+  box-shadow: 1px 2px 4px #474747;
 `
 const Num = styled.div`
-  color: #494949;
-  font-family: 'Irish Grover';
-  font-style: normal;
-  font-size: 7vh;
+  color:${props.circleColor};
+  font-family: 'Do Hyeon', sans-serif;
+  font-weight : bold;
+  font-size: 8vh;
+  margin: -3vh;
+  filter: drop-shadow(0.2vh 0.4vh 0.1vh rgb(0 0 0 / 0.5));
+  `
+  const dispatch = useDispatch();
+  
+  let num = useSelector((state)=> state.ratio[props.index])
+  let Image = useSelector((state)=> state.port[props.index].beverage_image_url)
+  let port = useSelector((state)=>state.port)
 
+  
+  const Decredible = () => {
+    return num.rate > 0 ? dispatch(decreaseRatio(props.index)) : false
+  }
+  const Incredible = () => {
+    return num.rate < 8 ? dispatch(increaseRatio(props.index)) : false
+  }
+  
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  
+  return(
+  <>
+    <Box>
+      <Beverageimg
+       onClick={handleOpen}
+      src = {Image}></Beverageimg>
+      <Modal
+        open={open}
+        onClose={handleClose}
+      >
+       <BeverageModal
+       getRecipes = { props.getRecipes }
+       reco = { props.getRecipes }
+       index = { props.index }
+       handleClose = {handleClose}/>
+      </Modal>
+      <Circle></Circle>
+      <UpandDown>
+      <FontAwesomeIcon onClick={()=>{
+        Incredible()
+        }} icon= {faChevronUp}/>
+      </UpandDown>
+      <Num>{num.rate}</Num>
+      <UpandDown>
+        <FontAwesomeIcon onClick={()=>{
+        Decredible()
+        }} icon= {faChevronDown}/>
+      </UpandDown>
+      
+    </Box>
+  </>
+)
+}
+
+const Beverageimg = styled.img`
+  height : 30vh;
+  max-width : 5vw;
+  position: relative;
+  top: 3vh;
+  margin: -13vh 0;
+`
+const UpandDown = styled.div`
+  color: #ffffff;
+  font-size: 10vh;  
+  filter: drop-shadow(0.4vh 0.4vh 0.1vh rgb(0 0 0 / 0.5));
 `
 
 export default BeverageItem
