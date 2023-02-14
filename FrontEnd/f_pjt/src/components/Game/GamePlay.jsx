@@ -16,7 +16,7 @@ function GamePlay() {
   const Playercnt = location.state.cnt
   const GameId = `/game${id}`
   const game = useSelector((state) => state.game)
-  const img = ['img/gameplay/덜루기.gif','img/gameplay/뮤.gif','img/gameplay/이상해씨.gif','img/gameplay/피카츄.gif']
+  const img = ['img/gameplay/덜루기.gif','img/gameplay/뮤.gif','img/gameplay/이상해씨.gif','img/gameplay/피카츄.gif', 'img/gameplay/파치리스.gif', 'img/gameplay/잠만보.gif']
   const bgcolor = [' #F7CAC9', '#878586', ' #f0eee9', '#d0e1ff']
   const dispatch = useDispatch();
 
