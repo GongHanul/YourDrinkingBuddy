@@ -1,9 +1,14 @@
 import styled, {keyframes} from "styled-components";
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from "react-redux";
+import { safeTerminateIfGamePlayed } from "../store";
 
 function Page404() {  
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  dispatch(safeTerminateIfGamePlayed())
   const Gohome = (() =>{
     navigate("/")
   })

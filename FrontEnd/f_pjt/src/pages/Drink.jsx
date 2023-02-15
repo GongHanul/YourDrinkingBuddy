@@ -11,6 +11,7 @@ import { makeCocktail, stopMakeCocktail } from '../store';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faRotateRight } from "@fortawesome/free-solid-svg-icons"
 import { checkConnection } from "../socket";
+import { URL } from "../url";
 
 function Drink() {
   const dispatch = useDispatch()
@@ -93,7 +94,6 @@ function Drink() {
   }
 // http 관련 별도의 모듈로 빼낼 필요 있음.
 const getRecipes = () => {
-  const URL= 'http://i8a103.p.ssafy.io:3001'
   // const URL= `${process.env.PUBLIC_URL}${process.env.REACT_APP_API_SERVER_PATH}`
     axios.get(URL+'/recipes',{params: {filter: beverages.join(",")}}).then((a)=>{
       dispatch(changeReco(setLengthIfLessFills(a.data.items, 3, {recipe_name: "X"})));
