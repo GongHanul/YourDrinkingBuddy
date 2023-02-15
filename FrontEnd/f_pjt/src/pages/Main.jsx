@@ -3,8 +3,12 @@ import React from 'react';
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMartiniGlassCitrus, faGamepad, faClipboardList } from "@fortawesome/free-solid-svg-icons"
+import { useDispatch } from "react-redux";
+import { safeTerminateIfGamePlayed } from "../store";
 
 function Main() {  
+  const dispatch = useDispatch()
+  dispatch(safeTerminateIfGamePlayed())
   return(
   <>
   <MainBody>

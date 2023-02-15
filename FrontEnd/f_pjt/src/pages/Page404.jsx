@@ -1,14 +1,22 @@
 import styled, {keyframes} from "styled-components";
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from "react-redux";
+import { safeTerminateIfGamePlayed } from "../store";
 
 function Page404() {  
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  dispatch(safeTerminateIfGamePlayed())
   const Gohome = (() =>{
     navigate("/")
   })
   const GoAboutus = (() =>{
     navigate("/aboutus")
+  })
+  const GoCB = (() =>{
+    navigate("/rain")
   })
   return(
   <>
@@ -38,6 +46,7 @@ function Page404() {
     <Buttons>
       <Btn onClick={Gohome}>Home</Btn>
       <Btn onClick={GoAboutus}>About Us</Btn>
+      <Btn onClick={GoCB}>Cherry Blossoms</Btn>
     </Buttons>
   </Bottom>
   </Background>

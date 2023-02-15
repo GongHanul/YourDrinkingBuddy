@@ -18,7 +18,8 @@ import {
   requestCompleteGame,
   requestChangeGame,
   listenOnMakingCocktail,
-  listenOffMakingCocktail
+  listenOffMakingCocktail,
+  checkConnection
 } from './socket';
 
 export const CocktailMakerState = {
@@ -42,57 +43,65 @@ let cocktailMaker = createSlice({
       state.state = CocktailMakerState.BUSY;
     },
     makeCocktail(state, action) {
-      const ratio = action.payload;
-      console.log(ratio)
-      if (state.state === CocktailMakerState.IDLE) {
-        requestMakeCocktail(ratio, defaultCallback);
+      if(checkConnection()){
+        const ratio = action.payload;
+        console.log(ratio)
+        if (state.state === CocktailMakerState.IDLE) {
+          requestMakeCocktail(ratio, defaultCallback);
+          listenOnMakingCocktail();
+          state.state = CocktailMakerState.BUSY;
+        }
+      }
+    },
+    stopMakeCocktail(state) {
+      if(checkConnection()){
+        if (state.state === CocktailMakerState.BUSY) {
+          requestForceStopMakingCocktail(defaultCallback);
+        }
+      }
+    },
+    clearPorts(state, action) {
+      if(checkConnection()){
+        if (state.state === CocktailMakerState.BUSY) {
+          alert("술 디스펜서가 작동중입니다. 기달려주세요.");
+          return
+        }
+        const beverageIdsInPort = action.payload;
+        let ports = [];
+        for (let i = 0; i < beverageIdsInPort.length; i++) {
+          ports.push(beverageIdsInPort[i] !== state.before[i]);
+        }
+        requestClearBeverage(ports, (responseData) => {
+          if (responseData.statusCode === StatusCode.FAILURE) {
+            alert("술 디스펜서로 부터 예외가 발생했습니다. 술 디스펜서를 확인해주세요.")
+          }
+          store.dispatch(setStateIdle());
+        });
         listenOnMakingCocktail();
         state.state = CocktailMakerState.BUSY;
       }
     },
-    stopMakeCocktail(state) {
-      if (state.state === CocktailMakerState.BUSY) {
-        requestForceStopMakingCocktail(defaultCallback);
-      }
-    },
-    clearPorts(state, action) {
-      if (state.state === CocktailMakerState.BUSY) {
-        alert("술 디스펜서가 작동중입니다. 기달려주세요.");
-        return
-      }
-      const beverageIdsInPort = action.payload;
-      let ports = [];
-      for (let i = 0; i < beverageIdsInPort.length; i++) {
-        ports.push(beverageIdsInPort[i] !== state.before[i]);
-      }
-      requestClearBeverage(ports, (responseData) => {
-        if (responseData.statusCode === StatusCode.FAILURE) {
-          alert("술 디스펜서로 부터 예외가 발생했습니다. 술 디스펜서를 확인해주세요.")
-        }
-        store.dispatch(setStateIdle());
-      });
-      listenOnMakingCocktail();
-      state.state = CocktailMakerState.BUSY;
-    },
     changePorts(state, action) {
-      if (state.state === CocktailMakerState.BUSY) {
-        alert("술 디스펜서가 작동중입니다. 기달려주세요.");
-        return
-      }
-      const beverageIdsInPort = action.payload;
-      let ports = [];
-      for (let i = 0; i < beverageIdsInPort.length; i++) {
-        ports.push(beverageIdsInPort[i] !== state.before[i]);
-      }
-      requestChangeBeverage(ports, (responseData) => {
-        if (responseData.statusCode === StatusCode.FAILURE) {
-          alert("술 디스펜서로 부터 예외가 발생했습니다. 술 디스펜서를 확인해주세요.")
+      if(checkConnection()){
+        if (state.state === CocktailMakerState.BUSY) {
+          alert("술 디스펜서가 작동중입니다. 기달려주세요.");
+          return
         }
-        store.dispatch(setStateIdle());
-      });
-      state.before = beverageIdsInPort;
-      listenOnMakingCocktail();
-      state.state = CocktailMakerState.BUSY;
+        const beverageIdsInPort = action.payload;
+        let ports = [];
+        for (let i = 0; i < beverageIdsInPort.length; i++) {
+          ports.push(beverageIdsInPort[i] !== state.before[i]);
+        }
+        requestChangeBeverage(ports, (responseData) => {
+          if (responseData.statusCode === StatusCode.FAILURE) {
+            alert("술 디스펜서로 부터 예외가 발생했습니다. 술 디스펜서를 확인해주세요.")
+          }
+          store.dispatch(setStateIdle());
+        });
+        state.before = beverageIdsInPort;
+        listenOnMakingCocktail();
+        state.state = CocktailMakerState.BUSY;
+      }
     }
   }
 })
@@ -480,7 +489,19 @@ let game = createSlice({
   },
 });
 
-export let { setPlayer, removePlayer, addPlayer, initializePlayerViewPos, setGameDataHandler, updateGameData, updateGameResult, setGameStateIdle, setGameStateReady, setGameStatePlay, createGame, recreateGame, destroyGame, completeGame, changeGame } = game.actions;
+export let { setPlayer, removePlayer, addPlayer, initializePlayerViewPos, setGameDataHandler, updateGameData, updateGameResult, setGameStateIdle, setGameStateReady, setGameStatePlay, createGame, recreateGame, destroyGame, completeGame, changeGame, safeTerminateIfGamePlayed } = game.actions;
+
+let gamePlayerCount = createSlice({
+  name: 'gamePlayerCount',
+  initialState: 1,
+  reducers: {
+    setGamePlayerCount(state, action) {
+      return action.payload;
+    }
+  },
+});
+
+export let { setGamePlayerCount } = gamePlayerCount.actions
 
 const store = configureStore({
   reducer: {
@@ -492,6 +513,7 @@ const store = configureStore({
     port: port.reducer,
     recoRecipes: recoRecipes.reducer,
     game: game.reducer,
+    gamePlayerCount: gamePlayerCount.reducer,
   },
 });
 

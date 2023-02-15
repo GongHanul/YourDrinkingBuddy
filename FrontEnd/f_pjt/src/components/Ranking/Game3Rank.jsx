@@ -28,7 +28,7 @@ function Game3Rank(props) {
       <Topdiv>
         <Rank>🏆RANK🏆</Rank><br />
         { result.map( (e) => {
-          return <Score>PLAYER {e.playerId} : {e.cnt} </Score>
+          return <Score>✨Player <Id>{e.playerId}</Id> : {e.cnt} </Score>
         })}
       </Topdiv>
       <Bomdiv>
@@ -54,6 +54,10 @@ const style = {
   justifyContent : 'center',
   flexDirection: 'column',
 };
+const Id = styled.span`
+  color : #da3b1f;
+`
+
 const Topdiv = styled.div`
   display : flex;
   flex-direction: column;
@@ -78,7 +82,7 @@ const Quit = styled.div`
   letter-spacing: 0.3vh;
   margin: 3vh;
   &:hover {
-    color: red;
+    color: #da341f;
   }
 `
 const Rank = styled.div`

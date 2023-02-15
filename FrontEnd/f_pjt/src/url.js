@@ -1,0 +1,1 @@
+export const URL= 'http://i8a103.p.ssafy.io:3001';

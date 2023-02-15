@@ -21,7 +21,7 @@ function Game3Modal(props) {
   <>
   <Box sx={style}>
   <Change1>컨트롤러 게임 🎮</Change1>
-  <Change1>{timeLeft}초 후 게임이 시작됩니다🎉</Change1><br />
+  <Change1><Time>{timeLeft}</Time> 초 후 게임이 시작됩니다🎉</Change1><br />
   </Box>
   </>
   )
@@ -48,4 +48,7 @@ const Change1 = styled.div`
   font-size: 5vh;
   font-family: 'Jua', sans-serif;
   filter: drop-shadow(0.2vh 0.2vh 0.1vh rgb(0 0 0 / 0.5));
+`
+const Time = styled.span`
+  color : #da341f;
 `

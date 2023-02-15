@@ -210,15 +210,14 @@ const Side = styled.div`
   font-size: 8vh;
 `
 const Quit = styled.div`
-  position : relative;
-  left : 15vh;
-  color : #1966A5;
+  padding : 0 8vh;
+  color : #004680;
   font-size: 5vh;
   font-family: 'Jua', sans-serif;
   font-weight : bold;
   letter-spacing: 0.3vh;
   &:hover {
-    color: red;
+    color: #da341f;
   }
 ` 
 const PlayerDisplay = styled.div`
