@@ -6,12 +6,21 @@ import {Cookies} from 'react-cookie'
 
 const cookies = new Cookies();
 
+const defaultAddr = 'localhost:9000';
+
+const cookieExpires = new Date();
+cookieExpires.setFullYear(cookieExpires.getFullYear() + 100);
+
 const getAddress = () => {
   return cookies.get('dispenser-address');
 }
 
 const setAddress = (address) => {
-  return cookies.set('dispenser-address', address);
+  return cookies.set('dispenser-address', address, {path: '/', expires:cookieExpires} );
+}
+
+if(getAddress() === undefined){
+  setAddress(defaultAddr);
 }
 
 // 서버IP와 PORT는 웹 설정창에서의 로컬파일이나 쿠키등을 통해 읽어올 수 있도록 변경해야 함. 설정창도 필요해보임.
