@@ -28,7 +28,7 @@ function Game3Rank(props) {
       <Topdiv>
         <Rank>🏆RANK🏆</Rank><br />
         { result.map( (e) => {
-          return <Score>PLAYER {e.playerId} : {e.cnt} </Score>
+          return <Score>Player {e.playerId} : {e.cnt} </Score>
         })}
       </Topdiv>
       <Bomdiv>

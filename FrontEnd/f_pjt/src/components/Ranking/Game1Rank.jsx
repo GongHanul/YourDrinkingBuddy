@@ -28,7 +28,7 @@ function Game1Rank(props) {
     <Topdiv>
       <Rank>🏆RANK🏆</Rank><br />
       { result.map( (e) => {
-        return <Score>PLAYER {e.playerId} <br />MAX💓'{e.max}' | MEAN💖'{e.mean}' | GAP💕'{e.gap}' <br /><br /></Score>
+        return <Score>💕Player {e.playerId} <br />최대 : {e.max} | 평균 : {e.mean} | 차이 : {e.gap}<br /></Score>
       })}
     </Topdiv>
     <Bomdiv>

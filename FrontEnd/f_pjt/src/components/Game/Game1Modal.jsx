@@ -24,7 +24,7 @@ function Game1Modal(props) {
     <Change1>{timeLeft}초 후 게임이 시작됩니다🎉</Change1>
     <br/>
     <Change1>주의사항💢</Change1>
-    <Change2>1. 손가락을 그림과 같이 센서에 붙여주세요.</Change2>
+    <Change2>1. 손가락을 센서위에 올려주세요</Change2>
     <Change2>[너무 약한 힘이거나 센 힘으로 누르면 </Change2>
     <Change2>측정이 잘 안될 수 있습니다.]</Change2>
     <Change2>2. 게임을 진행하는 동안</Change2>

@@ -33,12 +33,12 @@ function Game6Rank(props) {
         return(
             
             (time > 10000) ? 
-              (<Score>PLAYER{e.playerId} : Times Out! </Score>)
+              (<Score>Player{e.playerId} : Times Out! </Score>)
             :
               (gap >= 0)? 
-                (<Score>PLAYER{e.playerId} : {time}s <br/>  gap : <ScoreTimePlus> +{ gap }s</ScoreTimePlus></Score>)
+                (<Score>Player{e.playerId} : {time}s <br/> Gap : <ScoreTimePlus> +{ gap }s</ScoreTimePlus></Score>)
               :
-                (<Score>PLAYER{e.playerId} : {time}s,<br/>  gap : <ScoreTimeMinus>{ gap }s</ScoreTimeMinus></Score>)
+                (<Score>Player{e.playerId} : {time}s,<br/> Gap : <ScoreTimeMinus>{ gap }s</ScoreTimeMinus></Score>)
         )
       })}
     </Topdiv>
