@@ -7,12 +7,12 @@ import { useSelector, useDispatch } from "react-redux"
 import Modal from '@mui/material/Modal';
 import ShotModal from "./components/ShotModal";
 import { makeCocktail, stopMakeCocktail } from './store';
+import { checkConnection } from './socket';
 
 
 
 function SideNav() {
     const ratio = useSelector((state)=>state.ratio)
-    // const URL = "http://70.12.226.153:5000/api/motor"
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -38,8 +38,10 @@ function SideNav() {
       </NavStyle>
       <Shot 
         onClick={async ()=>{
-          make()
-          handleOpen()
+          if(checkConnection()){
+            make()
+            handleOpen()
+          }
           // setTimeout(function(){handleClose()},5000)
       }}>
         SHOT!</Shot>

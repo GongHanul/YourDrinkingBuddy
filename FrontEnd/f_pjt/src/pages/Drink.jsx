@@ -10,6 +10,7 @@ import ChangeModal from "../components/ChangeModal";
 import { makeCocktail, stopMakeCocktail } from '../store';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faRotateRight } from "@fortawesome/free-solid-svg-icons"
+import { checkConnection } from "../socket";
 
 function Drink() {
   const dispatch = useDispatch()
@@ -90,9 +91,10 @@ function Drink() {
       beverages.push(i.beverage_id)
     }
   }
-  const URL = 'http://i8a103.p.ssafy.io:3001'
+// http 관련 별도의 모듈로 빼낼 필요 있음.
 const getRecipes = () => {
-    axios.get(URL+'/recipes',{params: {filter: beverages.join(",")}}).then((a)=>{
+  const URL= `${process.env.PUBLIC_URL}${process.env.REACT_APP_API_SERVER_PATH}`
+    axios.get(`${URL}/recipes`,{params: {filter: beverages.join(",")}}).then((a)=>{
       dispatch(changeReco(setLengthIfLessFills(a.data.items, 3, {recipe_name: "X"})));
     })
     .catch((e)=>{
@@ -112,7 +114,7 @@ const getRecipes = () => {
         <BtnDiv>
           <Btn onClick={getRecipes}><FontAwesomeIcon icon={ faRotateRight }/></Btn>
           <Btn onClick={()=>{
-            handleOpen2()}}>
+            if(checkConnection())(handleOpen2())}}>
              <span data-text="술교체">술교체</span></Btn>
             <Modal
             open={open2}
@@ -120,8 +122,10 @@ const getRecipes = () => {
             <ChangeModal handleClose2 = {handleClose2}/>
             </Modal>
           <Shot  onClick={async ()=>{
-            make()
-            handleOpen()
+            if(checkConnection()){
+              make()
+              handleOpen()
+            }
             }}>
             SHOT!</Shot>
             <Modal

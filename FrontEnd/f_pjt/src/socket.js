@@ -1,11 +1,22 @@
 import { io } from "socket.io-client"
 import { addPlayer, removePlayer, getPreservedGameDataHandler, updateGameData, initializePlayerViewPos, setGameStatePlay, setGameStateIdle, updateGameResult, GameState, setStateIdle, CocktailMakerState } from "./store";
 import store from "./store";
+import Swal from "sweetalert2";
+import {Cookies} from 'react-cookie'
 
-// export const socket = io("70.12.226.153:3000", { transports: ["websocket"] });
-// export const socket = io("localhost:9000", { transports: ["websocket"] });
-// export const socket = io("70.12.246.22:3000", { transports: ["websocket"] });
-export const socket = io("70.12.246.24:3000", { transports: ["websocket"] });
+const cookies = new Cookies();
+
+const getAddress = () => {
+  return cookies.get('dispenser-address');
+}
+
+const setAddress = (address) => {
+  return cookies.set('dispenser-address', address);
+}
+
+// 서버IP와 PORT는 웹 설정창에서의 로컬파일이나 쿠키등을 통해 읽어올 수 있도록 변경해야 함. 설정창도 필요해보임.
+export let socket = io(getAddress(), { transports: ["websocket"] });
+
 
 export let StatusCode = {
   SUCCESS: 0,
@@ -199,7 +210,7 @@ export const requestChangeGame = (requestData, requestCallback) => {
 }
 
 
-export const isConnected = () => {
+export const isNotConnected = () => {
   return !socket || socket.connected === false;
 }
 
@@ -209,8 +220,61 @@ const trySocketConnection = () => {
   socket.connect();
 };
 
+export const showModalToChangeDispenserAddress = () => {
+  Swal.fire({
+    title: '디스펜서 서버 주소 입력',
+    input: 'text',
+    inputValue: `${getAddress()}`,
+    inputAttributes: {
+      autocapitalize: 'off',
+    },
+    showCancelButton: true,
+    confirmButtonText: '확인',
+    cancelButtonText: '취소',
+    showClass: {
+      popup: 'swal2-noanimation',
+      backdrop: 'swal2-noanimation'
+    },
+    hideClass: {
+      popup: '',
+      backdrop: ''
+    },
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // get new address from input field
+      const newAddress = result.value;
+      changeDispenserAddress(newAddress);
+      document.location.href="/";
+    }
+  });
+}
+
+export const changeDispenserAddress = (addr) => {
+  setAddress(addr);
+  socket.disconnect();
+}
+
+export const checkConnection = () => {
+  if(isNotConnected()){
+    Swal.fire({
+      title: '서버에러',
+      text: '디스펜서 서버와 연결에 실패했습니다. 잠시 후 다시 시도해주세요.',
+      confirmButtonText: 'address 변경',
+      showCancelButton: true,
+      cancelButtonText: '닫기',
+      icon: 'error'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        showModalToChangeDispenserAddress();
+      }
+    });
+    return false;
+  }
+  return true
+} 
+
 export const send = (event, data, callback) => {
-  if (isConnected()) {
+  if (isNotConnected()) {
     trySocketConnection();
   }
   socket.emit(event, data, callback);
