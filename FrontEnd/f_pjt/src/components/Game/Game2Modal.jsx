@@ -21,9 +21,9 @@ function Game2Modal(props) {
   <>
   <Box sx={style}>
     <Change1>무게 게임 ⏲</Change1>
-    <Change1>{timeLeft}초 후 게임이 시작됩니다🎉</Change1><br/>
+    <Change1><Time>{timeLeft}</Time> 초 후 게임이 시작됩니다🎉</Change1><br/>
     <Change1>주의사항💢</Change1>
-    <Change1>!꼭! 컵을 올려 놓고 시작해주세요!</Change1>
+    <Change1><Time>'꼭'</Time> 컵을 올려 놓고 시작해주세요!</Change1>
   </Box>
   </>
   )
@@ -51,9 +51,6 @@ const Change1 = styled.div`
   font-family: 'Jua', sans-serif;
   filter: drop-shadow(0.2vh 0.2vh 0.1vh rgb(0 0 0 / 0.5));
 `
-const Cnt = styled.div`
-  font-size: 6vh;
-  font-family: 'Jua', sans-serif;
-  color : red;
-  filter: drop-shadow(0.2vh 0.2vh 0.1vh rgb(0 0 0 / 0.5));
+const Time = styled.span`
+  color : #da341f;
 `

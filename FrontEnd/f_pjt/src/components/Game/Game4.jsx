@@ -211,13 +211,13 @@ const Side = styled.div`
 `
 const Quit = styled.div`
   padding : 0 8vh;
-  color : #1966A5;
+  color : #004680;
   font-size: 5vh;
   font-family: 'Jua', sans-serif;
   font-weight : bold;
   letter-spacing: 0.3vh;
   &:hover {
-    color: red;
+    color: #da341f;
   }
 ` 
 const PlayerDisplay = styled.div`
