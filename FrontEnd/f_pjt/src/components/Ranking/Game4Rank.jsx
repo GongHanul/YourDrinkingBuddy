@@ -28,7 +28,7 @@ function Game4Rank(props) {
     <Topdiv>
       <Rank>🏆RANK🏆</Rank><br />
       { result.map( (e) => {
-        return <Score>PLAYER {e.playerId} : {e.max} </Score>
+        return <Score>Player {e.playerId} : {e.max} </Score>
       })}
     </Topdiv>
     <Bomdiv>

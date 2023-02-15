@@ -42,6 +42,7 @@ const style = {
   display: 'flex',
   alignItems: 'center',
   justifyContent : 'center',
+  overflowY : 'auto',
   flexDirection: 'column',
 };
 const Change1 = styled.div`

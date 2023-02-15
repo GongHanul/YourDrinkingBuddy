@@ -210,8 +210,7 @@ const Side = styled.div`
   font-size: 8vh;
 `
 const Quit = styled.div`
-  position : relative;
-  left : 15vh;
+  padding : 0 8vh;
   color : #1966A5;
   font-size: 5vh;
   font-family: 'Jua', sans-serif;
