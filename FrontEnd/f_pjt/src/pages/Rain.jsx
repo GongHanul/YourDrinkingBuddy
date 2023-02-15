@@ -1,10 +1,14 @@
 import styled, {keyframes} from "styled-components";
 import React, { useRef, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { safeTerminateIfGamePlayed } from "../store";
 
 
 export default function AboutUs() {
   const canvas = useRef(null);
   const [ctx, setCts] = useState(undefined);
+  const dispatch = useDispatch()
+  dispatch(safeTerminateIfGamePlayed())
 
   useEffect(() => {
       // @ts-ignore

@@ -49,13 +49,13 @@ function Recipe() {
 }
 
 const ListCard = styled.div`
-margin : 5vh 3vh 3vh;
+margin : 3vh 2vh 1vh;
 display : flex;
 align-items: center ;
 flex-direction: column;
 position: relative;
 font-weight : bold;
-min-width : 23vw;
+min-width : 33vw;
 padding: 1vh;
 background: #B9D1E4;
 color : #474747;
@@ -98,18 +98,18 @@ const Body = styled.div`
 // font-family: 'Black Han Sans', sans-serif;
 const RecipeName = styled.div`
   z-index: 1;
-  font-size : 5vh;
+  font-size : 4.5vh;
   margin : 10px 0;
   color : #0a2133;
-  font-family: 'Do Hyeon', sans-serif;
+  font-family: 'Jua', sans-serif;
   font-weight: bold;
   letter-spacing: 0.6vh;
   filter: drop-shadow(0.2vh 0.2vh 0.1vh rgb(0 0 0 / 0.5));
 `
 const BeverageName = styled.div`
-  font-size : 4vh;
+  font-size : 3.5vh;
   color : #004680;
-  font-family: 'Do Hyeon', sans-serif;
+  font-family: 'Jua', sans-serif;
   font-weight: bold;
   letter-spacing: 0.3vh;
 `
@@ -117,7 +117,7 @@ const BeverageRatio = styled.div`
   font-size : 4vh;
   margin : 0 0 10px 0 ;
   color : #004680;
-  font-family: 'Do Hyeon', sans-serif;
+  font-family: 'Jua', sans-serif;
   font-weight: bold;
   filter: drop-shadow(0.2vh 0.2vh 0.1vh rgb(0 0 0 / 0.5));
 `

@@ -113,7 +113,7 @@ function Game3() {
   </Modal>    
     <Side>
     <TimeLeft>{timeLeft}</TimeLeft>
-    <progress value={timeLeft} max={25} />
+    <progress value={timeLeft} max={timeWait} />
     {/* https://coreui.io/react/docs/components/progress/ */}
     {/* https://mui.com/material-ui/react-progress/ */}
     {/* https://freefrontend.com/react-progress-bars/ */}

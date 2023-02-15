@@ -10,6 +10,9 @@ function Page404() {
   const GoAboutus = (() =>{
     navigate("/aboutus")
   })
+  const GoCB = (() =>{
+    navigate("/rain")
+  })
   return(
   <>
   <Background>
@@ -38,6 +41,7 @@ function Page404() {
     <Buttons>
       <Btn onClick={Gohome}>Home</Btn>
       <Btn onClick={GoAboutus}>About Us</Btn>
+      <Btn onClick={GoCB}>Cherry Blossoms</Btn>
     </Buttons>
   </Bottom>
   </Background>
