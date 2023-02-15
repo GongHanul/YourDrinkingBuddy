@@ -29,7 +29,7 @@ function BeverageModal(props) {
   
       let a = ratio.findIndex((f)=>f.beverage_id === e.beverage_id)
 
-      if(a!==-1){
+      if(a!==-1 && ratio[a].beverage_id !== -1){
         // props.index 에 있는 음료를 a로 옮기고, props.index는 없애버리기
         
         return (<></>);
@@ -52,7 +52,7 @@ function BeverageModal(props) {
   }
       }>{ i < 9 && <B1>{ Beverages[i].beverage_name }</B1>}
       { i >= 9 && i < 24 && <B2>{ Beverages[i].beverage_name }</B2>}
-      { i === 25 && <B3>{ Beverages[i].beverage_name }</B3>}
+      { i === 24 && <B3>{ Beverages[i].beverage_name }</B3>}
     </SulList></div>)}
     })}
     </Box>
@@ -79,21 +79,8 @@ const style = {
   background : '#f0eee9f4',
 };
 
-const SulList = styled.div`
-  // display: flex;
-  // justify-content: center;
-  // align-items: center ;
-  // margin: 1vh;
-  // padding: 1vh;
-  // border-radius : 1vh;
-  // color: #ffffff;
-  // font-size : 5vh;
-  // /* font-family: 'Jua', sans-serif; */
-  // font-family: 'Noto Sans KR', sans-serif;
-  // font-weight: bold;
-  // filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.7));
-  // letter-spacing: 5px;
-  `
+const SulList = styled.div
+  
 const shiny = keyframes`
 0% { -webkit-transform: scale(0) rotate(45deg); opacity: 0; }
 80% { -webkit-transform: scale(0) rotate(45deg); opacity: 0.5; }
