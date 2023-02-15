@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 
 function Game2Modal(props) {
   const handleClose = props.handleClose
-  const [timeLeft, setTimeLeft] = useState(3);
+  const [timeLeft, setTimeLeft] = useState(5);
 
   useEffect(() => {
     let intervalId = setInterval(() => {
