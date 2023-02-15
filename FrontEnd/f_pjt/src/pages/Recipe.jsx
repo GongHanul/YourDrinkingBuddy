@@ -49,13 +49,13 @@ function Recipe() {
 }
 
 const ListCard = styled.div`
-margin : 5vh 3vh 3vh;
+margin : 3vh 2vh 1vh;
 display : flex;
 align-items: center ;
 flex-direction: column;
 position: relative;
 font-weight : bold;
-min-width : 23vw;
+min-width : 33vw;
 padding: 1vh;
 background: #B9D1E4;
 color : #474747;

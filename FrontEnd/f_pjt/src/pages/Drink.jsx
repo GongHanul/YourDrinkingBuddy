@@ -287,7 +287,7 @@ const RecipeItem = styled.div`
   padding: 2vh;
   color: #004680;
   font-size: 4vh;
-  font-family: 'Do Hyeon', sans-serif;
+  font-family: 'Jua', sans-serif;
   font-weight : bold;
   letter-spacing: 5px;
 `

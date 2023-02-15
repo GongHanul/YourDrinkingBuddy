@@ -27,7 +27,8 @@ function Game1Modal(props) {
     <Change2>1. 손가락을 그림과 같이 센서에 붙여주세요.</Change2>
     <Change2>[너무 약한 힘이거나 센 힘으로 누르면 </Change2>
     <Change2>측정이 잘 안될 수 있습니다.]</Change2>
-    <Change2>2. 게임을 진행하는 동안 한 자세를 유지해주시면</Change2>
+    <Change2>2. 게임을 진행하는 동안</Change2>
+    <Change2>한 자세를 유지해주시면</Change2>
     <Change2>더 정확한 심박수를 알 수 있습니다.</Change2>
   </Box>
   </>

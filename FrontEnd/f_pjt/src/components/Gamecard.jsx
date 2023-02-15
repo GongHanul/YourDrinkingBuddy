@@ -86,7 +86,7 @@ const Rule = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  filter: drop-shadow(0.3vh 0.3vh 0.1vh rgb(0 0 0 / 0.5));
+  filter: drop-shadow(0.2vh 0.2vh 0.1vh rgb(0 0 0 / 0.3));
 `
 const Rule1 = styled.div`  
 `
