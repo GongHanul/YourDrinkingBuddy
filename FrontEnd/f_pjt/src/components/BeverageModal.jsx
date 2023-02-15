@@ -51,8 +51,8 @@ function BeverageModal(props) {
     }))
   }
       }>{ i < 9 && <B1>{ Beverages[i].beverage_name }</B1>}
-      { i >= 9 && i < 24 && <B2>{ Beverages[i].beverage_name }</B2>}
-      { i === 24 && <B3>{ Beverages[i].beverage_name }</B3>}
+      { i >= 9 && i < 28 && <B2>{ Beverages[i].beverage_name }</B2>}
+      { i === 28 && <B3>{ Beverages[i].beverage_name }</B3>}
     </SulList></div>)}
     })}
     </Box>
@@ -107,7 +107,6 @@ const shiny = keyframes`
   letter-spacing: 5px;
   border: none;
   background: #F7CAC9;
-  /* background: #89ABE3; */
   overflow: hidden;
   &:hover {
     text-decoration: none;
@@ -144,7 +143,6 @@ const B2 = styled.div`
     inset 4px 4px 6px 0 rgba(0, 0, 0, .2);
   letter-spacing: 5px;
   border: none;
-  /* background: #F7CAC9; */
   background: #89ABE3;
   overflow: hidden;
   &:hover {
@@ -183,8 +181,7 @@ const B3 = styled.div`
     inset 4px 4px 6px 0 rgba(0, 0, 0, .2);
   letter-spacing: 5px;
   border: none;
-  /* background: #F7CAC9; */
-  background: #89ABE3;
+  background: #858585 ;
   overflow: hidden;
   &:hover {
     text-decoration: none;
