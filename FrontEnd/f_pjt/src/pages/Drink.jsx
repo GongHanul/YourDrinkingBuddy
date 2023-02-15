@@ -255,7 +255,7 @@ const Btn = styled.div`
   }
   span {
     display: block;
-    padding: 0 20px;
+    padding: 0 10px;
     animation: ${moveleft} 8s linear infinite;
     &::after {
       position: absolute;

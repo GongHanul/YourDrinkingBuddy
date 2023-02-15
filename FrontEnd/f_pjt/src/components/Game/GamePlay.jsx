@@ -43,8 +43,8 @@ function GamePlay() {
     if( game.playerCount < Playercnt ){
       // alert(`플레이어 모자릅니다. 현재 플레이어 수 : ${game.playerCount}, 목표 플레이어 수 : ${Playercnt}`)
       Swal.fire(
-        '플레이어 모자릅니다.',
-        `현재 플레이어 수 : ${game.playerCount}, 목표 플레이어 수 : ${Playercnt}`,
+        '플레이어수가 모자릅니다.',
+        `| 현재 플레이어 수 : ${game.playerCount} | 목표 플레이어 수 : ${Playercnt} |`,
         'question'
       )
     } else {
