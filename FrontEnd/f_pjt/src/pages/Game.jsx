@@ -45,7 +45,7 @@ function Game() {
       title = {'# 술 넘기지마!'}
       rule1 = {'# 랜덤값이 주어진다'}
       rule2 = {'돌아가며 술을 따르며'}
-      rule3 = {'랜덤값을 넘으면 벌칙!'}
+      rule3 = {'랜덤값 넘으면 벌칙!'}
       rule4 = {'무게 센서에 잔올리기'}
       ></Gamecard2></Flexdiv>
       

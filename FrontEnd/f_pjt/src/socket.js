@@ -3,8 +3,9 @@ import { addPlayer, removePlayer, getPreservedGameDataHandler, updateGameData, i
 import store from "./store";
 
 // export const socket = io("70.12.226.153:3000", { transports: ["websocket"] });
-export const socket = io("localhost:9000", { transports: ["websocket"] });
+// export const socket = io("localhost:9000", { transports: ["websocket"] });
 // export const socket = io("70.12.246.22:3000", { transports: ["websocket"] });
+export const socket = io("70.12.246.24:3000", { transports: ["websocket"] });
 
 export let StatusCode = {
   SUCCESS: 0,
