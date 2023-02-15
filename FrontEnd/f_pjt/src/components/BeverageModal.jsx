@@ -35,7 +35,7 @@ function BeverageModal(props) {
         return (<></>);
       }
       else{
-        console.log( a)
+        console.log(a)
 
    
     return (<div onClick={props.handleClose}><SulList onClick={()=>
@@ -79,7 +79,8 @@ const style = {
   background : '#f0eee9f4',
 };
 
-const SulList = styled.div
+const SulList = styled.div`
+`
   
 const shiny = keyframes`
 0% { -webkit-transform: scale(0) rotate(45deg); opacity: 0; }

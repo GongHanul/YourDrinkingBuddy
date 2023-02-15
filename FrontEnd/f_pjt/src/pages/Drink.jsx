@@ -93,8 +93,9 @@ function Drink() {
   }
 // http 관련 별도의 모듈로 빼낼 필요 있음.
 const getRecipes = () => {
-  const URL= `${process.env.PUBLIC_URL}${process.env.REACT_APP_API_SERVER_PATH}`
-    axios.get(`${URL}/recipes`,{params: {filter: beverages.join(",")}}).then((a)=>{
+  const URL= 'http://i8a103.p.ssafy.io:3001'
+  // const URL= `${process.env.PUBLIC_URL}${process.env.REACT_APP_API_SERVER_PATH}`
+    axios.get(URL+'/recipes',{params: {filter: beverages.join(",")}}).then((a)=>{
       dispatch(changeReco(setLengthIfLessFills(a.data.items, 3, {recipe_name: "X"})));
     })
     .catch((e)=>{
