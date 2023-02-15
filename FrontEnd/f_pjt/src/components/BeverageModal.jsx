@@ -67,6 +67,7 @@ const style = {
   top: '50%',
   left: '50%',
   height : '70%',
+  width : '70%',
   transform: 'translate(-50%, -50%)',
   boxShadow: '0 2px 4px',
   p: '4vh',
