@@ -1,12 +1,13 @@
 import styled from "styled-components";
 import { React, useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowRotateRight } from "@fortawesome/free-solid-svg-icons"
+import { faArrowRotateRight, faArrowLeftLong } from "@fortawesome/free-solid-svg-icons"
 import Modal from '@mui/material/Modal';
 import Game2Modal from "./Game2Modal";
 import { useDispatch, useSelector } from 'react-redux';
 import { GameState, completeGame, createGame, setGameDataHandler, setGameStateReady } from "../../store";
 import { useNavigate } from 'react-router-dom';
+import { destroyGame } from "../../store";
 
 
 function Game2() {
@@ -18,6 +19,11 @@ function Game2() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const back = () => {
+    dispatch(destroyGame());
+    navigate('/game');}
+
 
   const game = useSelector((state)=> state.game);
   const game2 = game.gameData;
@@ -71,11 +77,12 @@ function Game2() {
         </Modal>
         <Display>
           {/* 이미지 리터칭 , css */}
-          <Weight>{game2.weight}</Weight>
+          <Weight>{game2.weight} ml</Weight>
           { view && <IMG src={img[0]}></IMG>}
           { !view && <IMG src={img[1]}></IMG>}
         </Display>
         <Side>
+          <Restart onClick={back}><FontAwesomeIcon icon= {faArrowLeftLong}/> BACK</Restart>
           <Restart onClick={restart}>REPLAY<FontAwesomeIcon icon={faArrowRotateRight}/></Restart>
         </Side>
         </Full>
@@ -101,7 +108,7 @@ function Game2() {
       return (
         <Full>
           <Display>
-                  잠시 대기해주세요.
+              잠시 대기해주세요.
           </Display>
       </Full>
       )

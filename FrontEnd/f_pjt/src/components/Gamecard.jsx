@@ -13,7 +13,7 @@ function GameList(props) {
   // const Changelist = [`img/${pros}.png`,]
 
   const Ready = styled.div`
-  margin: 4vh 0 0 0 ;
+  margin: 3vh 0 0 0 ;
   background: #ffffff;
   border : none;
   border-radius : 1vh;
@@ -65,7 +65,7 @@ const Title = styled.div`
   span {
     display: block;
     padding: 0 4vh;
-    animation: ${moveleft} 5s linear infinite;
+    animation: ${moveleft} 8s linear infinite;
     &::after {
       position: absolute;
       content: attr(data-text);
@@ -88,8 +88,10 @@ const Rule = styled.div`
   justify-content: center;
   filter: drop-shadow(0.3vh 0.3vh 0.1vh rgb(0 0 0 / 0.5));
 `
-const Rule1 = styled.div`
-  
+const Rule1 = styled.div`  
+`
+const Rule2 = styled.div`
+  margin-top: 2vh;
 `
   return (
   <>
@@ -110,8 +112,7 @@ const Rule1 = styled.div`
     <Rule1>{props.rule1}</Rule1>
     <Rule1>{props.rule2}</Rule1>
     <Rule1>{props.rule3}</Rule1>
-    <br/>
-    <Rule1>{props.rule4}</Rule1>
+    <Rule2>{props.rule4}</Rule2>
     </Rule>
     <Ready onClick={handleOpen}
     >READY!</Ready>
