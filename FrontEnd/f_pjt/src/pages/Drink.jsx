@@ -11,6 +11,7 @@ import { makeCocktail, stopMakeCocktail } from '../store';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faRotateRight } from "@fortawesome/free-solid-svg-icons"
 import { checkConnection } from "../socket";
+import { URL } from "../url";
 
 function Drink() {
   const dispatch = useDispatch()
@@ -93,7 +94,6 @@ function Drink() {
   }
 // http 관련 별도의 모듈로 빼낼 필요 있음.
 const getRecipes = () => {
-  const URL= 'http://i8a103.p.ssafy.io:3001'
   // const URL= `${process.env.PUBLIC_URL}${process.env.REACT_APP_API_SERVER_PATH}`
     axios.get(URL+'/recipes',{params: {filter: beverages.join(",")}}).then((a)=>{
       dispatch(changeReco(setLengthIfLessFills(a.data.items, 3, {recipe_name: "X"})));
@@ -119,7 +119,7 @@ const getRecipes = () => {
              <span data-text="술교체">술교체</span></Btn>
             <Modal
             open={open2}
-            onClose2={handleClose2}>
+            onClose={handleClose2}>
             <ChangeModal handleClose2 = {handleClose2}/>
             </Modal>
           <Shot  onClick={async ()=>{
@@ -130,7 +130,8 @@ const getRecipes = () => {
             }}>
             SHOT!</Shot>
             <Modal
-            open={open}>
+            open={open}
+            >
             <ShotModal handleClose = {handleClose} cancel = { cancel }/>
             </Modal>
         </BtnDiv>
@@ -282,9 +283,9 @@ const RecipeItem = styled.div`
   box-shadow: 0 2px 4px #004680, 0px 2px 4px #004680 inset;
   box-sizing: border-box;
   border-radius: 2vh;
-  width: 25vh;
-  min-height : 14vh;
-  padding: 2vh;
+  min-width: 25vh;
+  min-height : 10vh;
+  padding: 1.5vh;
   color: #004680;
   font-size: 4vh;
   font-family: 'Jua', sans-serif;

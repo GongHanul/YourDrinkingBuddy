@@ -28,11 +28,11 @@ function Game1Rank(props) {
     <Topdiv>
       <Rank>🏆RANK🏆</Rank><br />
       { result.map( (e) => {
-        return <Score>PLAYER {e.playerId} <br />MAX💓'{e.max}' | MEAN💖'{e.mean}' | GAP💕'{e.gap}' <br /><br /></Score>
+        return <Score>💕Player <Id>{e.playerId}</Id> <br />최대 : {e.max} | 평균 : {e.mean} | 차이 : {e.gap}<br /></Score>
       })}
     </Topdiv>
     <Bomdiv>
-    <br /><Quit onClick={restart}>REPLAY<FontAwesomeIcon icon={faArrowRotateRight} /></Quit>
+    <Quit onClick={restart}>REPLAY<FontAwesomeIcon icon={faArrowRotateRight} /></Quit>
     <Quit onClick={quit}>QUIT</Quit>
     </Bomdiv>
   </Box>
@@ -66,7 +66,9 @@ const Bomdiv = styled.div`
   justify-content: space-evenly;
   align-items: center ;
   justify-content: center;
-  margin-top : -7vh;
+`
+const Id = styled.span`
+  color : #da3b1f;
 `
 const Quit = styled.div`
   display : flex;
@@ -77,7 +79,7 @@ const Quit = styled.div`
   font-family: 'Jua', sans-serif;
   font-weight : bold;
   letter-spacing: 0.3vh;
-  margin: 3vh;
+  margin-right: 5vh;
   &:hover {
     color: red;
   }

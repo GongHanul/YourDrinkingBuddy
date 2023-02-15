@@ -139,7 +139,7 @@ const Start = styled.div`
   font-weight : bold;
   letter-spacing: 0.3vh;
   &:hover {
-    color: red;
+    color: #da341f;
   }
 `
 export default GamePlay

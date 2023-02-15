@@ -33,12 +33,12 @@ function Game6Rank(props) {
         return(
             
             (time > 10000) ? 
-              (<Score>PLAYER{e.playerId} : Times Out! </Score>)
+              (<Score>✨Player<Id>{e.playerId}</Id> : Times Out! </Score>)
             :
               (gap >= 0)? 
-                (<Score>PLAYER{e.playerId} : {time}s <br/>  gap : <ScoreTimePlus> +{ gap }s</ScoreTimePlus></Score>)
+                (<Score>✨Player<Id>{e.playerId}</Id> : {time}s <br/> Gap : <ScoreTimePlus> +{ gap }s</ScoreTimePlus></Score>)
               :
-                (<Score>PLAYER{e.playerId} : {time}s,<br/>  gap : <ScoreTimeMinus>{ gap }s</ScoreTimeMinus></Score>)
+                (<Score>✨Player<Id>{e.playerId}</Id> : {time}s,<br/> Gap : <ScoreTimeMinus>{ gap }s</ScoreTimeMinus></Score>)
         )
       })}
     </Topdiv>
@@ -78,6 +78,9 @@ const Bomdiv = styled.div`
   align-items: center ;
   justify-content: center;
 `
+const Id = styled.span`
+  color : #4648c0     ;
+`
 const Quit = styled.div`
   display : flex;
   justify-content: center;
@@ -106,10 +109,10 @@ const Score = styled.div`
 `
 
 const ScoreTimeMinus = styled.span`
-  color: red;
+  color: #da3b1f;
 `
 
 const ScoreTimePlus = styled.span`
-  color: green;
+  color: #327c29;
 `
 export default Game6Rank

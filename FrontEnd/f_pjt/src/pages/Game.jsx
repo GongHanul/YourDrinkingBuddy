@@ -1,25 +1,16 @@
 import styled from "styled-components";
-import { React, useState } from 'react';
+import { React } from 'react';
 import Gamecard from "../components/Gamecard";
 import Gamecard2 from "../components/Gamecard2";
+import { useDispatch } from "react-redux";
+import { safeTerminateIfGamePlayed } from "../store";
 
 function Game() {
   const randomNum = ['1', '2', '3', '4', '6']
-  const random = Math.floor(Math.random() * 5 + 1);
-  const shuffle = (array) => {
-    for(let index = array.length -1 ; index > 0; index--){
-      // 무작위 index 값을 만든다. (0 이상의 배열 길이 값)
-      const randomPosition = Math.floor(Math.random() * (index +1));
-
-      // 임시로 원본 값을 저장하고, randomPosition을 사용해 배열 요소를 섞는다.
-      const temporary = array[index];
-      array[index] = array[randomPosition];
-      array[randomPosition] =temporary;
-    }
-    return array
-  }
-  shuffle(randomNum)
-  console.log(randomNum)
+  const random = Math.floor(Math.random() * 5);
+  const dispatch = useDispatch()
+  dispatch(safeTerminateIfGamePlayed())
+  console.log(`random game : ${randomNum[random]}`)
   return (
     <>
     <Gamee>
@@ -76,7 +67,7 @@ function Game() {
       ></Gamecard></Flexdiv>
       
       <Flexdiv>
-      <Gamecard id = {randomNum[0]}
+      <Gamecard id = {randomNum[random]}
       ready = {'#EDD582'}
       background= {'#EDD582'}
       font = {'#000000'}

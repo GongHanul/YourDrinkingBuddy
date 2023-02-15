@@ -159,7 +159,7 @@ const GameStart = styled.div`
   font-size: 4vh;
   letter-spacing: 0.5vh;
   animation: ${jittery} 5s infinite;
-  color : #4b76c0;
+  color : #004680;
   &:hover {
     color: #da341f;
     filter: drop-shadow(0.4vh 0.4vh 0.1vh rgb(0 0 0 / 0.6));

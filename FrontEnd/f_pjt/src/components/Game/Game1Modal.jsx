@@ -21,13 +21,13 @@ function Game1Modal(props) {
   <>
   <Box sx={style}>
     <Change1>심전도 게임💖</Change1>
-    <Change1>{timeLeft}초 후 게임이 시작됩니다🎉</Change1>
+    <Change1><Time>{timeLeft}</Time> 초 후 게임이 시작됩니다🎉</Change1>
     <br/>
-    <Change1>주의사항💢</Change1>
-    <Change2>1. 손가락을 그림과 같이 센서에 붙여주세요.</Change2>
-    <Change2>[너무 약한 힘이거나 센 힘으로 누르면 </Change2>
-    <Change2>측정이 잘 안될 수 있습니다.]</Change2>
-    <Change2>2. 게임을 진행하는 동안</Change2>
+    <Change1><Time>주의사항💢</Time></Change1>
+    <Change2><Time>1.</Time> 손가락을 센서위에 올려주세요</Change2>
+    <Change2><Feat>너무 약한 힘이거나 센 힘으로 누르면</Feat></Change2>
+    <Change2><Feat>측정이 잘 안될 수 있습니다.</Feat></Change2>
+    <Change2><Time>2.</Time> 게임을 진행하는 동안</Change2>
     <Change2>한 자세를 유지해주시면</Change2>
     <Change2>더 정확한 심박수를 알 수 있습니다.</Change2>
   </Box>
@@ -61,4 +61,10 @@ const Change2 = styled.div`
   font-size: 4vh;
   font-family: 'Jua', sans-serif;
   filter: drop-shadow(0.2vh 0.2vh 0.1vh rgb(0 0 0 / 0.5));
+`
+const Time = styled.span`
+  color : #da341f;
+`
+const Feat = styled.span`
+  color : #194aa5;
 `
