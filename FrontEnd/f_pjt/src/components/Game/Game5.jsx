@@ -74,13 +74,13 @@ const End = styled.div`
   display : flex;
   justify-content: center;
   align-items : center;
-  color : #1966A5;
+  color : #004680;
   font-size: 5vh;
   font-family: 'Jua', sans-serif;
   font-weight : bold;
   letter-spacing: 0.3vh;
   &:hover {
-    color: red;
+    color: #da341f;
   }
 `
 export default Game5

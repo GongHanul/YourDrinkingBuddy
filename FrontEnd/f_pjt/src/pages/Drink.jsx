@@ -119,7 +119,7 @@ const getRecipes = () => {
              <span data-text="술교체">술교체</span></Btn>
             <Modal
             open={open2}
-            onClose2={handleClose2}>
+            onClose={handleClose2}>
             <ChangeModal handleClose2 = {handleClose2}/>
             </Modal>
           <Shot  onClick={async ()=>{
@@ -130,7 +130,8 @@ const getRecipes = () => {
             }}>
             SHOT!</Shot>
             <Modal
-            open={open}>
+            open={open}
+            >
             <ShotModal handleClose = {handleClose} cancel = { cancel }/>
             </Modal>
         </BtnDiv>
@@ -282,9 +283,9 @@ const RecipeItem = styled.div`
   box-shadow: 0 2px 4px #004680, 0px 2px 4px #004680 inset;
   box-sizing: border-box;
   border-radius: 2vh;
-  width: 25vh;
-  min-height : 14vh;
-  padding: 2vh;
+  min-width: 25vh;
+  min-height : 10vh;
+  padding: 1.5vh;
   color: #004680;
   font-size: 4vh;
   font-family: 'Jua', sans-serif;

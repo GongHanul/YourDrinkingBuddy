@@ -124,6 +124,7 @@ const GameOver = styled.div`
   font-family: 'Hanalei Fill', cursive;
   /* font-family: 'Nabla', cursive; */
   font-size: 13vh;
+  color : #004680;
 `
 const Limit = styled.div`
   display : flex;
@@ -189,20 +190,20 @@ const PlayerDisplay = styled.div`
   display : flex;
   justify-content: center;
   align-items : center;
-  color : #1966A5;
+  color : #004680;
   font-size: 5vh;
   font-family: 'Jua', sans-serif;
   font-weight : bold;
   letter-spacing: 0.3vh;
   &:hover {
-    color: red;
+    color: #da341f;
   }
 `
 const Quit = styled.div`
   display : flex;
   justify-content: center;
   align-items : center;
-  color : #1966A5;
+  color : #004680;
   font-size: 5vh;
   font-family: 'Jua', sans-serif;
   font-weight : bold;
