@@ -1,4 +1,4 @@
-FROM node:alpine
+FROM node:19.6.0-alpine3.17
 
 WORKDIR /backend
 COPY package*.json ./
