@@ -59,11 +59,11 @@ function Game() {
       background= {'#F4E5B2'}
       font = {'#000000'}
       src = {'img/gamelist/sound_black2.png'}
-      title = {'# 누가 시끄럽지!'}
-      rule1 = {'# 각 순서에 따라서'}
-      rule2 = {'큰 소리 낸 사람이'}
-      rule3 = {'승자! 지명 벌칙!'}
-      rule4 = {'시간에 따라 차례대로'}
+      title = {'# 풍선 터트리기!'}
+      rule1 = {'# 센서에 숨을 불어'}
+      rule2 = {'적은 풍선을 분'}
+      rule3 = {'사람이 벌칙'}
+      rule4 = {'센서 위치 확인'}
       ></Gamecard></Flexdiv>
       
       <Flexdiv>

@@ -189,7 +189,7 @@ const Player = styled.div`
 `
 const IMG = styled.img`
   display : flex;
-  height : 15vh;
+  height : 20vh;
   padding : 2vh 5vh;
 `
 
