@@ -71,6 +71,10 @@ function Game4() {
             const gameData = getPreservedGameDataHandler().onTurnChange(game);
             dispatch(updateGameData(gameData));
             dispatch(changeGame({data:{playerId: gameData.turn}}));
+            console.log(gameData.totalTurn)
+            if(gameData.totalTurn === players.length){
+              dispatch(completeGame({}));
+            }
             return timePerTurn;
           } else {
             return prevTime - 1;
