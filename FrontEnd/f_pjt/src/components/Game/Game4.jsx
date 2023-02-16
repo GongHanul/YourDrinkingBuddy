@@ -22,7 +22,7 @@ function Game4() {
   const location = useLocation();
   const Playercnt = location.state.cnt;
   const img1 = ['img/game4/sound1.gif', 'img/game4/sound2.gif', 'img/game4/sound3.gif']
-
+  const img2 = ['img/game4/0.png', 'img/game4/1.png', 'img/game4/2.png', 'img/game4/3.png' ,'img/game4/4.png' ,'img/game4/5.png' ,'img/game4/6.png' ,'img/game4/7.png', 'img/game4/8.png', 'img/game4/9.png']
   const bgcolor = [' #B3CEE5   ', '#f1f5d2', ' #bfc7d6', '#c3ddd6  ']
   // const shuffle = (array) => {
   //   for(let index = array.length -1 ; index > 0; index--){
@@ -116,12 +116,12 @@ function Game4() {
     <STATE>
     {/* <IMG 
     src={img1[i]}></IMG> */}
-    { game4[i].db < 80 && <IMG 
-    src={img1[0]}></IMG>}
-    { game4[i].db >= 80 && game4[i].db < 100 && <IMG 
+    <IMG 
+    src={img2[game4[i].db % 10]}></IMG>
+    {/* { game4[i].db >= 80 && game4[i].db < 100 && <IMG 
     src={img1[1]}></IMG>}
     { game4[i].db >= 100 && <IMG 
-    src={img1[2]}></IMG>}
+    src={img1[2]}></IMG>} */}
     <CNT>{game4[i].db}</CNT>
     </STATE>
     {(i === game.gameData.turnIndex)?<Turn>TURN</Turn>:<></>}
