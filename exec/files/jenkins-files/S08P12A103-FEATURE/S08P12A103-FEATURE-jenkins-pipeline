@@ -1,0 +1,101 @@
+def repository = 'https://lab.ssafy.com/s08-webmobile3-sub2/S08P12A103'
+def credentials = '68907cfb-7c81-4fe4-90b4-f6c46edb5f99'
+
+
+def branch = 'FEATURE';
+def branch_decorator = 'feature'
+
+def backend_container = "node-backend-${branch_decorator}"
+def backend_location = './BackEnd'
+def backend_port = 3002
+
+def frontend_container = "nginx-frontend-${branch_decorator}"
+def frontend_location = './FrontEnd/f_pjt'
+def frontend_port = 3080
+
+pipeline {
+    agent any
+    stages {
+        
+        stage('Git Checkout') {
+            steps {
+                git branch: "${branch}", credentialsId: "${credentials}", url: "${repository}"
+            }
+        }
+        stage("Deploy"){
+            parallel {
+                stage('Frontend') {
+                    when{
+                        expression { sh( returnStdout: true, script: "git show --oneline --first-parent -- ${frontend_location}").trim().length() > 0 }
+                    }
+                    stages{
+                        stage('Build Image') {
+                            steps {
+                                sh "docker build -t ${frontend_container}:latest ${frontend_location}"
+                            }
+                        }
+                        stage('Drop Container') {
+                            when {
+                                expression { sh( returnStdout: true, script: "docker ps -f name=${frontend_container} -q").trim().length() > 0 }
+                            }
+                            steps {
+                                sh "docker stop ${frontend_container}"
+                                sh "docker rm ${frontend_container}"
+                            }
+                        }
+                        stage('Run Container') {
+                            steps {
+                                sh "docker run -it -d -p ${frontend_port}:80 --name ${frontend_container} --add-host=host.docker.internal:host-gateway ${frontend_container}"
+                            }
+                        }
+                    }
+                }
+                stage('Backend') {
+                    when{
+                        expression { sh( returnStdout: true, script: "git show --oneline --first-parent -- ${backend_location}").trim().length() > 0 }
+                    }
+                    stages{
+                        stage('Build Image') {
+                            steps {
+                                sh "docker build -t ${backend_container}:latest ${backend_location}"
+                            }
+                        }
+                        stage('Drop Container') {
+                            when {
+                                expression { sh( returnStdout: true, script: "docker ps -f name=${backend_container} -q").trim().length() > 0 }
+                            }
+                            steps {
+                                sh "docker stop ${backend_container}"
+                                sh "docker rm ${backend_container}"
+                            }
+                        }
+                        stage('Run Container') {
+                            steps {
+                                sh "docker run -it -d -p ${backend_port}:3000 --name ${backend_container} ${backend_container}"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        stage('Prune Unused Container'){
+            when {
+                expression { sh( returnStdout: true, script: "docker ps -a -q -f status=exited").trim().length() > 0 }
+            }
+            steps {
+                sh "docker rm \$(docker ps -a -q -f status=exited)"
+            }
+        }
+        stage('Prune Unused Image'){
+            steps{
+                script{
+                    try{
+                        sh "docker image prune -f"
+                    }catch (Exception e) {
+                        echo 'Skip pruning image due to : ' + e.toString()
+                    }
+                }
+            }
+        }
+    }
+}
