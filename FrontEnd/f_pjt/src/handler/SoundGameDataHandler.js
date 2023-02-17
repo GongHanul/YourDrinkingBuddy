@@ -68,7 +68,7 @@ class SoundGameDataHandler extends AbstractGameDataHandler {
     //     result[idx] = resultOfPlayer;
     //   }
     // }
-    result.sort((x,y) => x.max-y.max);
+    result.sort((x,y) => y.max-x.max);
     return result;
   }
 }
