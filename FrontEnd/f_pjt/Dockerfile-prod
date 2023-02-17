@@ -1,4 +1,4 @@
-FROM node:alpine as builder
+FROM node:19.6.0-alpine3.17 as builder
 
 WORKDIR /frontend
 COPY package*.json ./
@@ -9,7 +9,7 @@ RUN npm install react-scripts@latest -g
 COPY . .
 RUN npm run build
 
-FROM nginx:latest
+FROM nginx:1.23.3
 
 RUN rm -rf /etc/nginx/conf.d
 COPY conf.prod /etc/nginx

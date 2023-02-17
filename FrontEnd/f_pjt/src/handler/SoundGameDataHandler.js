@@ -1,6 +1,6 @@
 import AbstractGameDataHandler from './AbstractGameDataHandler'
 
-const timePerTuen = 5;
+const timePerTurn = 5;
 
 class SoundGameDataHandler extends AbstractGameDataHandler {
 
@@ -10,7 +10,7 @@ class SoundGameDataHandler extends AbstractGameDataHandler {
 
   createGameData(gameState) {
     const views = gameState.playerViewPos;
-    let result = {turnIndex: 0, turn: views[0], timePerTurn: timePerTuen};
+    let result = {turnIndex: 0, turn: views[0], timePerTurn: timePerTurn, totalTurn: 0};
     let playerData = [];
     for (const view of views) {
       playerData.push({ playerId: view, db: 0, max:0 });
@@ -36,7 +36,7 @@ class SoundGameDataHandler extends AbstractGameDataHandler {
     const nextTurn = playerViewPos[nextTurnIndex];
     gameData.turnIndex = nextTurnIndex;
     gameData.turn = nextTurn;
-    
+    gameData.totalTurn++;
     return gameData;
   }
 
@@ -68,7 +68,7 @@ class SoundGameDataHandler extends AbstractGameDataHandler {
     //     result[idx] = resultOfPlayer;
     //   }
     // }
-    result.sort((x,y) => x.max-y.max);
+    result.sort((x,y) => y.max-x.max);
     return result;
   }
 }

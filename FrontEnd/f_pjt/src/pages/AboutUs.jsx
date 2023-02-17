@@ -29,7 +29,7 @@ export default function AboutUs() {
     overflow-y : auto;
     height : 100vh;
     width : 100vw;
-    padding : 0 4vh;
+    padding : 0 10vh;
     background: #D3DEEA;
   `
   const Flexdiv = styled.div`
@@ -38,7 +38,7 @@ export default function AboutUs() {
     justify-content: center;
   `
   const Name = styled.div`
-    font-size: 4vh;
+    font-size: 3.5vh;
     font-weight : bold;
     padding-bottom: 1vh;
     font-family: 'Lato', sans-serif;
@@ -64,7 +64,7 @@ export default function AboutUs() {
     <Card sx={{ maxWidth: 345 , boxShadow : 2}}>
       <CardMedia
         component="img"
-        height="200"
+        height="170"
         image="img/profile/쥐.png"
       />
       <CardContent>
@@ -73,6 +73,9 @@ export default function AboutUs() {
         </Name>
         <Content>
           백엔드
+        </Content>
+        <Content>
+        짧은 기간 동안 함께 개발해서 즐거웠습니다. 특히 결과물이 예뻐서 마음에 들었습니다.
         </Content>
       </CardContent>
       <CardActions>
@@ -84,7 +87,7 @@ export default function AboutUs() {
     <Card sx={{ maxWidth: 345 , boxShadow : 2}}>
       <CardMedia
         component="img"
-        height="200"
+        height="170"
         image="img/profile/펭귄.png"
       />
       <CardContent>
@@ -93,6 +96,9 @@ export default function AboutUs() {
         </Name>
         <Content>
           임베디드
+        </Content>
+        <Content>
+        멋지고 이쁘고 다하시는 우리 언니오빠들 덕에 공통 프젝 하는 동안 정말 즐겁게 개발했습니다! 무한 감사 드립니다❤
         </Content>
       </CardContent>
       <CardActions>
@@ -104,7 +110,7 @@ export default function AboutUs() {
     <Card sx={{ maxWidth: 345 , boxShadow : 2}}>
       <CardMedia
         component="img"
-        height="200"
+        height="170"
         image="img/profile/돼지.png"
       />
       <CardContent>
@@ -113,6 +119,9 @@ export default function AboutUs() {
         </Name>
         <Content>
           임베디드
+        </Content>
+        <Content>
+        새로운 인연, 기술적 경험 그리고 멋진 산출물까지 귀중한 시간이었습니다. 모두 마지막까지 화이팅입니다!
         </Content>
       </CardContent>
       <CardActions>
@@ -124,7 +133,7 @@ export default function AboutUs() {
     <Card sx={{ maxWidth: 345 , boxShadow : 2}}>
       <CardMedia
         component="img"
-        height="200"
+        height="170"
         image="img/profile/양.png"
       />
       <CardContent>
@@ -133,6 +142,9 @@ export default function AboutUs() {
         </Name>
         <Content>
           프론트엔드
+        </Content>
+        <Content>
+          Iot라는 새로운 분야에서 새로운 기술과 함께 재밌는 결과물이 나와서 너무 좋았습니다! 모두들 마지막까지 고생많았옹❤
         </Content>
       </CardContent>
       <CardActions>
@@ -144,7 +156,7 @@ export default function AboutUs() {
     <Card sx={{ maxWidth: 345 , boxShadow : 2}}>
       <CardMedia
         component="img"
-        height="200"
+        height="170"
         image="img/profile/강아지.png"
       />
       <CardContent>
@@ -153,6 +165,9 @@ export default function AboutUs() {
         </Name>
         <Content>
           임베디드
+        </Content>
+        <Content>
+        함께해서 즐거웠고 감사했습니다. 다들 끝까지 화이팅!
         </Content>
       </CardContent>
       <CardActions>
@@ -164,7 +179,7 @@ export default function AboutUs() {
     <Card sx={{ maxWidth: 345 , boxShadow : 2}}>
       <CardMedia
         component="img"
-        height="200"
+        height="170"
         image="img/profile/곰.png"
       />
       <CardContent>
@@ -173,6 +188,9 @@ export default function AboutUs() {
         </Name>
         <Content>
           프론트엔드
+        </Content>
+        <Content>
+          7주가 짧게 느껴질만큼 즐거운 시간이었습니다. 마지막까지 화이팅!
         </Content>
       </CardContent>
       <CardActions>
